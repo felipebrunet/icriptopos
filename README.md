@@ -1,5 +1,5 @@
-# icriptopos
-Multi Server BTC Lightning Payment Terminal
+# Icripto POS
+Multi Server BTC Payment Terminal.
 
 Icripto POS is a payment terminal that allow vendors to receive payments in bitcoin.
 The app does not connect to any centralized backend. 
@@ -8,7 +8,7 @@ It only connects to the server the user chooses to (BTCPay, LNBits and/or BUDA.c
 The terminal currently supports:
 - Connection to BTCPay Server for accepting payments in bitcoin (on chain and lightning, plus altcoins via plugins).
 - Connection to LNBits Server for accepting payments in bitcoin (on chain and lightning).
-- Connection to Buda.com for accepting payments in bitcoin (lightning).
+- Connection to Buda.com for accepting payments in bitcoin (lightning only).
 
 TODOs:
 Enabling payments to Buda.com with bitcoin onchain.

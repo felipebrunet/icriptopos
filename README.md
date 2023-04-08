@@ -11,9 +11,9 @@ The terminal currently supports:
 - Connection to Buda.com for accepting payments in bitcoin (lightning only).
 
 TODOs:
-Enabling payments to Buda.com with bitcoin onchain.
-Enabling connections to LNBits and BTCPay Servers hosted behind onion addresses.
-Enabling payments via NFC cards to BTCPay Servers.
+- Enabling payments to Buda.com with bitcoin onchain (soon).
+- Enabling connections to LNBits and BTCPay Servers hosted behind onion addresses.
+- Enabling payments via NFC cards to BTCPay Servers.
 
 Donations via bitcoin lightning:
 LNAddress: felipe@btcpay.icripto.cl

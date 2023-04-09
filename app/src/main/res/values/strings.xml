@@ -1,3 +1,44 @@
 <resources>
     <string name="app_name">Icripto POS</string>
+    <string name="boton_pagar">PAGAR</string>
+    <string name="titulo_terminal">Terminal POS Icripto</string>
+    <string name="_1">1</string>
+    <string name="_2">2</string>
+    <string name="_3">3</string>
+    <string name="_4">4</string>
+    <string name="_5">5</string>
+    <string name="_6">6</string>
+    <string name="_7">7</string>
+    <string name="_8">8</string>
+    <string name="_9">9</string>
+    <string name="dot">.</string>
+    <string name="_0">0</string>
+    <string name="borrar">Borrar</string>
+    <string name="moneda_seleccionada">Moneda: </string>
+    <string name="seleccione_moneda">Seleccione moneda: </string>
+    <string name="moneda_inicial">CLP</string>
+    <string name="nombre_tienda">Restaurant A</string>
+    <string name="ingrese_servidor">Ingrese la URL del servidor BTCPay: (requerido)</string>
+    <string name="texto_ajustes">Ajustes</string>
+    <string name="icono_ajustes">⚙️</string>
+    <string name="ingrese_id_tienda">Ingrese el ID de la tienda BTCPay: (requerido)</string>
+    <string name="ingrese_nombre_local">Ingrese el nombre del local: (opcional)</string>
+    <string name="texto_guardar">Guardar</string>
+    <string name="texto_volver">Volver</string>
+    <string name="tip_nombre_local">Nombre de Local</string>
+    <string name="ID_local">ID de local según URL en servidor BTCPay</string>
+    <string name="URL_servidor_BTCPay">URL Tor es del tipo "'http://..'" \nURL en clearnet es del tipo "'https://..'"</string>
+    <string name="id_actual">ID Actual: </string>
+    <string name="servidor_actual">Servidor Actual: </string>
+    <string name="github_repo"><a href="https://github.com/felipebrunet/btcpayposicripto">Open Source</a></string>
+    <string name="logo_github">Logo Github</string>
+    <string name="switch_propinas">Propinas</string>
+    <string name="cifra_ini">⬅Setear servidor</string>
+    <string name="tip_message">Indicar propina</string>
+    <string name="no_tip">Sin propina</string>
+    <string name="text_version">Icripto POS V1.2.0</string>
+    <string name="rueda_desc">Ajustes</string>
+
+
+
 </resources>

@@ -4,15 +4,229 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/io_background"
     tools:context=".MainActivity">
 
+
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
+        android:id="@+id/input"
+        android:layout_width="260dp"
+        android:layout_height="72dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/myborder"
+        android:gravity="center"
+        android:textColor="@color/black"
+        android:textSize="30sp"
+        android:visibility="visible"
+        app:layout_constraintEnd_toEndOf="@+id/moneda"
+        app:layout_constraintTop_toBottomOf="@+id/tituloLocal"
+        tools:ignore="TextSizeCheck"
+        tools:text="@string/cifra_ini"
+        tools:visibility="visible" />
+
+    <TableLayout
+        android:id="@+id/tableLayout"
+        android:layout_width="330dp"
+        android:layout_height="350dp"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/myborder2"
+        android:gravity="bottom"
+        android:orientation="vertical"
+        android:stretchColumns="*"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/moneda"
+        tools:ignore="TextSizeCheck">
+
+        <TableRow>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/button_1"
+                style="@style/Button_Style"
+                android:layout_width="wrap_content"
+                android:height="90dp"
+                android:text="@string/_1"
+                android:textColor="@color/white" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/button_2"
+                style="@style/Button_Style"
+                android:layout_width="wrap_content"
+                android:height="90dp"
+                android:text="@string/_2" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/button_3"
+                style="@style/Button_Style"
+                android:layout_width="wrap_content"
+                android:height="90dp"
+                android:text="@string/_3" />
+
+
+        </TableRow>
+
+        <TableRow>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/button_4"
+                style="@style/Button_Style"
+                android:layout_width="wrap_content"
+                android:height="90dp"
+                android:text="@string/_4" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/button_5"
+                style="@style/Button_Style"
+                android:layout_width="wrap_content"
+                android:height="90dp"
+                android:text="@string/_5" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/button_6"
+                style="@style/Button_Style"
+                android:layout_width="wrap_content"
+                android:height="90dp"
+                android:text="@string/_6" />
+
+
+        </TableRow>
+
+        <TableRow>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/button_7"
+                style="@style/Button_Style"
+                android:layout_width="wrap_content"
+                android:height="90dp"
+                android:text="@string/_7" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/button_8"
+                style="@style/Button_Style"
+                android:layout_width="wrap_content"
+                android:height="90dp"
+                android:text="@string/_8" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/button_9"
+                style="@style/Button_Style"
+                android:layout_width="wrap_content"
+                android:height="90dp"
+                android:text="@string/_9" />
+
+
+        </TableRow>
+
+        <TableRow>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/button_dot"
+                style="@style/Button_Style"
+                android:layout_width="wrap_content"
+                android:layout_gravity="center"
+                android:height="90dp"
+                android:text="@string/dot" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/button_0"
+                style="@style/Button_Style"
+                android:layout_width="wrap_content"
+                android:height="90dp"
+                android:text="@string/_0" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/button_borrar"
+                style="@style/Button_Style"
+                android:layout_width="wrap_content"
+                android:layout_gravity="center"
+                android:height="90dp"
+                android:text="@string/borrar"
+                android:textSize="15sp"
+                tools:ignore="TextContrastCheck" />
+
+
+        </TableRow>
+
+    </TableLayout>
+
+
+    <Button
+        android:id="@+id/link_twitter"
+        android:layout_width="260dp"
+        android:layout_height="76dp"
+        android:backgroundTint="@color/gray1"
+        android:text="@string/boton_pagar"
+        android:textSize="25sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/tableLayout" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="280dp"
+        android:layout_height="72dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/myborder3"
+        android:fontFamily="monospace"
+        android:gravity="center"
+        android:text="@string/titulo_terminal"
+        android:textAlignment="center"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="TextSizeCheck,TextContrastCheck" />
+
+    <TextView
+        android:id="@+id/moneda"
+        android:layout_width="127dp"
+        android:layout_height="47dp"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/myborder"
+        android:gravity="center"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="@+id/tableLayout"
+        app:layout_constraintTop_toBottomOf="@+id/input" />
+
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="225dp"
+        android:layout_height="42dp"
+        android:gravity="center"
+        android:text="@string/moneda_seleccionada"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toStartOf="@+id/moneda"
+        app:layout_constraintTop_toTopOf="@+id/moneda" />
+
+    <Button
+        android:id="@+id/botonAjustes"
+        android:contentDescription="@string/rueda_desc"
+        android:layout_width="72dp"
+        android:layout_height="72dp"
+        android:text="@string/icono_ajustes"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toStartOf="@+id/input"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/input" />
+
+
+    <TextView
+        android:id="@+id/tituloLocal"
+        android:layout_width="324dp"
+        android:layout_height="39dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/gray1"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

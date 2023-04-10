@@ -25,9 +25,10 @@
 
     <TextView
         android:id="@+id/instance_title"
-        android:layout_width="225dp"
+        android:layout_width="125dp"
         android:layout_height="44dp"
-        android:gravity="center"
+        android:gravity=""
+        android:textAlignment="gravity"
         android:text="@string/select_instance"
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="@+id/server_title"
@@ -37,16 +38,15 @@
 
     <FrameLayout
         android:id="@+id/frame_lightning_instance"
-        android:layout_width="120dp"
+        android:layout_width="220dp"
         android:layout_height="44dp"
-        android:layout_marginTop="10dp"
         android:background="@drawable/myborder"
         app:layout_constraintEnd_toEndOf="@+id/server_title"
         app:layout_constraintTop_toBottomOf="@+id/setings_title">
 
         <Spinner
             android:id="@+id/spinner_instances"
-            android:layout_width="120dp"
+            android:layout_width="220dp"
             android:layout_height="42dp"
             android:spinnerMode="dropdown"
             tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
@@ -60,7 +60,8 @@
         android:id="@+id/currency_title"
         android:layout_width="225dp"
         android:layout_height="44dp"
-        android:gravity="center"
+        android:gravity=""
+        android:textAlignment="gravity"
         android:text="@string/select_currency"
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="@+id/server_title"
@@ -86,11 +87,23 @@
     </FrameLayout>
 
 
+    <Switch
+        android:id="@+id/tips1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:showText="false"
+        android:text="@string/switch_propinas"
+        app:layout_constraintStart_toStartOf="@+id/server_title"
+        app:layout_constraintTop_toBottomOf="@+id/currency_title"
+        tools:ignore="UseSwitchCompatOrMaterialXml,TouchTargetSizeCheck" />
+
+
     <TextView
         android:id="@+id/server_title"
         android:layout_width="350dp"
         android:layout_height="20dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="15dp"
         android:gravity="start"
         android:text="@string/enter_server"
         android:textSize="15sp"
@@ -144,6 +157,66 @@
         app:layout_constraintTop_toBottomOf="@+id/store_title"
         tools:ignore="TouchTargetSizeCheck" />
 
+    <TextView
+        android:id="@+id/ln_wallet_id_title"
+        android:layout_width="348dp"
+        android:layout_height="20dp"
+        android:layout_marginTop="10dp"
+        android:gravity="start"
+        android:text="@string/enter_ln_wallet_id"
+        android:textSize="15sp"
+        app:layout_constraintEnd_toEndOf="@+id/lightning_id"
+        app:layout_constraintStart_toStartOf="@+id/lightning_id"
+        app:layout_constraintTop_toBottomOf="@+id/lightning_id"
+        tools:ignore="TextSizeCheck" />
+
+
+    <EditText
+        android:id="@+id/ln_wallet_id"
+        android:layout_width="349dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="5dp"
+        android:autofillHints=""
+        android:background="@color/white"
+        android:gravity="top"
+        android:hint="@string/ln_wallet_id_hint"
+        android:inputType="text"
+        android:textSize="15sp"
+        app:layout_constraintEnd_toEndOf="@+id/ln_wallet_id_title"
+        app:layout_constraintStart_toStartOf="@+id/ln_wallet_id_title"
+        app:layout_constraintTop_toBottomOf="@+id/ln_wallet_id_title"
+        tools:ignore="TouchTargetSizeCheck" />
+
+    <TextView
+        android:id="@+id/onchain_wallet_id_title"
+        android:layout_width="348dp"
+        android:layout_height="20dp"
+        android:layout_marginTop="10dp"
+        android:gravity="start"
+        android:text="@string/enter_onchain_wallet_id"
+        android:textSize="15sp"
+        app:layout_constraintEnd_toEndOf="@+id/ln_wallet_id"
+        app:layout_constraintStart_toStartOf="@+id/ln_wallet_id"
+        app:layout_constraintTop_toBottomOf="@+id/ln_wallet_id"
+        tools:ignore="TextSizeCheck" />
+
+
+    <EditText
+        android:id="@+id/onchain_wallet_id"
+        android:layout_width="349dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="5dp"
+        android:autofillHints=""
+        android:background="@color/white"
+        android:gravity="top"
+        android:hint="@string/onchain_wallet_id_hint"
+        android:inputType="text"
+        android:textSize="15sp"
+        app:layout_constraintEnd_toEndOf="@+id/onchain_wallet_id_title"
+        app:layout_constraintStart_toStartOf="@+id/onchain_wallet_id_title"
+        app:layout_constraintTop_toBottomOf="@+id/onchain_wallet_id_title"
+        tools:ignore="TouchTargetSizeCheck" />
+
 
     <TextView
         android:id="@+id/merchant_settings_title"
@@ -153,9 +226,9 @@
         android:gravity="start"
         android:text="@string/enter_merchant_name"
         android:textSize="15sp"
-        app:layout_constraintEnd_toEndOf="@+id/lightning_id"
-        app:layout_constraintStart_toStartOf="@+id/lightning_id"
-        app:layout_constraintTop_toBottomOf="@+id/lightning_id"
+        app:layout_constraintEnd_toEndOf="@+id/onchain_wallet_id"
+        app:layout_constraintStart_toStartOf="@+id/onchain_wallet_id"
+        app:layout_constraintTop_toBottomOf="@+id/onchain_wallet_id"
         tools:ignore="TextSizeCheck" />
 
     <EditText
@@ -177,46 +250,42 @@
 
     <Button
         android:id="@+id/save_button"
-        android:layout_width="wrap_content"
+        android:layout_width="160sp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:backgroundTint="@color/gray1"
+        android:backgroundTint="@color/green"
         android:text="@string/save_text"
         android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/merchant_name" />
+        app:layout_constraintEnd_toEndOf="@+id/merchant_name"
+        app:layout_constraintTop_toTopOf="@+id/go_back_button" />
 
     <Button
         android:id="@+id/go_back_button"
-        android:layout_width="wrap_content"
+        android:layout_width="160sp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:text="@string/go_back_text"
+        android:layout_marginTop="10dp"
         android:backgroundTint="@color/gray1"
+        android:text="@string/go_back_text"
         android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/save_button" />
+        app:layout_constraintStart_toStartOf="@+id/merchant_name"
+        app:layout_constraintTop_toBottomOf="@+id/merchant_name" />
 
     <TextView
         android:id="@+id/versionText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         android:text="@string/text_version"
-        app:layout_constraintBottom_toTopOf="@+id/linkGH"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/go_back_button" />
 
     <TextView
         android:id="@+id/linkGH"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="150dp"
         android:text="@string/github_repo"
         app:layout_constraintStart_toStartOf="@+id/versionText"
-        app:layout_constraintTop_toBottomOf="@+id/go_back_button"
+        app:layout_constraintTop_toBottomOf="@+id/versionText"
         tools:ignore="TextContrastCheck" />
 
     <ImageView
@@ -229,16 +298,16 @@
         app:srcCompat="@drawable/githubmark"
         android:contentDescription="@string/logo_github" />
 
-    <Switch
-        android:id="@+id/tips1"
+    <Button
+        android:id="@+id/delete_pin_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:showText="false"
-        android:text="@string/switch_propinas"
-        app:layout_constraintStart_toStartOf="@+id/server_title"
-        app:layout_constraintTop_toBottomOf="@+id/frame_layout_currency"
-        tools:ignore="UseSwitchCompatOrMaterialXml,TouchTargetSizeCheck" />
+        android:backgroundTint="@color/red"
+
+        android:text="@string/delete_pin"
+        app:layout_constraintEnd_toEndOf="@+id/server_title"
+        app:layout_constraintTop_toBottomOf="@+id/currency_title"
+        tools:ignore="TextContrastCheck" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

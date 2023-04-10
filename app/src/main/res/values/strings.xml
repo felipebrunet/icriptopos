@@ -38,7 +38,12 @@
     <string name="no_tip">Sin propina</string>
     <string name="text_version">Icripto POS V1.2.0</string>
     <string name="wheel_icon">Ajustes</string>
-    <string name="select_instance">Instancia Lightning: </string>
+    <string name="select_instance">Instancia: </string>
+    <string name="enter_ln_wallet_id">Ingrese Id de lightning wallet en LNBits: </string>
+    <string name="ln_wallet_id_hint">Campo "Wallet ID" de LNBits</string>
+    <string name="enter_onchain_wallet_id">Ingrese Id de onchain wallet en LNBits: </string>
+    <string name="onchain_wallet_id_hint">Campo "ID" en extensión OnChain Wallet de LNBits</string>
+    <string name="delete_pin">Borrar PIN</string>
 
 
 </resources>

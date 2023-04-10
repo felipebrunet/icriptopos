@@ -40,5 +40,10 @@
     <string name="no_tip">Aucun pourboire</string>
     <string name="text_version">Icripto POS V1.2.0</string>
     <string name="wheel_icon">Paramètres</string>
-    <string name="select_instance">Lightning Instancèe: </string>
+    <string name="select_instance">Instancèe: </string>
+    <string name="enter_ln_wallet_id">Enter lightning wallet Id at LNBits: </string>
+    <string name="ln_wallet_id_hint">"Wallet ID" field at LNBits</string>
+    <string name="enter_onchain_wallet_id">Enter Onchain wallet Id at LNBits: </string>
+    <string name="onchain_wallet_id_hint">"ID" field at Onchain Wallet extension of LNBits</string>
+    <string name="delete_pin">Delete PIN</string>
 </resources>

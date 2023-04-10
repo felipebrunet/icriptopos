@@ -32,8 +32,8 @@ class MainActivity : AppCompatActivity() {
         val button0: Button = findViewById(R.id.button_0)
         val buttonDot: Button = findViewById(R.id.button_dot)
         val buttonBorrar: Button = findViewById(R.id.button_delete)
-        val adjustScreenButton = findViewById<Button>(R.id.settings_button)
 
+        val defaultInstance = "BTCPay"
         val defaultMoneda = "CLP"
         val defaultMerchantName = "Restaurant A"
         val defaultBtcpayServer = ""
@@ -41,7 +41,18 @@ class MainActivity : AppCompatActivity() {
         val defaultTips = "no"
         val defaultPin = ""
         val defaultLnbitsServer = ""
-        val invoiceKeyLnbits = ""
+        val defaultInvoiceKeyLnbits = ""
+        val defaultLnWalletId = ""
+        val defaultOnChainWalletID = ""
+
+        val adjustScreenButton = findViewById<Button>(R.id.settings_button)
+        adjustScreenButton.setOnClickListener {
+            val intent = Intent(this,ActividadAjustes::class.java)
+            startActivity(intent)
+        }
+
+
+
 
 
 

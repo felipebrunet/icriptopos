@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/io_background"
+    tools:context=".ActividadAjustes">
+
+
+    <TextView
+        android:id="@+id/TextoAjustes"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@color/io_background"
+        android:gravity="center"
+        android:text="@string/texto_ajustes"
+        android:textSize="40sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="TextSizeCheck" />
+
+    <FrameLayout
+        android:id="@+id/frameLayout2"
+        android:layout_width="120dp"
+        android:layout_height="44dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/myborder"
+        app:layout_constraintEnd_toEndOf="@+id/TextoServidor"
+        app:layout_constraintTop_toBottomOf="@+id/TextoAjustes">
+
+        <Spinner
+            android:id="@+id/spinner_currencies2"
+            android:layout_width="120dp"
+            android:layout_height="42dp"
+            android:spinnerMode="dropdown"
+            tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+
+    </FrameLayout>
+
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="225dp"
+        android:layout_height="44dp"
+        android:gravity="center"
+        android:text="@string/seleccione_moneda"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="@+id/TextoServidor"
+        app:layout_constraintTop_toTopOf="@+id/frameLayout2"
+        tools:ignore="TextSizeCheck" />
+
+
+    <TextView
+        android:id="@+id/TextoServidor"
+        android:layout_width="350dp"
+        android:layout_height="20dp"
+        android:layout_marginTop="10dp"
+        android:gravity="start"
+        android:text="@string/ingrese_servidor"
+        android:textSize="15sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tips1"
+        tools:ignore="TextSizeCheck" />
+
+    <EditText
+        android:id="@+id/URLServicio"
+        android:layout_width="349dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="5dp"
+        android:autofillHints=""
+        android:background="@color/white"
+        android:gravity="top"
+        android:hint="@string/URL_servidor_BTCPay"
+        android:inputType="textUri"
+        android:textSize="15sp"
+        app:layout_constraintEnd_toEndOf="@+id/TextoServidor"
+        app:layout_constraintStart_toStartOf="@+id/TextoServidor"
+        app:layout_constraintTop_toBottomOf="@+id/TextoServidor" />
+
+
+    <TextView
+        android:id="@+id/TextoIDTienda"
+        android:layout_width="348dp"
+        android:layout_height="20dp"
+        android:layout_marginTop="10dp"
+        android:gravity="start"
+        android:text="@string/ingrese_id_tienda"
+        android:textSize="15sp"
+        app:layout_constraintEnd_toEndOf="@+id/URLServicio"
+        app:layout_constraintStart_toStartOf="@+id/URLServicio"
+        app:layout_constraintTop_toBottomOf="@+id/URLServicio"
+        tools:ignore="TextSizeCheck" />
+
+    <EditText
+        android:id="@+id/IDTienda"
+        android:layout_width="349dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="5dp"
+        android:autofillHints=""
+        android:background="@color/white"
+        android:gravity="top"
+        android:hint="@string/ID_local"
+        android:inputType="text"
+        android:textSize="15sp"
+        app:layout_constraintEnd_toEndOf="@+id/TextoIDTienda"
+        app:layout_constraintStart_toStartOf="@+id/TextoIDTienda"
+        app:layout_constraintTop_toBottomOf="@+id/TextoIDTienda"
+        tools:ignore="TouchTargetSizeCheck" />
+
+
+    <TextView
+        android:id="@+id/TextoNombRestaurant"
+        android:layout_width="348dp"
+        android:layout_height="20dp"
+        android:layout_marginTop="10dp"
+        android:gravity="start"
+        android:text="@string/ingrese_nombre_local"
+        android:textSize="15sp"
+        app:layout_constraintEnd_toEndOf="@+id/IDTienda"
+        app:layout_constraintStart_toStartOf="@+id/IDTienda"
+        app:layout_constraintTop_toBottomOf="@+id/IDTienda"
+        tools:ignore="TextSizeCheck" />
+
+    <EditText
+        android:id="@+id/NLocal"
+        android:layout_width="349dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="5dp"
+        android:autofillHints=""
+        android:background="@color/white"
+        android:hint="@string/tip_nombre_local"
+        android:inputType="text"
+        android:textAlignment="center"
+        android:textSize="15sp"
+        app:layout_constraintEnd_toEndOf="@+id/TextoNombRestaurant"
+        app:layout_constraintStart_toStartOf="@+id/TextoNombRestaurant"
+        app:layout_constraintTop_toBottomOf="@+id/TextoNombRestaurant"
+        tools:ignore="TouchTargetSizeCheck" />
+
+
+    <Button
+        android:id="@+id/botonGuardar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:backgroundTint="@color/gray1"
+        android:text="@string/texto_guardar"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/NLocal" />
+
+    <Button
+        android:id="@+id/botonVolver"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:text="@string/texto_volver"
+        android:backgroundTint="@color/gray1"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/botonGuardar" />
+
+
+    <TextView
+        android:id="@+id/servidorActual"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"
+        android:text="@string/servidor_actual"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/botonVolver" />
+
+    <TextView
+        android:id="@+id/servidorActualValor"
+        android:layout_width="250dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="10dp"
+        tools:text="hoalalalalalal"
+        app:layout_constraintStart_toEndOf="@+id/servidorActual"
+        app:layout_constraintTop_toTopOf="@+id/servidorActual" />
+
+    <TextView
+        android:id="@+id/IDActual"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:text="@string/id_actual"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/servidorActual" />
+
+    <TextView
+        android:id="@+id/IDActualValor"
+        android:layout_width="260dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="20dp"
+        app:layout_constraintStart_toEndOf="@+id/IDActual"
+        app:layout_constraintTop_toTopOf="@+id/IDActual" />
+
+
+    <TextView
+        android:id="@+id/versionText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/text_version"
+        app:layout_constraintBottom_toTopOf="@+id/linkGH"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/linkGH"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/github_repo"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/IDActual"
+        tools:ignore="TextContrastCheck" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_marginStart="10dp"
+        app:layout_constraintStart_toEndOf="@+id/linkGH"
+        app:layout_constraintTop_toTopOf="@+id/linkGH"
+        app:srcCompat="@drawable/githubmark"
+        android:contentDescription="@string/logo_github" />
+
+    <Switch
+        android:id="@+id/tips1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:showText="false"
+        android:text="@string/switch_propinas"
+        app:layout_constraintStart_toStartOf="@+id/TextoServidor"
+        app:layout_constraintTop_toBottomOf="@+id/frameLayout2"
+        tools:ignore="UseSwitchCompatOrMaterialXml,TouchTargetSizeCheck" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

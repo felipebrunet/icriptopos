@@ -12,8 +12,14 @@
         android:theme="@style/Theme.IcriptoPOS"
         tools:targetApi="31">
         <activity
+            android:name=".ActividadAjustes"
+            android:screenOrientation="portrait"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
-            android:exported="true">
+            android:screenOrientation="portrait"
+            android:exported="true"
+            android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

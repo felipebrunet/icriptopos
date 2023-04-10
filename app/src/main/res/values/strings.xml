@@ -20,7 +20,7 @@
     <string name="nombre_tienda">Restaurant A</string>
     <string name="enter_server">Ingrese la URL del servidor BTCPay: (requerido)</string>
     <string name="setting_text">Ajustes</string>
-    <string name="settings_icon">⚙️</string>
+    <string name="settings_icon">Ajustes</string>
     <string name="enter_lightning_id">Ingrese el ID de la tienda BTCPay: (requerido)</string>
     <string name="enter_merchant_name">Ingrese el nombre del local: (opcional)</string>
     <string name="save_text">Guardar</string>
@@ -33,7 +33,7 @@
     <string name="github_repo"><a href="https://github.com/felipebrunet/btcpayposicripto">Open Source</a></string>
     <string name="logo_github">Logo Github</string>
     <string name="switch_propinas">Propinas</string>
-    <string name="init_val_screen">⬅Setear servidor</string>
+    <string name="init_val_screen">Ver ajustes</string>
     <string name="tip_message">Indicar propina</string>
     <string name="no_tip">Sin propina</string>
     <string name="text_version">Icripto POS V1.2.0</string>

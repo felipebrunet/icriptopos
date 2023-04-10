@@ -1,11 +1,17 @@
 package cl.icripto.icriptopos
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.ContextThemeWrapper
 import android.widget.Button
+import android.widget.EditText
 import android.widget.TextView
+import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatDelegate
 
 class MainActivity : AppCompatActivity() {
@@ -33,6 +39,7 @@ class MainActivity : AppCompatActivity() {
         val buttonDot: Button = findViewById(R.id.button_dot)
         val buttonBorrar: Button = findViewById(R.id.button_delete)
 
+//        Default value for business constants
         val defaultInstance = "BTCPay"
         val defaultMoneda = "CLP"
         val defaultMerchantName = "Restaurant A"
@@ -45,13 +52,53 @@ class MainActivity : AppCompatActivity() {
         val defaultLnWalletId = ""
         val defaultOnChainWalletID = ""
 
+//        Load current User parameters
+        val sharedPreferences: SharedPreferences =
+            getSharedPreferences("sharedPres", Context.MODE_PRIVATE)
+        val pin = sharedPreferences.getString("LOCALPIN", defaultPin).toString()
+
+
         val adjustScreenButton = findViewById<Button>(R.id.settings_button)
         adjustScreenButton.setOnClickListener {
-            val intent = Intent(this,ActividadAjustes::class.java)
-            startActivity(intent)
+            val builder =
+                AlertDialog.Builder(ContextThemeWrapper(this, R.style.AlertDialogCustom))//(this)
+            if (pin == "") {
+                builder.setTitle(getString(R.string.create_pin))
+                val inputPin = EditText(ContextThemeWrapper(this, R.style.AlertInputCustom))
+                builder.setView(inputPin)
+                builder.setPositiveButton("Ok") { dialog, _ ->
+                    dialog.dismiss()
+                    val sharedPreferencesPin: SharedPreferences =
+                        getSharedPreferences("sharedPres", Context.MODE_PRIVATE)
+                    val editor: SharedPreferences.Editor = sharedPreferencesPin.edit()
+                    editor.apply {
+                        putString("LOCALPIN", inputPin.text.toString())
+                    }.apply()
+                    Toast.makeText(this, getString(R.string.saved_pin), Toast.LENGTH_SHORT).show()
+                    val intent = Intent(this, ActividadAjustes::class.java)
+                    startActivity(intent)
+
+                }
+                builder.show()
+            } else {
+                builder.setTitle(getString(R.string.enter_pin))
+                val inputPin = EditText(ContextThemeWrapper(this, R.style.AlertInputCustom))
+                builder.setView(inputPin)
+                builder.setPositiveButton("Ok") { dialog, _ ->
+                    dialog.dismiss()
+
+                    if (inputPin.text.toString() == pin) {
+                        Toast.makeText(this, getString(R.string.granted_message), Toast.LENGTH_SHORT).show()
+                        val intent = Intent(this, ActividadAjustes::class.java)
+                        startActivity(intent)
+                    } else {
+                        Toast.makeText(this, getString(R.string.denied_message), Toast.LENGTH_SHORT).show()
+                    }
+
+                }
+                builder.show()
+            }
         }
-
-
 
 
 

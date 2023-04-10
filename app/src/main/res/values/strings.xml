@@ -44,6 +44,11 @@
     <string name="enter_onchain_wallet_id">Ingrese Id de onchain wallet en LNBits: </string>
     <string name="onchain_wallet_id_hint">Campo "ID" en extensión OnChain Wallet de LNBits</string>
     <string name="delete_pin">Borrar PIN</string>
+    <string name="create_pin">Crear PIN secreto</string>
+    <string name="saved_pin">PIN Guardado</string>
+    <string name="enter_pin">Ingrese PIN secreto</string>
+    <string name="granted_message">Acceso autorizado</string>
+    <string name="denied_message">Acceso denegado</string>
 
 
 </resources>

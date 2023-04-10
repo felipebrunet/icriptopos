@@ -9,12 +9,12 @@
 
 
     <TextView
-        android:id="@+id/TextoAjustes"
+        android:id="@+id/setings_title"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:background="@color/io_background"
         android:gravity="center"
-        android:text="@string/texto_ajustes"
+        android:text="@string/setting_text"
         android:textSize="40sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -22,17 +22,62 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="TextSizeCheck" />
 
+
+    <TextView
+        android:id="@+id/instance_title"
+        android:layout_width="225dp"
+        android:layout_height="44dp"
+        android:gravity="center"
+        android:text="@string/select_instance"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="@+id/server_title"
+        app:layout_constraintTop_toTopOf="@+id/frame_lightning_instance"
+        tools:ignore="TextSizeCheck" />
+
+
     <FrameLayout
-        android:id="@+id/frameLayout2"
+        android:id="@+id/frame_lightning_instance"
         android:layout_width="120dp"
         android:layout_height="44dp"
         android:layout_marginTop="10dp"
         android:background="@drawable/myborder"
-        app:layout_constraintEnd_toEndOf="@+id/TextoServidor"
-        app:layout_constraintTop_toBottomOf="@+id/TextoAjustes">
+        app:layout_constraintEnd_toEndOf="@+id/server_title"
+        app:layout_constraintTop_toBottomOf="@+id/setings_title">
 
         <Spinner
-            android:id="@+id/spinner_currencies2"
+            android:id="@+id/spinner_instances"
+            android:layout_width="120dp"
+            android:layout_height="42dp"
+            android:spinnerMode="dropdown"
+            tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+
+    </FrameLayout>
+
+
+
+
+    <TextView
+        android:id="@+id/currency_title"
+        android:layout_width="225dp"
+        android:layout_height="44dp"
+        android:gravity="center"
+        android:text="@string/select_currency"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="@+id/server_title"
+        app:layout_constraintTop_toTopOf="@+id/frame_layout_currency"
+        tools:ignore="TextSizeCheck" />
+
+    <FrameLayout
+        android:id="@+id/frame_layout_currency"
+        android:layout_width="120dp"
+        android:layout_height="44dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/myborder"
+        app:layout_constraintEnd_toEndOf="@+id/server_title"
+        app:layout_constraintTop_toBottomOf="@+id/instance_title">
+
+        <Spinner
+            android:id="@+id/spinner_currencies"
             android:layout_width="120dp"
             android:layout_height="42dp"
             android:spinnerMode="dropdown"
@@ -42,24 +87,12 @@
 
 
     <TextView
-        android:id="@+id/textView3"
-        android:layout_width="225dp"
-        android:layout_height="44dp"
-        android:gravity="center"
-        android:text="@string/seleccione_moneda"
-        android:textSize="20sp"
-        app:layout_constraintStart_toStartOf="@+id/TextoServidor"
-        app:layout_constraintTop_toTopOf="@+id/frameLayout2"
-        tools:ignore="TextSizeCheck" />
-
-
-    <TextView
-        android:id="@+id/TextoServidor"
+        android:id="@+id/server_title"
         android:layout_width="350dp"
         android:layout_height="20dp"
         android:layout_marginTop="10dp"
         android:gravity="start"
-        android:text="@string/ingrese_servidor"
+        android:text="@string/enter_server"
         android:textSize="15sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -67,143 +100,104 @@
         tools:ignore="TextSizeCheck" />
 
     <EditText
-        android:id="@+id/URLServicio"
+        android:id="@+id/server_url"
         android:layout_width="349dp"
         android:layout_height="50dp"
         android:layout_marginTop="5dp"
         android:autofillHints=""
         android:background="@color/white"
         android:gravity="top"
-        android:hint="@string/URL_servidor_BTCPay"
+        android:hint="@string/server_url_hint"
         android:inputType="textUri"
         android:textSize="15sp"
-        app:layout_constraintEnd_toEndOf="@+id/TextoServidor"
-        app:layout_constraintStart_toStartOf="@+id/TextoServidor"
-        app:layout_constraintTop_toBottomOf="@+id/TextoServidor" />
+        app:layout_constraintEnd_toEndOf="@+id/server_title"
+        app:layout_constraintStart_toStartOf="@+id/server_title"
+        app:layout_constraintTop_toBottomOf="@+id/server_title" />
 
 
     <TextView
-        android:id="@+id/TextoIDTienda"
+        android:id="@+id/store_title"
         android:layout_width="348dp"
         android:layout_height="20dp"
         android:layout_marginTop="10dp"
         android:gravity="start"
-        android:text="@string/ingrese_id_tienda"
+        android:text="@string/enter_lightning_id"
         android:textSize="15sp"
-        app:layout_constraintEnd_toEndOf="@+id/URLServicio"
-        app:layout_constraintStart_toStartOf="@+id/URLServicio"
-        app:layout_constraintTop_toBottomOf="@+id/URLServicio"
+        app:layout_constraintEnd_toEndOf="@+id/server_url"
+        app:layout_constraintStart_toStartOf="@+id/server_url"
+        app:layout_constraintTop_toBottomOf="@+id/server_url"
         tools:ignore="TextSizeCheck" />
 
     <EditText
-        android:id="@+id/IDTienda"
+        android:id="@+id/lightning_id"
         android:layout_width="349dp"
         android:layout_height="40dp"
         android:layout_marginTop="5dp"
         android:autofillHints=""
         android:background="@color/white"
         android:gravity="top"
-        android:hint="@string/ID_local"
+        android:hint="@string/lightning_id_hint"
         android:inputType="text"
         android:textSize="15sp"
-        app:layout_constraintEnd_toEndOf="@+id/TextoIDTienda"
-        app:layout_constraintStart_toStartOf="@+id/TextoIDTienda"
-        app:layout_constraintTop_toBottomOf="@+id/TextoIDTienda"
+        app:layout_constraintEnd_toEndOf="@+id/store_title"
+        app:layout_constraintStart_toStartOf="@+id/store_title"
+        app:layout_constraintTop_toBottomOf="@+id/store_title"
         tools:ignore="TouchTargetSizeCheck" />
 
 
     <TextView
-        android:id="@+id/TextoNombRestaurant"
+        android:id="@+id/merchant_settings_title"
         android:layout_width="348dp"
         android:layout_height="20dp"
         android:layout_marginTop="10dp"
         android:gravity="start"
-        android:text="@string/ingrese_nombre_local"
+        android:text="@string/enter_merchant_name"
         android:textSize="15sp"
-        app:layout_constraintEnd_toEndOf="@+id/IDTienda"
-        app:layout_constraintStart_toStartOf="@+id/IDTienda"
-        app:layout_constraintTop_toBottomOf="@+id/IDTienda"
+        app:layout_constraintEnd_toEndOf="@+id/lightning_id"
+        app:layout_constraintStart_toStartOf="@+id/lightning_id"
+        app:layout_constraintTop_toBottomOf="@+id/lightning_id"
         tools:ignore="TextSizeCheck" />
 
     <EditText
-        android:id="@+id/NLocal"
+        android:id="@+id/merchant_name"
         android:layout_width="349dp"
         android:layout_height="30dp"
         android:layout_marginTop="5dp"
         android:autofillHints=""
         android:background="@color/white"
-        android:hint="@string/tip_nombre_local"
+        android:hint="@string/merchant_name_hint"
         android:inputType="text"
         android:textAlignment="center"
         android:textSize="15sp"
-        app:layout_constraintEnd_toEndOf="@+id/TextoNombRestaurant"
-        app:layout_constraintStart_toStartOf="@+id/TextoNombRestaurant"
-        app:layout_constraintTop_toBottomOf="@+id/TextoNombRestaurant"
+        app:layout_constraintEnd_toEndOf="@+id/merchant_settings_title"
+        app:layout_constraintStart_toStartOf="@+id/merchant_settings_title"
+        app:layout_constraintTop_toBottomOf="@+id/merchant_settings_title"
         tools:ignore="TouchTargetSizeCheck" />
 
 
     <Button
-        android:id="@+id/botonGuardar"
+        android:id="@+id/save_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:backgroundTint="@color/gray1"
-        android:text="@string/texto_guardar"
+        android:text="@string/save_text"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/NLocal" />
+        app:layout_constraintTop_toBottomOf="@+id/merchant_name" />
 
     <Button
-        android:id="@+id/botonVolver"
+        android:id="@+id/go_back_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
-        android:text="@string/texto_volver"
+        android:text="@string/go_back_text"
         android:backgroundTint="@color/gray1"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/botonGuardar" />
-
-
-    <TextView
-        android:id="@+id/servidorActual"
-        android:layout_width="wrap_content"
-        android:layout_height="30dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="10dp"
-        android:text="@string/servidor_actual"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/botonVolver" />
-
-    <TextView
-        android:id="@+id/servidorActualValor"
-        android:layout_width="250dp"
-        android:layout_height="40dp"
-        android:layout_marginStart="10dp"
-        tools:text="hoalalalalalal"
-        app:layout_constraintStart_toEndOf="@+id/servidorActual"
-        app:layout_constraintTop_toTopOf="@+id/servidorActual" />
-
-    <TextView
-        android:id="@+id/IDActual"
-        android:layout_width="wrap_content"
-        android:layout_height="40dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="20dp"
-        android:text="@string/id_actual"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/servidorActual" />
-
-    <TextView
-        android:id="@+id/IDActualValor"
-        android:layout_width="260dp"
-        android:layout_height="40dp"
-        android:layout_marginStart="20dp"
-        app:layout_constraintStart_toEndOf="@+id/IDActual"
-        app:layout_constraintTop_toTopOf="@+id/IDActual" />
-
+        app:layout_constraintTop_toBottomOf="@+id/save_button" />
 
     <TextView
         android:id="@+id/versionText"
@@ -218,11 +212,11 @@
         android:id="@+id/linkGH"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="150dp"
         android:text="@string/github_repo"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/IDActual"
+        app:layout_constraintStart_toStartOf="@+id/versionText"
+        app:layout_constraintTop_toBottomOf="@+id/go_back_button"
         tools:ignore="TextContrastCheck" />
 
     <ImageView
@@ -242,8 +236,8 @@
         android:layout_marginTop="10dp"
         android:showText="false"
         android:text="@string/switch_propinas"
-        app:layout_constraintStart_toStartOf="@+id/TextoServidor"
-        app:layout_constraintTop_toBottomOf="@+id/frameLayout2"
+        app:layout_constraintStart_toStartOf="@+id/server_title"
+        app:layout_constraintTop_toBottomOf="@+id/frame_layout_currency"
         tools:ignore="UseSwitchCompatOrMaterialXml,TouchTargetSizeCheck" />
 
 

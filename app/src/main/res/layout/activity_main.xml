@@ -18,14 +18,14 @@
         android:textColor="@color/black"
         android:textSize="30sp"
         android:visibility="visible"
-        app:layout_constraintEnd_toEndOf="@+id/moneda"
-        app:layout_constraintTop_toBottomOf="@+id/tituloLocal"
+        app:layout_constraintEnd_toEndOf="@+id/currency"
+        app:layout_constraintTop_toBottomOf="@+id/merchant_title"
         tools:ignore="TextSizeCheck"
-        tools:text="@string/cifra_ini"
+        tools:text="@string/init_val_screen"
         tools:visibility="visible" />
 
     <TableLayout
-        android:id="@+id/tableLayout"
+        android:id="@+id/table_layout"
         android:layout_width="330dp"
         android:layout_height="350dp"
         android:layout_marginTop="5dp"
@@ -35,7 +35,7 @@
         android:stretchColumns="*"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/moneda"
+        app:layout_constraintTop_toBottomOf="@+id/currency"
         tools:ignore="TextSizeCheck">
 
         <TableRow>
@@ -135,12 +135,12 @@
                 android:text="@string/_0" />
 
             <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/button_borrar"
+                android:id="@+id/button_delete"
                 style="@style/Button_Style"
                 android:layout_width="wrap_content"
                 android:layout_gravity="center"
                 android:height="90dp"
-                android:text="@string/borrar"
+                android:text="@string/delete"
                 android:textSize="15sp"
                 tools:ignore="TextContrastCheck" />
 
@@ -151,26 +151,26 @@
 
 
     <Button
-        android:id="@+id/link_twitter"
+        android:id="@+id/pay_button"
         android:layout_width="260dp"
         android:layout_height="76dp"
         android:backgroundTint="@color/gray1"
-        android:text="@string/boton_pagar"
+        android:text="@string/pay_button_text"
         android:textSize="25sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tableLayout" />
+        app:layout_constraintTop_toBottomOf="@+id/table_layout" />
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/title_view"
         android:layout_width="280dp"
         android:layout_height="72dp"
         android:layout_marginTop="10dp"
         android:background="@drawable/myborder3"
         android:fontFamily="monospace"
         android:gravity="center"
-        android:text="@string/titulo_terminal"
+        android:text="@string/terminal_title"
         android:textAlignment="center"
         android:textAllCaps="false"
         android:textColor="@color/white"
@@ -182,33 +182,33 @@
         tools:ignore="TextSizeCheck,TextContrastCheck" />
 
     <TextView
-        android:id="@+id/moneda"
+        android:id="@+id/currency"
         android:layout_width="127dp"
         android:layout_height="47dp"
         android:layout_marginTop="5dp"
         android:background="@drawable/myborder"
         android:gravity="center"
         android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="@+id/tableLayout"
+        app:layout_constraintEnd_toEndOf="@+id/table_layout"
         app:layout_constraintTop_toBottomOf="@+id/input" />
 
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/currency_title"
         android:layout_width="225dp"
         android:layout_height="42dp"
         android:gravity="center"
-        android:text="@string/moneda_seleccionada"
+        android:text="@string/selected_currency"
         android:textSize="20sp"
-        app:layout_constraintEnd_toStartOf="@+id/moneda"
-        app:layout_constraintTop_toTopOf="@+id/moneda" />
+        app:layout_constraintEnd_toStartOf="@+id/currency"
+        app:layout_constraintTop_toTopOf="@+id/currency" />
 
     <Button
-        android:id="@+id/botonAjustes"
-        android:contentDescription="@string/rueda_desc"
+            android:id="@+id/settings_button"
+        android:contentDescription="@string/wheel_icon"
         android:layout_width="72dp"
         android:layout_height="72dp"
-        android:text="@string/icono_ajustes"
+        android:text="@string/settings_icon"
         android:textSize="20sp"
         app:layout_constraintEnd_toStartOf="@+id/input"
         app:layout_constraintStart_toStartOf="parent"
@@ -216,7 +216,7 @@
 
 
     <TextView
-        android:id="@+id/tituloLocal"
+        android:id="@+id/merchant_title"
         android:layout_width="324dp"
         android:layout_height="39dp"
         android:layout_marginTop="10dp"
@@ -226,7 +226,7 @@
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        app:layout_constraintTop_toBottomOf="@+id/title_view" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

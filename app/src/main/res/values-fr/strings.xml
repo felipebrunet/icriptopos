@@ -2,8 +2,8 @@
 <resources>
 
     <string name="app_name">Icripto POS</string>
-    <string name="boton_pagar">PAYER</string>
-    <string name="titulo_terminal">Icripto POS Terminal</string>
+    <string name="pay_button_text">PAYER</string>
+    <string name="terminal_title">Icripto POS Terminal</string>
     <string name="_1">1</string>
     <string name="_2">2</string>
     <string name="_3">3</string>
@@ -15,29 +15,30 @@
     <string name="_9">9</string>
     <string name="dot">.</string>
     <string name="_0">0</string>
-    <string name="borrar">Supprimer</string>
-    <string name="moneda_seleccionada">Devise: </string>
-    <string name="seleccione_moneda">Sélectionnez la devise: </string>
+    <string name="delete">Supprimer</string>
+    <string name="selected_currency">Devise: </string>
+    <string name="select_currency">Sélectionnez la devise: </string>
     <string name="moneda_inicial">USD</string>
     <string name="nombre_tienda">Restaurant A</string>
-    <string name="ingrese_servidor">Entrez l\'URL du serveur BTCPay: (obligatoire)</string>
-    <string name="texto_ajustes">Paramètres</string>
-    <string name="icono_ajustes">⚙️</string>
-    <string name="ingrese_id_tienda">Entrez l\'identifiant du magasin: (obligatoire)</string>
-    <string name="ingrese_nombre_local">Entrez le nom du magasin: (optionnel)</string>
-    <string name="texto_guardar">Enregistrer </string>
-    <string name="texto_volver">Retourner</string>
-    <string name="tip_nombre_local">Nom du magasin</string>
-    <string name="ID_local">ID de magasin selon l\'URL du serveur</string>
-    <string name="URL_servidor_BTCPay">L\'URL Tor est de type "'http://..'" \nL\'URL Clearnet est du type "'https://..'"</string>
+    <string name="enter_server">Entrez l\'URL du serveur BTCPay: (obligatoire)</string>
+    <string name="setting_text">Paramètres</string>
+    <string name="settings_icon">⚙️</string>
+    <string name="enter_lightning_id">Entrez l\'identifiant du magasin: (obligatoire)</string>
+    <string name="enter_merchant_name">Entrez le nom du magasin: (optionnel)</string>
+    <string name="save_text">Enregistrer </string>
+    <string name="go_back_text">Retourner</string>
+    <string name="merchant_name_hint">Nom du magasin</string>
+    <string name="lightning_id_hint">ID de magasin selon l\'URL du serveur</string>
+    <string name="server_url_hint">L\'URL Tor est de type "'http://..'" \nL\'URL Clearnet est du type "'https://..'"</string>
     <string name="id_actual">ID actuel: </string>
     <string name="servidor_actual">Serveur actuel: </string>
     <string name="github_repo" ><a href="https://github.com/felipebrunet/btcpayposicripto">Open Source</a></string>
     <string name="logo_github">Logo Github</string>
     <string name="switch_propinas">Pourboires</string>
-    <string name="cifra_ini">⬅Définir le serveur</string>
+    <string name="init_val_screen">⬅Définir le serveur</string>
     <string name="tip_message">Sélectionnez le pourboire</string>
     <string name="no_tip">Aucun pourboire</string>
     <string name="text_version">Icripto POS V1.2.0</string>
-    <string name="rueda_desc">Paramètres</string>
+    <string name="wheel_icon">Paramètres</string>
+    <string name="select_instance">Lightning Instancèe: </string>
 </resources>

@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Icripto POS</string>
-    <string name="boton_pagar">PAGAR</string>
-    <string name="titulo_terminal">Terminal POS Icripto</string>
+    <string name="pay_button_text">PAGAR</string>
+    <string name="terminal_title">Terminal POS Icripto</string>
     <string name="_1">1</string>
     <string name="_2">2</string>
     <string name="_3">3</string>
@@ -13,31 +13,32 @@
     <string name="_9">9</string>
     <string name="dot">.</string>
     <string name="_0">0</string>
-    <string name="borrar">Borrar</string>
-    <string name="moneda_seleccionada">Moneda: </string>
-    <string name="seleccione_moneda">Seleccione moneda: </string>
+    <string name="delete">Borrar</string>
+    <string name="selected_currency">Moneda: </string>
+    <string name="select_currency">Seleccione moneda: </string>
     <string name="moneda_inicial">CLP</string>
     <string name="nombre_tienda">Restaurant A</string>
-    <string name="ingrese_servidor">Ingrese la URL del servidor BTCPay: (requerido)</string>
-    <string name="texto_ajustes">Ajustes</string>
-    <string name="icono_ajustes">⚙️</string>
-    <string name="ingrese_id_tienda">Ingrese el ID de la tienda BTCPay: (requerido)</string>
-    <string name="ingrese_nombre_local">Ingrese el nombre del local: (opcional)</string>
-    <string name="texto_guardar">Guardar</string>
-    <string name="texto_volver">Volver</string>
-    <string name="tip_nombre_local">Nombre de Local</string>
-    <string name="ID_local">ID de local según URL en servidor BTCPay</string>
-    <string name="URL_servidor_BTCPay">URL Tor es del tipo "'http://..'" \nURL en clearnet es del tipo "'https://..'"</string>
+    <string name="enter_server">Ingrese la URL del servidor BTCPay: (requerido)</string>
+    <string name="setting_text">Ajustes</string>
+    <string name="settings_icon">⚙️</string>
+    <string name="enter_lightning_id">Ingrese el ID de la tienda BTCPay: (requerido)</string>
+    <string name="enter_merchant_name">Ingrese el nombre del local: (opcional)</string>
+    <string name="save_text">Guardar</string>
+    <string name="go_back_text">Volver</string>
+    <string name="merchant_name_hint">Nombre de Local</string>
+    <string name="lightning_id_hint">ID de local según URL en servidor BTCPay</string>
+    <string name="server_url_hint">URL Tor es del tipo "'http://..'" \nURL en clearnet es del tipo "'https://..'"</string>
     <string name="id_actual">ID Actual: </string>
     <string name="servidor_actual">Servidor Actual: </string>
     <string name="github_repo"><a href="https://github.com/felipebrunet/btcpayposicripto">Open Source</a></string>
     <string name="logo_github">Logo Github</string>
     <string name="switch_propinas">Propinas</string>
-    <string name="cifra_ini">⬅Setear servidor</string>
+    <string name="init_val_screen">⬅Setear servidor</string>
     <string name="tip_message">Indicar propina</string>
     <string name="no_tip">Sin propina</string>
     <string name="text_version">Icripto POS V1.2.0</string>
-    <string name="rueda_desc">Ajustes</string>
+    <string name="wheel_icon">Ajustes</string>
+    <string name="select_instance">Instancia Lightning: </string>
 
 
 </resources>

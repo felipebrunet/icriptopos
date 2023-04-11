@@ -33,7 +33,7 @@
     <string name="github_repo"><a href="https://github.com/felipebrunet/btcpayposicripto">Open Source</a></string>
     <string name="logo_github">Logo Github</string>
     <string name="switch_propinas">Propinas</string>
-    <string name="init_val_screen">Ver ajustes</string>
+    <string name="init_val_screen">ir a ajustes</string>
     <string name="tip_message">Indicar propina</string>
     <string name="no_tip">Sin propina</string>
     <string name="text_version">Icripto POS V1.3.0</string>

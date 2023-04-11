@@ -16,7 +16,7 @@
         android:background="@drawable/myborder"
         android:gravity="center"
         android:textColor="@color/black"
-        android:textSize="30sp"
+        android:textSize="20sp"
         android:visibility="visible"
         app:layout_constraintEnd_toEndOf="@+id/currency"
         app:layout_constraintTop_toBottomOf="@+id/merchant_title"

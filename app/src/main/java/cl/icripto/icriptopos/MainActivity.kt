@@ -24,6 +24,7 @@ class MainActivity : AppCompatActivity() {
 
 
 //        Constants associated to the keypad and other buttons
+
         val input: TextView = findViewById(R.id.input)
         val buttonBotondepago: Button = findViewById(R.id.pay_button)
         val button1: Button = findViewById(R.id.button_1)
@@ -41,6 +42,7 @@ class MainActivity : AppCompatActivity() {
         val adjustScreenButton = findViewById<Button>(R.id.settings_button)
 
 //        Default value for business constants
+
         val defaultInstance = "BTCPay"
         val defaultCurrency = "CLP"
         val defaultMerchantName = "Restaurant A"
@@ -70,6 +72,7 @@ class MainActivity : AppCompatActivity() {
 
 
 //        Transition to Settings activity, including the setup of the secret pin
+
         adjustScreenButton.setOnClickListener {
             val builder =
                 AlertDialog.Builder(ContextThemeWrapper(this, R.style.AlertDialogCustom))//(this)
@@ -112,20 +115,27 @@ class MainActivity : AppCompatActivity() {
         }
 
 //        Setting merchant name and currency in the main activity
+
         findViewById<TextView>(R.id.currency).text = currency
-        findViewById<TextView>(R.id.merchant_name).text = merchantName
+        findViewById<TextView>(R.id.merchant_title).text = merchantName
 
-        if (defaultInstance == "BTCPay") {
-
-
-
-
-
+        if (!checkSettings(instance, server, btcpayStoreId, lnbitsLnWalletId, lnbitsInvoiceKey)) {
+            input.text = addToInputText(initMessage, input)
         }
 
     }
 
     private fun addToInputText(buttonValue: String, input: TextView): String {
         return "${input.text}$buttonValue"
+    }
+
+    private fun checkSettings(currentInstance: String, server: String,
+                              btcpayStoreId: String, lnbitsInvoiceKey: String,
+                              lnbitsLnWalletId: String): Boolean {
+        when (currentInstance) {
+            "BTCPay" -> return !(server == "" || btcpayStoreId == "")
+            "LNBits" -> return !(server == "" || lnbitsInvoiceKey == "" || lnbitsLnWalletId == "")
+            else -> return false
+        }
     }
 }

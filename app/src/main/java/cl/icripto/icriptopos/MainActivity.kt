@@ -38,27 +38,38 @@ class MainActivity : AppCompatActivity() {
         val button0: Button = findViewById(R.id.button_0)
         val buttonDot: Button = findViewById(R.id.button_dot)
         val buttonBorrar: Button = findViewById(R.id.button_delete)
+        val adjustScreenButton = findViewById<Button>(R.id.settings_button)
 
 //        Default value for business constants
         val defaultInstance = "BTCPay"
-        val defaultMoneda = "CLP"
+        val defaultCurrency = "CLP"
         val defaultMerchantName = "Restaurant A"
-        val defaultBtcpayServer = ""
+        val defaultServer = ""
         val defaultBtcpayStoreId = ""
-        val defaultTips = "no"
+        val defaultLnbitsInvoiceKey = ""
+        val defaultLnbitsLnWalletId = ""
+        val defaultLnbitsOnChainWalletId = ""
         val defaultPin = ""
-        val defaultLnbitsServer = ""
-        val defaultInvoiceKeyLnbits = ""
-        val defaultLnWalletId = ""
-        val defaultOnChainWalletID = ""
+        val defaultTips = "no"
+        val initMessage: String = getString(R.string.init_val_screen)
 
 //        Load current User parameters
+
         val sharedPreferences: SharedPreferences =
             getSharedPreferences("sharedPres", Context.MODE_PRIVATE)
+        val instance = sharedPreferences.getString("INSTANCE", defaultInstance).toString()
+        val currency = sharedPreferences.getString("LOCALCURRENCY", defaultCurrency).toString()
+        val merchantName = sharedPreferences.getString("MERCHANTNAME", defaultMerchantName).toString()
+        val server = sharedPreferences.getString("SERVER", defaultServer).toString()
+        val btcpayStoreId = sharedPreferences.getString("BTCPAYSTORE", defaultBtcpayStoreId).toString()
+        val lnbitsInvoiceKey = sharedPreferences.getString("LNBITSINVOICEKEY", defaultLnbitsInvoiceKey).toString()
+        val lnbitsLnWalletId = sharedPreferences.getString("LNBITSLNWALLETID", defaultLnbitsLnWalletId).toString()
+        val lnbitsOnChainWalletId = sharedPreferences.getString("LNBITSONCHAINWALLETID", defaultLnbitsOnChainWalletId).toString()
+        val tips = sharedPreferences.getString("STATUSTIPS", defaultTips).toString()
         val pin = sharedPreferences.getString("LOCALPIN", defaultPin).toString()
 
 
-        val adjustScreenButton = findViewById<Button>(R.id.settings_button)
+//        Transition to Settings activity, including the setup of the secret pin
         adjustScreenButton.setOnClickListener {
             val builder =
                 AlertDialog.Builder(ContextThemeWrapper(this, R.style.AlertDialogCustom))//(this)
@@ -100,8 +111,21 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+//        Setting merchant name and currency in the main activity
+        findViewById<TextView>(R.id.currency).text = currency
+        findViewById<TextView>(R.id.merchant_name).text = merchantName
+
+        if (defaultInstance == "BTCPay") {
 
 
 
+
+
+        }
+
+    }
+
+    private fun addToInputText(buttonValue: String, input: TextView): String {
+        return "${input.text}$buttonValue"
     }
 }

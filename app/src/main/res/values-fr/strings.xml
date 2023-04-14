@@ -17,10 +17,11 @@
     <string name="_0">0</string>
     <string name="delete">Supprimer</string>
     <string name="selected_currency">Devise: </string>
-    <string name="select_currency">Sélectionnez la devise: </string>
+    <string name="select_currency">Devise:</string>
     <string name="moneda_inicial">USD</string>
     <string name="nombre_tienda">Restaurant A</string>
     <string name="enter_server">Entrez l\'URL du serveur BTCPay: (obligatoire)</string>
+    <string name="enter_server_lnbits">Entrez l\'URL du serveur LNBits: (obligatoire)</string>
     <string name="setting_text">Paramètres</string>
     <string name="settings_icon">Settings</string>
     <string name="enter_lightning_id">Entrez l\'identifiant du magasin: (obligatoire)</string>
@@ -43,8 +44,8 @@
     <string name="select_instance">Instancèe: </string>
     <string name="enter_ln_wallet_id">Enter lightning wallet Id at LNBits: </string>
     <string name="ln_wallet_id_hint">"Wallet ID" field at LNBits</string>
-    <string name="enter_onchain_wallet_id">Enter Onchain wallet Id at LNBits: </string>
-    <string name="onchain_wallet_id_hint">"ID" field at Onchain Wallet extension of LNBits</string>
+    <string name="enter_onchain_wallet_id">Enter OnChain wallet Id at LNBits: </string>
+    <string name="onchain_wallet_id_hint">"ID" field at OnChain Wallet extension of LNBits</string>
     <string name="delete_pin">Delete PIN</string>
     <string name="create_pin">Create secret PIN</string>
     <string name="saved_pin">Saved PIN</string>

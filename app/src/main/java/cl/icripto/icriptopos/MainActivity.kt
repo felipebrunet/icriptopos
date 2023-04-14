@@ -46,7 +46,8 @@ class MainActivity : AppCompatActivity() {
         val defaultInstance = "BTCPay"
         val defaultCurrency = "CLP"
         val defaultMerchantName = "Restaurant A"
-        val defaultServer = ""
+        val defaultBtcpayServer = ""
+        val defaultLnbitsServer = ""
         val defaultBtcpayStoreId = ""
         val defaultLnbitsInvoiceKey = ""
         val defaultLnbitsLnWalletId = ""
@@ -62,7 +63,8 @@ class MainActivity : AppCompatActivity() {
         val instance = sharedPreferences.getString("INSTANCE", defaultInstance).toString()
         val currency = sharedPreferences.getString("LOCALCURRENCY", defaultCurrency).toString()
         val merchantName = sharedPreferences.getString("MERCHANTNAME", defaultMerchantName).toString()
-        val server = sharedPreferences.getString("SERVER", defaultServer).toString()
+        val btcpayServer= sharedPreferences.getString("BTCPAYSERVER", defaultBtcpayServer).toString()
+        val lnbitsServer= sharedPreferences.getString("LNBITSSERVER", defaultLnbitsServer).toString()
         val btcpayStoreId = sharedPreferences.getString("BTCPAYSTORE", defaultBtcpayStoreId).toString()
         val lnbitsInvoiceKey = sharedPreferences.getString("LNBITSINVOICEKEY", defaultLnbitsInvoiceKey).toString()
         val lnbitsLnWalletId = sharedPreferences.getString("LNBITSLNWALLETID", defaultLnbitsLnWalletId).toString()
@@ -119,8 +121,13 @@ class MainActivity : AppCompatActivity() {
         findViewById<TextView>(R.id.currency).text = currency
         findViewById<TextView>(R.id.merchant_title).text = merchantName
 
-        if (!checkSettings(instance, server, btcpayStoreId, lnbitsLnWalletId, lnbitsInvoiceKey)) {
+        if (!checkSettings(instance, btcpayServer, btcpayStoreId, lnbitsLnWalletId, lnbitsInvoiceKey)) {
             input.text = addToInputText(initMessage, input)
+        }
+
+        else {
+
+            input.text = addToInputText("hello proceed", input)
         }
 
     }

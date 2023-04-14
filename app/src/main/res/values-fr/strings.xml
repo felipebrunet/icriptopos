@@ -25,12 +25,15 @@
     <string name="setting_text">Paramètres</string>
     <string name="settings_icon">Settings</string>
     <string name="enter_lightning_id">Entrez l\'identifiant du magasin: (obligatoire)</string>
+    <string name="enter_lnbits_api_title">Entrez l\'Invoice Key au LNBits: (obligatoire)</string>
+    <string name="enter_lnbits_api_key">"Invoice/read Key" field at LNBits</string>
     <string name="enter_merchant_name">Entrez le nom du magasin: (optionnel)</string>
     <string name="save_text">Enregistrer </string>
     <string name="go_back_text">Retourner</string>
     <string name="merchant_name_hint">Nom du magasin</string>
     <string name="lightning_id_hint">ID de magasin selon l\'URL du serveur</string>
     <string name="server_url_hint">L\'URL Tor est de type "'http://..'" \nL\'URL Clearnet est du type "'https://..'"</string>
+    <string name="server_lnbits_url_hint">"'https://...'"</string>
     <string name="id_actual">ID actuel: </string>
     <string name="servidor_actual">Serveur actuel: </string>
     <string name="github_repo" ><a href="https://github.com/felipebrunet/btcpayposicripto">Open Source</a></string>
@@ -42,10 +45,10 @@
     <string name="text_version">Icripto POS V1.3.0</string>
     <string name="wheel_icon">Paramètres</string>
     <string name="select_instance">Instancèe: </string>
-    <string name="enter_ln_wallet_id">Enter lightning wallet Id at LNBits: </string>
+    <string name="enter_ln_wallet_id">Enter lightning wallet Id at LNBits: (obligatoire)</string>
     <string name="ln_wallet_id_hint">"Wallet ID" field at LNBits</string>
-    <string name="enter_onchain_wallet_id">Enter OnChain wallet Id at LNBits: </string>
-    <string name="onchain_wallet_id_hint">"ID" field at OnChain Wallet extension of LNBits</string>
+    <string name="enter_onchain_wallet_id">Enter OnChain wallet Id at LNBits: (optionnel)</string>
+    <string name="onchain_wallet_id_hint">"ID" at OnChain Wallet extension of LNBits</string>
     <string name="delete_pin">Delete PIN</string>
     <string name="create_pin">Create secret PIN</string>
     <string name="saved_pin">Saved PIN</string>

@@ -250,7 +250,7 @@
 
     <Button
         android:id="@+id/save_button"
-        android:layout_width="160sp"
+        android:layout_width="140sp"
         android:layout_height="wrap_content"
         android:backgroundTint="@color/green"
         android:text="@string/save_text"
@@ -260,7 +260,7 @@
 
     <Button
         android:id="@+id/go_back_button"
-        android:layout_width="160sp"
+        android:layout_width="140sp"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:backgroundTint="@color/gray1"

@@ -23,12 +23,15 @@
     <string name="setting_text">Ajustes</string>
     <string name="settings_icon">Ajustes</string>
     <string name="enter_lightning_id">Ingrese el ID de la tienda BTCPay: (requerido)</string>
+    <string name="enter_lnbits_api_title">Ingrese el Invoice Key de LNBits: (requerido)</string>
+    <string name="enter_lnbits_api_key">Campo "Invoice/read Key" en LNBits</string>
     <string name="enter_merchant_name">Ingrese el nombre del local: (opcional)</string>
     <string name="save_text">Guardar</string>
     <string name="go_back_text">Volver</string>
     <string name="merchant_name_hint">Nombre de Local</string>
     <string name="lightning_id_hint">ID de local según URL en servidor BTCPay</string>
     <string name="server_url_hint">URL Tor es del tipo "'http://..'" \nURL en clearnet es del tipo "'https://..'"</string>
+    <string name="server_lnbits_url_hint">"'https://...'"</string>
     <string name="id_actual">ID Actual: </string>
     <string name="servidor_actual">Servidor Actual: </string>
     <string name="github_repo"><a href="https://github.com/felipebrunet/btcpayposicripto">Open Source</a></string>
@@ -40,10 +43,10 @@
     <string name="text_version">Icripto POS V1.3.0</string>
     <string name="wheel_icon">Ajustes</string>
     <string name="select_instance">Instancia: </string>
-    <string name="enter_ln_wallet_id">Ingrese Id de lightning wallet en LNBits: </string>
+    <string name="enter_ln_wallet_id">Ingrese lightning wallet Id en LNBits: (requerido)</string>
     <string name="ln_wallet_id_hint">Campo "Wallet ID" de LNBits</string>
-    <string name="enter_onchain_wallet_id">Ingrese Id de OnChain wallet en LNBits: </string>
-    <string name="onchain_wallet_id_hint">Campo "ID" en extensión OnChain Wallet de LNBits</string>
+    <string name="enter_onchain_wallet_id">Ingrese OnChain wallet Id en LNBits: (opcional)</string>
+    <string name="onchain_wallet_id_hint">"ID" en extensión OnChain Wallet de LNBits</string>
     <string name="delete_pin">Borrar PIN</string>
     <string name="create_pin">Crear PIN secreto</string>
     <string name="saved_pin">PIN Guardado</string>

@@ -216,10 +216,10 @@ class MainActivity : AppCompatActivity() {
     private fun checkSettings(currentInstance: String, btcpayServer: String,
                               btcpayStoreId: String, lnbitsServer: String, lnbitsInvoiceKey: String,
                               lnbitsLnWalletId: String): Boolean {
-        when (currentInstance) {
-            "BTCPay" -> return !(btcpayServer == "" || btcpayStoreId == "")
-            "LNBits" -> return !(lnbitsServer == "" || lnbitsInvoiceKey == "" || lnbitsLnWalletId == "")
-            else -> return false
+        return when (currentInstance) {
+            "BTCPay" -> !(btcpayServer == "" || btcpayStoreId == "")
+            "LNBits" -> !(lnbitsServer == "" || lnbitsInvoiceKey == "" || lnbitsLnWalletId == "")
+            else -> false
         }
     }
 

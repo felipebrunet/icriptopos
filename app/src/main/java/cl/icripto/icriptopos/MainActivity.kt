@@ -13,6 +13,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.content.ContextCompat
 
 class MainActivity : AppCompatActivity() {
     @SuppressLint("MissingInflatedId")
@@ -26,7 +27,7 @@ class MainActivity : AppCompatActivity() {
 //        Constants associated to the keypad and other buttons
 
         val input: TextView = findViewById(R.id.input)
-        val buttonBotondepago: Button = findViewById(R.id.pay_button)
+        val buttonPay: Button = findViewById(R.id.pay_button)
         val button1: Button = findViewById(R.id.button_1)
         val button2: Button = findViewById(R.id.button_2)
         val button3: Button = findViewById(R.id.button_3)
@@ -38,14 +39,14 @@ class MainActivity : AppCompatActivity() {
         val button9: Button = findViewById(R.id.button_9)
         val button0: Button = findViewById(R.id.button_0)
         val buttonDot: Button = findViewById(R.id.button_dot)
-        val buttonBorrar: Button = findViewById(R.id.button_delete)
+        val buttonDelete: Button = findViewById(R.id.button_delete)
         val adjustScreenButton = findViewById<Button>(R.id.settings_button)
 
 //        Default value for business constants
 
         val defaultInstance = "BTCPay"
         val defaultCurrency = "CLP"
-        val defaultMerchantName = "Restaurant A"
+        val defaultMerchantName = ""
         val defaultBtcpayServer = ""
         val defaultLnbitsServer = ""
         val defaultBtcpayStoreId = ""
@@ -121,28 +122,149 @@ class MainActivity : AppCompatActivity() {
         findViewById<TextView>(R.id.currency).text = currency
         findViewById<TextView>(R.id.merchant_title).text = merchantName
 
-        if (!checkSettings(instance, btcpayServer, btcpayStoreId, lnbitsLnWalletId, lnbitsInvoiceKey)) {
+        if (!checkSettings(instance, btcpayServer, btcpayStoreId, lnbitsServer, lnbitsInvoiceKey, lnbitsLnWalletId)) {
             input.text = addToInputText(initMessage, input)
         }
 
         else {
 
-            input.text = addToInputText("hello proceed", input)
+            buttonDelete.setOnClickListener {
+                input.text = ""
+                input.setTextColor(ContextCompat.getColor(this, R.color.black))
+            }
+            button1.setOnClickListener {
+                input.text = addToInputText("1", input)
+            }
+            button2.setOnClickListener {
+                input.text = addToInputText("2", input)
+            }
+            button3.setOnClickListener {
+                input.text = addToInputText("3", input)
+            }
+            button4.setOnClickListener {
+                input.text = addToInputText("4", input)
+            }
+            button5.setOnClickListener {
+                input.text = addToInputText("5", input)
+            }
+            button6.setOnClickListener {
+                input.text = addToInputText("6", input)
+            }
+            button7.setOnClickListener {
+                input.text = addToInputText("7", input)
+            }
+            button8.setOnClickListener {
+                input.text = addToInputText("8", input)
+            }
+            button9.setOnClickListener {
+                input.text = addToInputText("9", input)
+            }
+            button0.setOnClickListener {
+                if (input.text.isEmpty()) {
+                    // Show Error Message
+                    input.text = addToInputText("", input)
+                }
+                else {
+                    input.text = addToInputText("0", input)
+                }
+            }
+            buttonDot.setOnClickListener {
+                if (input.text.isEmpty()) {
+                    input.text = addToInputText("0.", input)
+                } else {
+                    input.text = addToInputText(".", input)
+                }
+            }
+
+            //        Setting the function of the "Pay" button
+            buttonPay.setOnClickListener{
+                if (input.text.isNotEmpty()) {
+                    try {
+                        val price: Double = input.text.toString().toDouble()
+                        if (price > 0) {
+
+                            if (tips == "yes") {
+                                payWithTip(instance, btcpayServer, btcpayStoreId,
+                                    lnbitsServer, lnbitsInvoiceKey, lnbitsLnWalletId,
+                                    lnbitsOnChainWalletId, price, merchantName, currency)
+                            } else {
+                                goPayment(instance, btcpayServer, btcpayStoreId,
+                                    lnbitsServer, lnbitsInvoiceKey, lnbitsLnWalletId,
+                                    lnbitsOnChainWalletId, price, merchantName, currency)
+                            }
+                        }
+                    } catch (e: Exception) {
+                        input.text = "Error"
+                        input.setTextColor(ContextCompat.getColor(this, R.color.red))
+                    }
+
+                }
+            }
+
         }
 
     }
 
+
+
+
+//    More useful functions
     private fun addToInputText(buttonValue: String, input: TextView): String {
         return "${input.text}$buttonValue"
     }
 
-    private fun checkSettings(currentInstance: String, server: String,
-                              btcpayStoreId: String, lnbitsInvoiceKey: String,
+    private fun checkSettings(currentInstance: String, btcpayServer: String,
+                              btcpayStoreId: String, lnbitsServer: String, lnbitsInvoiceKey: String,
                               lnbitsLnWalletId: String): Boolean {
         when (currentInstance) {
-            "BTCPay" -> return !(server == "" || btcpayStoreId == "")
-            "LNBits" -> return !(server == "" || lnbitsInvoiceKey == "" || lnbitsLnWalletId == "")
+            "BTCPay" -> return !(btcpayServer == "" || btcpayStoreId == "")
+            "LNBits" -> return !(lnbitsServer == "" || lnbitsInvoiceKey == "" || lnbitsLnWalletId == "")
             else -> return false
         }
     }
+
+    private fun payWithTip(instance: String, btcpayServer: String, btcpayStoreId: String,
+                           lnbitsServer: String, lnbitsInvoiceKey: String, lnbitsLnWalletId: String,
+                           lnbitsOnChainWalletId: String, price: Double, merchantName: String, currency: String) {
+        val noTip = R.string.no_tip
+        var tipValue: Double
+        val tipString = getString(noTip)
+        val tipMessage = R.string.tip_message
+        val items = arrayOf(tipString, "5%", "10%", "15%", "20%")
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle(tipMessage)
+        builder.setItems(items) { _, which->
+            tipValue = when (items[which]) {
+                "5%" -> 1.05
+                "10%" -> 1.1
+                "15%" -> 1.15
+                "20%" -> 1.2
+                else -> {
+                    1.0
+                }
+            }
+            goPayment(instance, btcpayServer, btcpayStoreId,
+                lnbitsServer, lnbitsInvoiceKey, lnbitsLnWalletId,
+                lnbitsOnChainWalletId, price*tipValue, merchantName, currency)
+        }
+        builder.show()
+    }
+
+    private fun goPayment(instance: String, btcpayServer: String, btcpayStoreId: String,
+                          lnbitsServer: String, lnbitsInvoiceKey: String, lnbitsLnWalletId: String,
+                          lnbitsOnChainWalletId: String, price: Double, merchantName: String, currency: String) {
+        if (instance == "BTCPay") {
+            val urlIcripto = "${btcpayServer}/api/v1/invoices?storeId=${btcpayStoreId}&price=${price}&checkoutDesc=${merchantName}&currency=${currency}"
+            startActivity(Intent.parseUri(urlIcripto, 0))
+        } else {
+
+
+
+
+            val urlIcripto = "${btcpayServer}/api/v1/invoices?storeId=${btcpayStoreId}&price=${price}&checkoutDesc=${merchantName}&currency=${currency}"
+            startActivity(Intent.parseUri(urlIcripto, 0))
+        }
+
+    }
+
 }

@@ -6,6 +6,7 @@ import android.content.Intent
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.util.TypedValue
 import android.view.ContextThemeWrapper
 import android.widget.Button
@@ -15,9 +16,16 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.ContextCompat
+import cl.icripto.icriptopos.apis.BtcPriceInterface
+import cl.icripto.icriptopos.models.PriceObject
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 
 class MainActivity : AppCompatActivity() {
-    @SuppressLint("MissingInflatedId")
+    @SuppressLint("MissingInflatedId", "SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(R.style.Theme_IcriptoPOS)
         super.onCreate(savedInstanceState)
@@ -184,17 +192,17 @@ class MainActivity : AppCompatActivity() {
             buttonPay.setOnClickListener{
                 if (input.text.isNotEmpty()) {
                     try {
-                        val price: Double = input.text.toString().toDouble()
-                        if (price > 0) {
+                        val amount: Double = input.text.toString().toDouble()
+                        if (amount > 0) {
 
                             if (tips == "yes") {
                                 payWithTip(instance, btcpayServer, btcpayStoreId,
                                     lnbitsServer, lnbitsInvoiceKey, lnbitsLnWalletId,
-                                    lnbitsOnChainWalletId, price, merchantName, currency)
+                                    lnbitsOnChainWalletId, amount, merchantName, currency)
                             } else {
                                 goPayment(instance, btcpayServer, btcpayStoreId,
                                     lnbitsServer, lnbitsInvoiceKey, lnbitsLnWalletId,
-                                    lnbitsOnChainWalletId, price, merchantName, currency)
+                                    lnbitsOnChainWalletId, amount, merchantName, currency)
                             }
                         }
                     } catch (e: Exception) {
@@ -229,7 +237,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun payWithTip(instance: String, btcpayServer: String, btcpayStoreId: String,
                            lnbitsServer: String, lnbitsInvoiceKey: String, lnbitsLnWalletId: String,
-                           lnbitsOnChainWalletId: String, price: Double, merchantName: String, currency: String) {
+                           lnbitsOnChainWalletId: String, amount: Double, merchantName: String, currency: String) {
         val noTip = R.string.no_tip
         var tipValue: Double
         val tipString = getString(noTip)
@@ -249,26 +257,58 @@ class MainActivity : AppCompatActivity() {
             }
             goPayment(instance, btcpayServer, btcpayStoreId,
                 lnbitsServer, lnbitsInvoiceKey, lnbitsLnWalletId,
-                lnbitsOnChainWalletId, price*tipValue, merchantName, currency)
+                lnbitsOnChainWalletId, amount*tipValue, merchantName, currency)
         }
         builder.show()
     }
 
     private fun goPayment(instance: String, btcpayServer: String, btcpayStoreId: String,
                           lnbitsServer: String, lnbitsInvoiceKey: String, lnbitsLnWalletId: String,
-                          lnbitsOnChainWalletId: String, price: Double, merchantName: String, currency: String) {
+                          lnbitsOnChainWalletId: String, amount: Double, merchantName: String, currency: String) {
         if (instance == "BTCPay") {
-            val urlIcripto = "${btcpayServer}/api/v1/invoices?storeId=${btcpayStoreId}&price=${price}&checkoutDesc=${merchantName}&currency=${currency}"
+            val urlIcripto = "${btcpayServer}/api/v1/invoices?storeId=${btcpayStoreId}&price=${amount}&checkoutDesc=${merchantName}&currency=${currency}"
             startActivity(Intent.parseUri(urlIcripto, 0))
         } else {
 
+            getBTCPrice(currency, amount)
 
 
 
-            val urlIcripto = "${btcpayServer}/api/v1/invoices?storeId=${btcpayStoreId}&price=${price}&checkoutDesc=${merchantName}&currency=${currency}"
-            startActivity(Intent.parseUri(urlIcripto, 0))
+
+
+//            val urlIcripto = "${btcpayServer}/api/v1/invoices?storeId=${btcpayStoreId}&price=${amount}&checkoutDesc=${merchantName}&currency=${currency}"
+//            startActivity(Intent.parseUri(urlIcripto, 0))
         }
 
+    }
+
+    private fun getBTCPrice(currency: String, amount: Double) {
+//        val btcPriceUrl = "https://api.yadio.io/convert/${amount*100}/$currency/"
+        val btcPriceUrl = "https://api.yadio.io/convert/$amount/$currency/"
+        val retrofitBuilder = Retrofit.Builder()
+            .addConverterFactory(GsonConverterFactory.create())
+            .baseUrl(btcPriceUrl)
+            .build()
+            .create(BtcPriceInterface::class.java)
+        val retrofitData = retrofitBuilder.getData()
+        retrofitData.enqueue(object : Callback<PriceObject?> {
+            override fun onFailure(call: Call<PriceObject?>, t: Throwable) {
+                Log.d("error_yadio", "OnFailure: " + t.message)
+            }
+
+            @SuppressLint("SetTextI18n")
+            override fun onResponse(call: Call<PriceObject?>, response: Response<PriceObject?>) {
+                val responseBody = response.body()
+                val priceBTC = 1 / responseBody!!.rate
+//                val btcAmount = (responseBody.result) / 100
+                val btcAmount = (responseBody.result)
+//                val precioSentence = "Price Bitcoin is ${priceBTC.toInt()} $currency"
+                val valorSats = (btcAmount * 100000000).toLong()
+                val satsSentence = "Amount in sats is $valorSats sats, and in bitcoin is $btcAmount"
+                Toast.makeText(this@MainActivity, satsSentence, Toast.LENGTH_LONG).show()
+
+            }
+        })
     }
 
 }

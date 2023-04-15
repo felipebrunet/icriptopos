@@ -28,9 +28,9 @@ class ActividadAjustes : AppCompatActivity() {
         val defaultBtcpayServer = "https://btcpay.icripto.cl"
         val defaultLnbitsServer = "https://lnbits.icripto.cl"
         val defaultBtcpayStoreId = "72fLbYCah9z7sFJfP9wWrkBMoNvtX9H6vU4B67GKgWf"
-        val defaultLnbitsInvoiceKey = ""
-        val defaultLnbitsLnWalletId = ""
-        val defaultLnbitsOnChainWalletId = ""
+        val defaultLnbitsInvoiceKey = "149e50e346754b9695178a011ddd05e4"
+        val defaultLnbitsLnWalletId = "485dd2ed0cad49cb8e1ffcebe8fdcf8b"
+        val defaultLnbitsOnChainWalletId = "XLtdyJvwKYBHYxiVbPEhNX"
         val defaultTips = "no"
 
 //        Loading saved parameters

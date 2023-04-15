@@ -82,27 +82,25 @@ class ActividadAjustes : AppCompatActivity() {
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
                 instance = instanceOptions[p2]
 
+
 //                Switch behavior and settings activity depending on the instance selected by user
                 when (instance) {
                     "BTCPay" -> {
-
-//                        Hide Lnbits textviews and boxes
+//                        Hide Lnbits text views and boxes
                         findViewById<TextView>(R.id.ln_wallet_id_title).isInvisible = true
                         findViewById<EditText>(R.id.ln_wallet_id).isInvisible = true
                         findViewById<EditText>(R.id.onchain_wallet_id_title).isInvisible = true
                         findViewById<EditText>(R.id.onchain_wallet_id).isInvisible = true
 
+//                        Fill boxes with parameters that were loaded
                         findViewById<TextView>(R.id.server_title).setText(R.string.enter_server)
                         findViewById<EditText>(R.id.server_url).setText(savedBtcpayServer)
                         findViewById<EditText>(R.id.server_url).setHint(R.string.server_url_hint)
 
                         findViewById<TextView>(R.id.store_title).setText(R.string.enter_lightning_id)
-                        findViewById<EditText>(R.id.lightning_id).setText(defaultBtcpayStoreId)
+                        findViewById<EditText>(R.id.lightning_id).setText(savedBtcpayStoreId)
                         findViewById<EditText>(R.id.lightning_id).setHint(R.string.lightning_id_hint)
 
-//                        Fill boxes with parameters that were loaded
-                        findViewById<EditText>(R.id.server_url).setText(savedBtcpayServer)
-                        findViewById<EditText>(R.id.lightning_id).setText(savedBtcpayStoreId)
                         findViewById<EditText>(R.id.merchant_name).setText(savedMerchantName)
                         findViewById<Switch>(R.id.tips1).isChecked = tips == "yes"
 
@@ -115,57 +113,67 @@ class ActividadAjustes : AppCompatActivity() {
                             startActivity(intent)
                         }
 
+//                        Save button functionality
                         val guardarButton = findViewById<Button>(R.id.save_button)
                         guardarButton.setOnClickListener {
                             openMainActivitySaved(currency, instance)
                         }
-
-
-
-
-
-
                     }
-                    "LNBits" -> {
 
+                    "LNBits" -> {
+//                        Show Lnbits text views and boxes
                         findViewById<TextView>(R.id.ln_wallet_id_title).isInvisible = false
                         findViewById<EditText>(R.id.ln_wallet_id).isInvisible = false
                         findViewById<EditText>(R.id.onchain_wallet_id_title).isInvisible = false
                         findViewById<EditText>(R.id.onchain_wallet_id).isInvisible = false
-//
+
+//                        Fill boxes with parameters that were loaded and edit instance title
                         findViewById<TextView>(R.id.server_title).setText(R.string.enter_server_lnbits)
                         findViewById<EditText>(R.id.server_url).setText(savedLnbitsServer)
                         findViewById<EditText>(R.id.server_url).setHint(R.string.server_lnbits_url_hint)
 
                         findViewById<TextView>(R.id.store_title).setText(R.string.enter_lnbits_api_title)
-                        findViewById<EditText>(R.id.lightning_id).setText(defaultLnbitsInvoiceKey)
+                        findViewById<EditText>(R.id.lightning_id).setText(savedLnbitsInvoiceKey)
                         findViewById<EditText>(R.id.lightning_id).setHint(R.string.enter_lnbits_api_key)
-//                        findViewById<EditText>(R.id.server_url).setHint(R.string.server_lnbits_url_hint)
+
+                        findViewById<TextView>(R.id.ln_wallet_id_title).setText(R.string.enter_ln_wallet_id)
+                        findViewById<EditText>(R.id.ln_wallet_id).setText(savedLnbitsLnWalletId)
+                        findViewById<EditText>(R.id.ln_wallet_id).setHint(R.string.ln_wallet_id_hint)
+
+                        findViewById<TextView>(R.id.onchain_wallet_id_title).setText(R.string.enter_onchain_wallet_id)
+                        findViewById<EditText>(R.id.onchain_wallet_id).setText(savedLnbitsOnChainWalletId)
+                        findViewById<EditText>(R.id.onchain_wallet_id).setHint(R.string.onchain_wallet_id_hint)
+
+                        findViewById<EditText>(R.id.merchant_name).setText(savedMerchantName)
+                        findViewById<Switch>(R.id.tips1).isChecked = tips == "yes"
 
 
+//                        Go Back button functionality
+                        val volverButton = findViewById<Button>(R.id.go_back_button)
+                        volverButton.setOnClickListener {
+                            val intent = Intent(this@ActividadAjustes ,MainActivity::class.java)
+                            startActivity(intent)
+                        }
 
-
-
-
+//                        Save button functionality
+                        val guardarButton = findViewById<Button>(R.id.save_button)
+                        guardarButton.setOnClickListener {
+                            openMainActivitySaved(currency, instance)
+                        }
                     }
-
                 }
-
             }
         }
-
-
-
-
-
     }
 
+//    Save and go to main screen function
     private fun openMainActivitySaved(currency : String, instance: String) {
         val intent = Intent(this, MainActivity::class.java)
         saveData(currency, instance)
         startActivity(intent)
     }
-//
+
+//    Detailed saving function
     private fun saveData(currency: String, instance: String) {
         val tipsSwitch : Switch = findViewById(R.id.tips1)
         val tips: String = if (tipsSwitch.isChecked) {
@@ -181,7 +189,6 @@ class ActividadAjustes : AppCompatActivity() {
                 val merchantName : String = findViewById<EditText>(R.id.merchant_name).text.toString()
                 val sharedPreferences : SharedPreferences = getSharedPreferences("sharedPres", Context.MODE_PRIVATE)
                 val editor : SharedPreferences.Editor = sharedPreferences.edit()
-
                 editor.apply{
                     putString("LOCALCURRENCY", currency)
                 }.apply()
@@ -197,40 +204,51 @@ class ActividadAjustes : AppCompatActivity() {
                 editor.apply{
                     putString("STATUSTIPS", tips)
                 }.apply()
+                editor.apply{
+                    putString("INSTANCE", instance)
+                }.apply()
 
                 Toast.makeText(this, "Data saved", Toast.LENGTH_SHORT).show()
 
             }
             "LNBits" -> {
+                val lnbitsServer : String = findViewById<EditText>(R.id.server_url).text.toString()
+                val lnbitsInvoiceKey : String = findViewById<EditText>(R.id.lightning_id).text.toString()
+                val lnbitsLnWalletId : String = findViewById<EditText>(R.id.ln_wallet_id).text.toString()
+                val lnbitsOnchainWalletId : String = findViewById<EditText>(R.id.onchain_wallet_id).text.toString()
+                val merchantName : String = findViewById<EditText>(R.id.merchant_name).text.toString()
+                val sharedPreferences : SharedPreferences = getSharedPreferences("sharedPres", Context.MODE_PRIVATE)
+                val editor : SharedPreferences.Editor = sharedPreferences.edit()
+                editor.apply{
+                    putString("LOCALCURRENCY", currency)
+                }.apply()
+                editor.apply{
+                    putString("LNBITSSERVER", lnbitsServer)
+                }.apply()
+                editor.apply{
+                    putString("LNBITSINVOICEKEY", lnbitsInvoiceKey)
+                }.apply()
+                editor.apply{
+                    putString("LNBITSLNWALLETID", lnbitsLnWalletId)
+                }.apply()
+                editor.apply{
+                    putString("LNBITSONCHAINWALLETID", lnbitsOnchainWalletId)
+                }.apply()
+                editor.apply{
+                    putString("MERCHANTNAME", merchantName)
+                }.apply()
+                editor.apply{
+                    putString("STATUSTIPS", tips)
+                }.apply()
+                editor.apply{
+                    putString("INSTANCE", instance)
+                }.apply()
+
+                Toast.makeText(this, "Data saved", Toast.LENGTH_SHORT).show()
+
 
             }
 
         }
     }
-
-
-//        val merchantName : String = findViewById<EditText>(R.id.merchant_name).text.toString()
-//        val btcpayServer : String = findViewById<EditText>(R.id.server_url).text.toString()
-//        val nombreIdTienda : String = findViewById<EditText>(R.id.lightning_id).text.toString()
-//        val sharedPreferences : SharedPreferences = getSharedPreferences("sharedPres", Context.MODE_PRIVATE)
-//        val editor : SharedPreferences.Editor = sharedPreferences.edit()
-//        editor.apply{
-//            putString("STATUSTIPS", tips)
-//        }.apply()
-//        editor.apply{
-//            putString("LOCALNOMBRE", nombreLocal)
-//        }.apply()
-//        editor.apply{
-//            putString("LOCALMONEDA", currency)
-//        }.apply()
-//        editor.apply{
-//            putString("LOCALSERVER", nombreServidor)
-//        }.apply()
-//        editor.apply{
-//            putString("LOCALID", nombreIdTienda)
-//        }.apply()
-//
-//        Toast.makeText(this, "Data saved", Toast.LENGTH_SHORT).show()
-//    }
-
 }

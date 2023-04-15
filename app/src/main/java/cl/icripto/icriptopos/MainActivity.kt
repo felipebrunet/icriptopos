@@ -6,6 +6,7 @@ import android.content.Intent
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.TypedValue
 import android.view.ContextThemeWrapper
 import android.widget.Button
 import android.widget.EditText
@@ -123,10 +124,13 @@ class MainActivity : AppCompatActivity() {
         findViewById<TextView>(R.id.merchant_title).text = merchantName
 
         if (!checkSettings(instance, btcpayServer, btcpayStoreId, lnbitsServer, lnbitsInvoiceKey, lnbitsLnWalletId)) {
+            input.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20.0F)
             input.text = addToInputText(initMessage, input)
         }
 
         else {
+
+            input.setTextSize(TypedValue.COMPLEX_UNIT_SP, 30.0F)
 
             buttonDelete.setOnClickListener {
                 input.text = ""

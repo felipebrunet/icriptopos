@@ -256,7 +256,8 @@
         android:text="@string/save_text"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="@+id/merchant_name"
-        app:layout_constraintTop_toTopOf="@+id/go_back_button" />
+        app:layout_constraintTop_toTopOf="@+id/go_back_button"
+        tools:ignore="TextSizeCheck" />
 
     <Button
         android:id="@+id/go_back_button"

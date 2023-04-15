@@ -1,15 +1,15 @@
 package cl.icripto.icriptopos
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.method.LinkMovementMethod
 import android.view.View
 import android.widget.*
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isInvisible
-import org.w3c.dom.Text
 
 class ActividadAjustes : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -48,11 +48,10 @@ class ActividadAjustes : AppCompatActivity() {
 
 //        Functionality of Currency selection spinner
         val currencyOption : Spinner = findViewById(R.id.spinner_currencies)
-        val currencyOptions : Array<String>
-        if (savedCurrency == null) {
-            currencyOptions = arrayOf("USD", "EUR", "AED", "ARS", "AUD", "BRL", "CAD", "CHF", "CLP", "CNY", "GBP", "INR", "JPY", "KRW", "MXN", "NGN", "RUB", "ZAR", "BTC")
+        val currencyOptions : Array<String> = if (savedCurrency == null) {
+            arrayOf("USD", "EUR", "AED", "ARS", "AUD", "BRL", "CAD", "CHF", "CLP", "CNY", "GBP", "INR", "JPY", "KRW", "MXN", "NGN", "RUB", "ZAR", "BTC")
         } else {
-            currencyOptions = arrayOf(savedCurrency) + arrayOf("USD", "EUR", "AED", "ARS", "AUD", "BRL", "CAD", "CHF", "CLP", "CNY", "GBP", "INR", "JPY", "KRW", "MXN", "NGN", "RUB", "ZAR", "BTC").filter{s -> s != savedCurrency}
+            arrayOf(savedCurrency) + arrayOf("USD", "EUR", "AED", "ARS", "AUD", "BRL", "CAD", "CHF", "CLP", "CNY", "GBP", "INR", "JPY", "KRW", "MXN", "NGN", "RUB", "ZAR", "BTC").filter{s -> s != savedCurrency}
         }
         var currency : String = savedCurrency.toString()
         currencyOption.adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, currencyOptions)
@@ -65,13 +64,24 @@ class ActividadAjustes : AppCompatActivity() {
         }
 
 
+        val resetPinButton = findViewById<Button>(R.id.delete_pin_button)
+        resetPinButton.setOnClickListener {
+            val sharedPreferencesPin : SharedPreferences = getSharedPreferences("sharedPres", Context.MODE_PRIVATE)
+            val editor : SharedPreferences.Editor = sharedPreferencesPin.edit()
+            editor.apply{
+                putString("LOCALPIN", "")
+            }.apply()
+            Toast.makeText(this, R.string.pin_deleted, Toast.LENGTH_SHORT).show()
+
+        }
+
+
 //        Functionality of Instance selection spinner
         val instanceOption : Spinner = findViewById(R.id.spinner_instances)
-        val instanceOptions : Array<String>
-        if (savedInstance == null) {
-            instanceOptions = arrayOf("BTCPay", "LNBits")
+        val instanceOptions : Array<String> = if (savedInstance == null) {
+            arrayOf("BTCPay", "LNBits")
         } else {
-            instanceOptions = arrayOf(savedInstance) + arrayOf("BTCPay", "LNBits").filter{s -> s != savedInstance}
+            arrayOf(savedInstance) + arrayOf("BTCPay", "LNBits").filter{s -> s != savedInstance}
         }
         var instance: String
 
@@ -174,6 +184,7 @@ class ActividadAjustes : AppCompatActivity() {
     }
 
 //    Detailed saving function
+    @SuppressLint("UseSwitchCompatOrMaterialCode", "CutPasteId")
     private fun saveData(currency: String, instance: String) {
         val tipsSwitch : Switch = findViewById(R.id.tips1)
         val tips: String = if (tipsSwitch.isChecked) {
@@ -208,7 +219,7 @@ class ActividadAjustes : AppCompatActivity() {
                     putString("INSTANCE", instance)
                 }.apply()
 
-                Toast.makeText(this, "Data saved", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, R.string.data_saved, Toast.LENGTH_SHORT).show()
 
             }
             "LNBits" -> {
@@ -244,7 +255,7 @@ class ActividadAjustes : AppCompatActivity() {
                     putString("INSTANCE", instance)
                 }.apply()
 
-                Toast.makeText(this, "Data saved", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, R.string.data_saved, Toast.LENGTH_SHORT).show()
 
 
             }

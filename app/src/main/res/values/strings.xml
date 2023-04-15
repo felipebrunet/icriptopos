@@ -53,6 +53,8 @@
     <string name="enter_pin">Ingrese PIN secreto</string>
     <string name="granted_message">Acceso autorizado</string>
     <string name="denied_message">Acceso denegado</string>
+    <string name="pin_deleted">PIN borrado</string>
+    <string name="data_saved">Valores guardados</string>
 
 
 </resources>

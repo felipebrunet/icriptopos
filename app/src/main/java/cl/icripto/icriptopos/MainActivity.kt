@@ -16,13 +16,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.ContextCompat
-import cl.icripto.icriptopos.apis.BtcPriceInterface
-import cl.icripto.icriptopos.models.PriceObject
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
+import cl.icripto.icriptopos.repositories.getBtcPrice
 
 class MainActivity : AppCompatActivity() {
     @SuppressLint("MissingInflatedId", "SetTextI18n")
@@ -188,7 +182,7 @@ class MainActivity : AppCompatActivity() {
                 }
             }
 
-            //        Setting the function of the "Pay" button
+//        Setting the function of the "Pay" button
             buttonPay.setOnClickListener{
                 if (input.text.isNotEmpty()) {
                     try {
@@ -268,47 +262,14 @@ class MainActivity : AppCompatActivity() {
         if (instance == "BTCPay") {
             val urlIcripto = "${btcpayServer}/api/v1/invoices?storeId=${btcpayStoreId}&price=${amount}&checkoutDesc=${merchantName}&currency=${currency}"
             startActivity(Intent.parseUri(urlIcripto, 0))
-        } else {
-
-            getBTCPrice(currency, amount)
-
-
-
-
-
-//            val urlIcripto = "${btcpayServer}/api/v1/invoices?storeId=${btcpayStoreId}&price=${amount}&checkoutDesc=${merchantName}&currency=${currency}"
-//            startActivity(Intent.parseUri(urlIcripto, 0))
+        }
+        if (instance == "LNBits") {
+//            Log.d("acoacoaco", "lnbitsserver in main is $lnbitsServer")
+            getBtcPrice(currency, amount, lnbitsLnWalletId,
+                lnbitsOnChainWalletId, merchantName,
+                "$lnbitsServer/satspay/", lnbitsInvoiceKey,
+                baseContext)
         }
 
     }
-
-    private fun getBTCPrice(currency: String, amount: Double) {
-//        val btcPriceUrl = "https://api.yadio.io/convert/${amount*100}/$currency/"
-        val btcPriceUrl = "https://api.yadio.io/convert/$amount/$currency/"
-        val retrofitBuilder = Retrofit.Builder()
-            .addConverterFactory(GsonConverterFactory.create())
-            .baseUrl(btcPriceUrl)
-            .build()
-            .create(BtcPriceInterface::class.java)
-        val retrofitData = retrofitBuilder.getData()
-        retrofitData.enqueue(object : Callback<PriceObject?> {
-            override fun onFailure(call: Call<PriceObject?>, t: Throwable) {
-                Log.d("error_yadio", "OnFailure: " + t.message)
-            }
-
-            @SuppressLint("SetTextI18n")
-            override fun onResponse(call: Call<PriceObject?>, response: Response<PriceObject?>) {
-                val responseBody = response.body()
-                val priceBTC = 1 / responseBody!!.rate
-//                val btcAmount = (responseBody.result) / 100
-                val btcAmount = (responseBody.result)
-//                val precioSentence = "Price Bitcoin is ${priceBTC.toInt()} $currency"
-                val valorSats = (btcAmount * 100000000).toLong()
-                val satsSentence = "Amount in sats is $valorSats sats, and in bitcoin is $btcAmount"
-                Toast.makeText(this@MainActivity, satsSentence, Toast.LENGTH_LONG).show()
-
-            }
-        })
-    }
-
 }

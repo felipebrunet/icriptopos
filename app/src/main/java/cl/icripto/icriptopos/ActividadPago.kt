@@ -79,6 +79,10 @@ class ActividadPago : AppCompatActivity() {
                         val invoice: String = JSONObject(resp).getString("encoded_payment_request")
                         val checkId = JSONObject(resp).getString("id")
                         val monedaCobro = JSONObject(resp).getString("currency")
+                        val editor : SharedPreferences.Editor = sharedPreferences.edit()
+                        editor.apply{
+                            putString("LOCALCURRENCY", monedaCobro)
+                        }.apply()
 //                        val memo = "Pago de $${price.toInt()} $monedaCobro a $nombreLocal"
 //                        val satsAmount = JSONObject(resp).getString("amount")
 //                        Log.d("Respuesta", invoice)

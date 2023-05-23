@@ -14,7 +14,7 @@
     <string name="dot">.</string>
     <string name="_0">0</string>
     <string name="delete">Borrar</string>
-    <string name="selected_currency">Moneda: </string>
+    <string name="selected_currency">Moneda:</string>
     <string name="select_currency">Moneda:</string>
     <string name="moneda_inicial">CLP</string>
     <string name="nombre_tienda">Restaurant A</string>
@@ -32,11 +32,14 @@
     <string name="go_back_text">Volver</string>
     <string name="merchant_name_hint">Nombre de Local</string>
     <string name="lightning_id_hint">ID de local según URL en servidor BTCPay</string>
-    <string name="server_url_hint">URL Tor es del tipo "'http://..'" \nURL en clearnet es del tipo "'https://..'"</string>
+    <string name="server_url_hint">URL Tor es del tipo "'http://..'" \nURL en clearnet es del tipo "'https://..'"
+    </string>
     <string name="server_lnbits_url_hint">"'https://...'"</string>
-    <string name="id_actual">ID Actual: </string>
-    <string name="servidor_actual">Servidor Actual: </string>
-    <string name="github_repo"><a href="https://github.com/felipebrunet/btcpayposicripto">Open Source</a></string>
+    <string name="id_actual">ID Actual:</string>
+    <string name="servidor_actual">Servidor Actual:</string>
+    <string name="github_repo">
+        <a href="https://github.com/felipebrunet/btcpayposicripto">Open Source</a>
+    </string>
     <string name="logo_github">Logo Github</string>
     <string name="switch_propinas">Propinas</string>
     <string name="init_val_screen">Ir a ajustes</string>
@@ -44,7 +47,7 @@
     <string name="no_tip">Sin propina</string>
     <string name="text_version">Icripto POS V1.4.0</string>
     <string name="wheel_icon">Ajustes</string>
-    <string name="select_instance">Instancia: </string>
+    <string name="select_instance">Instancia:</string>
     <string name="enter_ln_wallet_id">Ingrese lightning wallet Id en LNBits: (requerido)</string>
     <string name="ln_wallet_id_hint">Campo "Wallet ID" de LNBits</string>
     <string name="enter_onchain_wallet_id">Ingrese OnChain wallet Id en LNBits: (opcional)</string>

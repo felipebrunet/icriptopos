@@ -414,7 +414,9 @@ class ActividadAjustes : AppCompatActivity() {
                     putString("INSTANCE", instance)
                 }.apply()
 
+//                Toast.makeText(this, "${R.string.data_saved} ${budaUserName.isNotEmpty()}", Toast.LENGTH_SHORT).show()
                 Toast.makeText(this, R.string.data_saved, Toast.LENGTH_SHORT).show()
+
 
             }
 

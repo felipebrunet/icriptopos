@@ -69,6 +69,7 @@ class MainActivity : AppCompatActivity() {
         val merchantName = sharedPreferences.getString("MERCHANTNAME", defaultMerchantName).toString()
         val btcpayServer= sharedPreferences.getString("BTCPAYSERVER", defaultBtcpayServer).toString()
         val lnbitsServer= sharedPreferences.getString("LNBITSSERVER", defaultLnbitsServer).toString()
+        val budaUserName= sharedPreferences.getString("BUDAUSERNAME", defaultBudaUserName).toString()
         val btcpayStoreId = sharedPreferences.getString("BTCPAYSTORE", defaultBtcpayStoreId).toString()
         val lnbitsInvoiceKey = sharedPreferences.getString("LNBITSINVOICEKEY", defaultLnbitsInvoiceKey).toString()
         val lnbitsLnWalletId = sharedPreferences.getString("LNBITSLNWALLETID", defaultLnbitsLnWalletId).toString()
@@ -125,7 +126,7 @@ class MainActivity : AppCompatActivity() {
         findViewById<TextView>(R.id.currency).text = currency
         findViewById<TextView>(R.id.merchant_title).text = merchantName
 
-        if (!checkSettings(instance, btcpayServer, btcpayStoreId, lnbitsServer, lnbitsInvoiceKey, lnbitsLnWalletId)) {
+        if (!checkSettings(instance, btcpayServer, btcpayStoreId, lnbitsServer, lnbitsInvoiceKey, lnbitsLnWalletId, budaUserName)) {
             input.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20.0F)
             input.text = addToInputText(initMessage, input)
         }
@@ -192,11 +193,11 @@ class MainActivity : AppCompatActivity() {
                             if (tips == "yes") {
                                 payWithTip(instance, btcpayServer, btcpayStoreId,
                                     lnbitsServer, lnbitsInvoiceKey, lnbitsLnWalletId,
-                                    lnbitsOnChainWalletId, amount, merchantName, currency)
+                                    lnbitsOnChainWalletId, amount, merchantName, currency, budaUserName)
                             } else {
                                 goPayment(instance, btcpayServer, btcpayStoreId,
                                     lnbitsServer, lnbitsInvoiceKey, lnbitsLnWalletId,
-                                    lnbitsOnChainWalletId, amount, merchantName, currency)
+                                    lnbitsOnChainWalletId, amount, merchantName, currency, budaUserName)
                             }
                         }
                     } catch (e: Exception) {
@@ -221,17 +222,19 @@ class MainActivity : AppCompatActivity() {
 
     private fun checkSettings(currentInstance: String, btcpayServer: String,
                               btcpayStoreId: String, lnbitsServer: String, lnbitsInvoiceKey: String,
-                              lnbitsLnWalletId: String): Boolean {
+                              lnbitsLnWalletId: String, budaUserName: String): Boolean {
         return when (currentInstance) {
             "BTCPay" -> !(btcpayServer == "" || btcpayStoreId == "")
             "LNBits" -> !(lnbitsServer == "" || lnbitsInvoiceKey == "" || lnbitsLnWalletId == "")
+            "Buda" -> budaUserName.isNotEmpty()
             else -> false
         }
     }
 
     private fun payWithTip(instance: String, btcpayServer: String, btcpayStoreId: String,
                            lnbitsServer: String, lnbitsInvoiceKey: String, lnbitsLnWalletId: String,
-                           lnbitsOnChainWalletId: String, amount: Double, merchantName: String, currency: String) {
+                           lnbitsOnChainWalletId: String, amount: Double, merchantName: String,
+                           currency: String, budaUserName: String) {
         val noTip = R.string.no_tip
         var tipValue: Double
         val tipString = getString(noTip)
@@ -251,14 +254,15 @@ class MainActivity : AppCompatActivity() {
             }
             goPayment(instance, btcpayServer, btcpayStoreId,
                 lnbitsServer, lnbitsInvoiceKey, lnbitsLnWalletId,
-                lnbitsOnChainWalletId, amount*tipValue, merchantName, currency)
+                lnbitsOnChainWalletId, amount*tipValue, merchantName, currency, budaUserName)
         }
         builder.show()
     }
 
     private fun goPayment(instance: String, btcpayServer: String, btcpayStoreId: String,
                           lnbitsServer: String, lnbitsInvoiceKey: String, lnbitsLnWalletId: String,
-                          lnbitsOnChainWalletId: String, amount: Double, merchantName: String, currency: String) {
+                          lnbitsOnChainWalletId: String, amount: Double, merchantName: String,
+                          currency: String, budaUserName: String) {
         if (instance == "BTCPay") {
             val urlIcripto = "${btcpayServer}/api/v1/invoices?storeId=${btcpayStoreId}&price=${amount}&checkoutDesc=${merchantName}&currency=${currency}"
             startActivity(Intent.parseUri(urlIcripto, 0))
@@ -270,6 +274,7 @@ class MainActivity : AppCompatActivity() {
                 "$lnbitsServer/satspay/", lnbitsInvoiceKey,
                 baseContext)
         }
+
 
     }
 }

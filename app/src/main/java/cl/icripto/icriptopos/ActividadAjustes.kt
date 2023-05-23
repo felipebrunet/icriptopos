@@ -128,13 +128,17 @@ class ActividadAjustes : AppCompatActivity() {
                         findViewById<TextView>(R.id.currency_title).isInvisible = false
                         findViewById<FrameLayout>(R.id.frame_layout_currency).isInvisible = false
 
+//                        Set store title visible
+                        findViewById<EditText>(R.id.store_title).isInvisible = false
+                        findViewById<EditText>(R.id.lightning_id).isInvisible = false
+
 
 //                        Hide Lnbits text views and boxes
-
                         findViewById<TextView>(R.id.ln_wallet_id_title).isInvisible = true
                         findViewById<EditText>(R.id.ln_wallet_id).isInvisible = true
                         findViewById<EditText>(R.id.onchain_wallet_id_title).isInvisible = true
                         findViewById<EditText>(R.id.onchain_wallet_id).isInvisible = true
+
 
 //                        Fill boxes with parameters that were loaded
                         findViewById<TextView>(R.id.server_title).setText(R.string.enter_server)
@@ -193,15 +197,19 @@ class ActividadAjustes : AppCompatActivity() {
 
 
 //                        Show Lnbits text views and boxes
+                        findViewById<EditText>(R.id.store_title).isInvisible = false
+                        findViewById<EditText>(R.id.lightning_id).isInvisible = false
                         findViewById<TextView>(R.id.ln_wallet_id_title).isInvisible = false
                         findViewById<EditText>(R.id.ln_wallet_id).isInvisible = false
                         findViewById<EditText>(R.id.onchain_wallet_id_title).isInvisible = false
                         findViewById<EditText>(R.id.onchain_wallet_id).isInvisible = false
 
+
 //                        Fill boxes with parameters that were loaded and edit instance title
                         findViewById<TextView>(R.id.server_title).setText(R.string.enter_server_lnbits)
                         findViewById<EditText>(R.id.server_url).setText(savedLnbitsServer)
                         findViewById<EditText>(R.id.server_url).setHint(R.string.server_lnbits_url_hint)
+
 
                         findViewById<TextView>(R.id.store_title).setText(R.string.enter_lnbits_api_title)
                         findViewById<EditText>(R.id.lightning_id).setText(savedLnbitsInvoiceKey)
@@ -245,16 +253,15 @@ class ActividadAjustes : AppCompatActivity() {
                         findViewById<EditText>(R.id.ln_wallet_id).isInvisible = true
                         findViewById<EditText>(R.id.onchain_wallet_id_title).isInvisible = true
                         findViewById<EditText>(R.id.onchain_wallet_id).isInvisible = true
+                        findViewById<EditText>(R.id.store_title).isInvisible = true
+                        findViewById<EditText>(R.id.lightning_id).isInvisible = true
 
 //                        Fill boxes with parameters that were loaded
-                        findViewById<TextView>(R.id.server_title).setText(R.string.enter_server)
-                        findViewById<EditText>(R.id.server_url).setText(savedBtcpayServer)
-                        findViewById<EditText>(R.id.server_url).setHint(R.string.server_url_hint)
+                        findViewById<TextView>(R.id.server_title).setText(R.string.enter_buda_username)
+                        findViewById<EditText>(R.id.server_url).setText(savedBudaUserName)
+                        findViewById<EditText>(R.id.server_url).setHint(R.string.buda_username)
 
-                        findViewById<TextView>(R.id.store_title).setText(R.string.enter_lightning_id)
-                        findViewById<EditText>(R.id.lightning_id).setText(savedBtcpayStoreId)
-                        findViewById<EditText>(R.id.lightning_id).setHint(R.string.lightning_id_hint)
-
+//                        Restaurant name
                         findViewById<EditText>(R.id.merchant_name).setText(savedMerchantName)
                         findViewById<Switch>(R.id.tips1).isChecked = tips == "yes"
 
@@ -269,7 +276,7 @@ class ActividadAjustes : AppCompatActivity() {
 //                        Save button functionality
                         val guardarButton = findViewById<Button>(R.id.save_button)
                         guardarButton.setOnClickListener {
-                            openMainActivitySaved("BUDA", instance)
+                            openMainActivitySaved(savedCurrency ?: defaultCurrency, instance)
                         }
 
 
@@ -361,6 +368,31 @@ class ActividadAjustes : AppCompatActivity() {
 
                 Toast.makeText(this, R.string.data_saved, Toast.LENGTH_SHORT).show()
 
+
+            }
+
+            "Buda" -> {
+                val budaUserName : String = findViewById<EditText>(R.id.server_url).text.toString()
+                val merchantName : String = findViewById<EditText>(R.id.merchant_name).text.toString()
+                val sharedPreferences : SharedPreferences = getSharedPreferences("sharedPres", Context.MODE_PRIVATE)
+                val editor : SharedPreferences.Editor = sharedPreferences.edit()
+                editor.apply{
+                    putString("LOCALCURRENCY", currency)
+                }.apply()
+                editor.apply{
+                    putString("BUDAUSERNAME", budaUserName)
+                }.apply()
+                editor.apply{
+                    putString("MERCHANTNAME", merchantName)
+                }.apply()
+                editor.apply{
+                    putString("STATUSTIPS", tips)
+                }.apply()
+                editor.apply{
+                    putString("INSTANCE", instance)
+                }.apply()
+
+                Toast.makeText(this, R.string.data_saved, Toast.LENGTH_SHORT).show()
 
             }
 

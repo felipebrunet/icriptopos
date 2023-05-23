@@ -282,8 +282,8 @@ class MainActivity : AppCompatActivity() {
                 putString("PRICE", amount.toString())
             }.apply()
 
-//            val intent = Intent(this, ActividadPago::class.java)
-//            startActivity(intent)
+            val intent = Intent(this, ActividadPago::class.java)
+            startActivity(intent)
 
 
 //        val urlIcripto = "${server}/api/v1/invoices?storeId=${localID}&price=${price}&checkoutDesc=${nombreLocal}&currency=${moneda}"

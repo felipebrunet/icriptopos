@@ -51,6 +51,7 @@ class MainActivity : AppCompatActivity() {
         val defaultMerchantName = ""
         val defaultBtcpayServer = ""
         val defaultLnbitsServer = ""
+        val defaultBudaUserName = ""
         val defaultBtcpayStoreId = ""
         val defaultLnbitsInvoiceKey = ""
         val defaultLnbitsLnWalletId = ""

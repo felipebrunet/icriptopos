@@ -243,9 +243,31 @@ class ActividadAjustes : AppCompatActivity() {
 
                     "Buda" -> {
 
+                        currencies = arrayOf("ARS", "CLP", "COP", "PEN")
+
+                        val currencyOption : Spinner = findViewById(R.id.spinner_currencies)
+                        val currencyOptions : Array<String> =
+                            if (currencies.contains(savedCurrency) && savedCurrency != null) {
+                                arrayOf(savedCurrency) + currencies.filter{it != savedCurrency}
+                            } else {
+                                currencies
+                            }
+                        var currency : String = savedCurrency.toString()
+                        currencyOption.adapter = ArrayAdapter(baseContext, android.R.layout.simple_list_item_1, currencyOptions)
+                        currencyOption.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+                            override fun onNothingSelected(p0: AdapterView<*>?) {
+                            }
+                            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+                                currency = currencyOptions[p2]
+
+
+                            }
+                        }
+
+
 //                        Set currency selector visible
-                        findViewById<TextView>(R.id.currency_title).isInvisible = true
-                        findViewById<FrameLayout>(R.id.frame_layout_currency).isInvisible = true
+                        findViewById<TextView>(R.id.currency_title).isInvisible = false
+                        findViewById<FrameLayout>(R.id.frame_layout_currency).isInvisible = false
 
 
 //                        Show Lnbits text views and boxes
@@ -276,7 +298,7 @@ class ActividadAjustes : AppCompatActivity() {
 //                        Save button functionality
                         val guardarButton = findViewById<Button>(R.id.save_button)
                         guardarButton.setOnClickListener {
-                            openMainActivitySaved(savedCurrency ?: defaultCurrency, instance)
+                            openMainActivitySaved(currency, instance)
                         }
 
 

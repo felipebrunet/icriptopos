@@ -16,10 +16,9 @@ class ActividadAjustes : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_actividad_ajustes)
 
-//        Github Project URL. Make it selectable by user for opening it in the browser
+//        GitHHub Project URL. Make it selectable by user for opening it in the browser
         val textView: TextView = findViewById(R.id.linkGH)
         textView.movementMethod = LinkMovementMethod.getInstance()
-
 
 //        Default values for parameters for both BTCPay and LNBits instances
         val defaultInstance = "BTCPay"
@@ -32,6 +31,10 @@ class ActividadAjustes : AppCompatActivity() {
         val defaultLnbitsLnWalletId = ""
         val defaultLnbitsOnChainWalletId = ""
         val defaultTips = "no"
+        val defaultBudaUserName = ""
+
+        var currencies: Array<String>
+
 
 //        Loading saved parameters
         val sharedPreferences : SharedPreferences = getSharedPreferences("sharedPres", Context.MODE_PRIVATE)
@@ -44,24 +47,27 @@ class ActividadAjustes : AppCompatActivity() {
         val savedLnbitsInvoiceKey = sharedPreferences.getString("LNBITSINVOICEKEY", defaultLnbitsInvoiceKey)
         val savedLnbitsLnWalletId = sharedPreferences.getString("LNBITSLNWALLETID", defaultLnbitsLnWalletId)
         val savedLnbitsOnChainWalletId = sharedPreferences.getString("LNBITSONCHAINWALLETID", defaultLnbitsOnChainWalletId)
+        val savedBudaUserName = sharedPreferences.getString("BUDAUSERNAME", defaultBudaUserName)
         val tips : String? = sharedPreferences.getString("STATUSTIPS", defaultTips)
 
-//        Functionality of Currency selection spinner
-        val currencyOption : Spinner = findViewById(R.id.spinner_currencies)
-        val currencyOptions : Array<String> = if (savedCurrency == null) {
-            arrayOf("USD", "EUR", "AED", "ARS", "AUD", "BRL", "CAD", "CHF", "CLP", "CNY", "GBP", "INR", "JPY", "KRW", "MXN", "NGN", "RUB", "ZAR", "BTC")
-        } else {
-            arrayOf(savedCurrency) + arrayOf("USD", "EUR", "AED", "ARS", "AUD", "BRL", "CAD", "CHF", "CLP", "CNY", "GBP", "INR", "JPY", "KRW", "MXN", "NGN", "RUB", "ZAR", "BTC").filter{s -> s != savedCurrency}
-        }
-        var currency : String = savedCurrency.toString()
-        currencyOption.adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, currencyOptions)
-        currencyOption.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onNothingSelected(p0: AdapterView<*>?) {
-            }
-            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-                currency = currencyOptions[p2]
-            }
-        }
+
+//        val currencyOption : Spinner = findViewById(R.id.spinner_currencies)
+//        val currencyOptions : Array<String> =
+//            if (savedCurrency == null) {
+//                currencies
+//            } else { arrayOf(savedCurrency) + currencies
+//        }
+//        var currency : String = savedCurrency.toString()
+//        currencyOption.adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, currencyOptions)
+//        currencyOption.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+//            override fun onNothingSelected(p0: AdapterView<*>?) {
+//            }
+//            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+//                currency = currencyOptions[p2]
+//
+//
+//            }
+//        }
 
 
         val resetPinButton = findViewById<Button>(R.id.delete_pin_button)
@@ -79,9 +85,9 @@ class ActividadAjustes : AppCompatActivity() {
 //        Functionality of Instance selection spinner
         val instanceOption : Spinner = findViewById(R.id.spinner_instances)
         val instanceOptions : Array<String> = if (savedInstance == null) {
-            arrayOf("BTCPay", "LNBits")
+            arrayOf("BTCPay", "LNBits", "Buda")
         } else {
-            arrayOf(savedInstance) + arrayOf("BTCPay", "LNBits").filter{s -> s != savedInstance}
+            arrayOf(savedInstance) + arrayOf("BTCPay", "LNBits", "Buda").filter{s -> s != savedInstance}
         }
         var instance: String
 
@@ -96,7 +102,35 @@ class ActividadAjustes : AppCompatActivity() {
 //                Switch behavior and settings activity depending on the instance selected by user
                 when (instance) {
                     "BTCPay" -> {
+
+                        currencies = arrayOf("USD", "EUR", "AED", "ARS", "AUD", "BRL",
+                            "CAD", "CHF", "CLP", "CNY", "GBP", "INR",
+                            "JPY", "KRW", "MXN", "NGN", "RUB", "ZAR", "BTC")
+
+                        val currencyOption : Spinner = findViewById(R.id.spinner_currencies)
+                        val currencyOptions : Array<String> =
+                            if (savedCurrency == null) {
+                                currencies
+                            } else { arrayOf(savedCurrency) + currencies.filter{it != savedCurrency}
+                            }
+                        var currency : String = savedCurrency.toString()
+                        currencyOption.adapter = ArrayAdapter(baseContext, android.R.layout.simple_list_item_1, currencyOptions)
+                        currencyOption.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+                            override fun onNothingSelected(p0: AdapterView<*>?) {
+                            }
+                            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+                                currency = currencyOptions[p2]
+
+
+                            }
+                        }
+//                        Set currency selector visible
+                        findViewById<TextView>(R.id.currency_title).isInvisible = false
+                        findViewById<FrameLayout>(R.id.frame_layout_currency).isInvisible = false
+
+
 //                        Hide Lnbits text views and boxes
+
                         findViewById<TextView>(R.id.ln_wallet_id_title).isInvisible = true
                         findViewById<EditText>(R.id.ln_wallet_id).isInvisible = true
                         findViewById<EditText>(R.id.onchain_wallet_id_title).isInvisible = true
@@ -115,7 +149,6 @@ class ActividadAjustes : AppCompatActivity() {
                         findViewById<Switch>(R.id.tips1).isChecked = tips == "yes"
 
 
-
 //                        Go Back button functionality
                         val volverButton = findViewById<Button>(R.id.go_back_button)
                         volverButton.setOnClickListener {
@@ -131,6 +164,34 @@ class ActividadAjustes : AppCompatActivity() {
                     }
 
                     "LNBits" -> {
+
+                        currencies = arrayOf("USD", "EUR", "AED", "ARS", "AUD", "BRL",
+                            "CAD", "CHF", "CLP", "CNY", "GBP", "INR",
+                            "JPY", "KRW", "MXN", "NGN", "RUB", "ZAR", "BTC")
+
+                        val currencyOption : Spinner = findViewById(R.id.spinner_currencies)
+                        val currencyOptions : Array<String> =
+                            if (savedCurrency == null) {
+                                currencies
+                            } else { arrayOf(savedCurrency) + currencies.filter{it != savedCurrency}
+                            }
+                        var currency : String = savedCurrency.toString()
+                        currencyOption.adapter = ArrayAdapter(baseContext, android.R.layout.simple_list_item_1, currencyOptions)
+                        currencyOption.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+                            override fun onNothingSelected(p0: AdapterView<*>?) {
+                            }
+                            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+                                currency = currencyOptions[p2]
+
+
+                            }
+                        }
+
+//                        Set currency selector visible
+                        findViewById<TextView>(R.id.currency_title).isInvisible = false
+                        findViewById<FrameLayout>(R.id.frame_layout_currency).isInvisible = false
+
+
 //                        Show Lnbits text views and boxes
                         findViewById<TextView>(R.id.ln_wallet_id_title).isInvisible = false
                         findViewById<EditText>(R.id.ln_wallet_id).isInvisible = false
@@ -170,6 +231,49 @@ class ActividadAjustes : AppCompatActivity() {
                         guardarButton.setOnClickListener {
                             openMainActivitySaved(currency, instance)
                         }
+                    }
+
+                    "Buda" -> {
+
+//                        Set currency selector visible
+                        findViewById<TextView>(R.id.currency_title).isInvisible = true
+                        findViewById<FrameLayout>(R.id.frame_layout_currency).isInvisible = true
+
+
+//                        Show Lnbits text views and boxes
+                        findViewById<TextView>(R.id.ln_wallet_id_title).isInvisible = true
+                        findViewById<EditText>(R.id.ln_wallet_id).isInvisible = true
+                        findViewById<EditText>(R.id.onchain_wallet_id_title).isInvisible = true
+                        findViewById<EditText>(R.id.onchain_wallet_id).isInvisible = true
+
+//                        Fill boxes with parameters that were loaded
+                        findViewById<TextView>(R.id.server_title).setText(R.string.enter_server)
+                        findViewById<EditText>(R.id.server_url).setText(savedBtcpayServer)
+                        findViewById<EditText>(R.id.server_url).setHint(R.string.server_url_hint)
+
+                        findViewById<TextView>(R.id.store_title).setText(R.string.enter_lightning_id)
+                        findViewById<EditText>(R.id.lightning_id).setText(savedBtcpayStoreId)
+                        findViewById<EditText>(R.id.lightning_id).setHint(R.string.lightning_id_hint)
+
+                        findViewById<EditText>(R.id.merchant_name).setText(savedMerchantName)
+                        findViewById<Switch>(R.id.tips1).isChecked = tips == "yes"
+
+
+//                        Go Back button functionality
+                        val volverButton = findViewById<Button>(R.id.go_back_button)
+                        volverButton.setOnClickListener {
+                            val intent = Intent(this@ActividadAjustes ,MainActivity::class.java)
+                            startActivity(intent)
+                        }
+
+//                        Save button functionality
+                        val guardarButton = findViewById<Button>(R.id.save_button)
+                        guardarButton.setOnClickListener {
+                            openMainActivitySaved("BUDA", instance)
+                        }
+
+
+
                     }
                 }
             }

@@ -21,6 +21,8 @@
     <string name="moneda_inicial">USD</string>
     <string name="nombre_tienda">Restaurant A</string>
     <string name="enter_server">Entrez l\'URL du serveur BTCPay: (obligatoire)</string>
+    <string name="enter_buda_username">Enter Buda payment link Username: (required)</string>
+    <string name="buda_username">Only the name: buda.com/link/{name}</string>
     <string name="enter_server_lnbits">Entrez l\'URL du serveur LNBits: (obligatoire)</string>
     <string name="setting_text">Paramètres</string>
     <string name="settings_icon">Settings</string>
@@ -42,7 +44,7 @@
     <string name="init_val_screen">Go to settings</string>
     <string name="tip_message">Sélectionnez le pourboire</string>
     <string name="no_tip">Aucun pourboire</string>
-    <string name="text_version">Icripto POS V1.3.0</string>
+    <string name="text_version">Icripto POS V1.4.0</string>
     <string name="wheel_icon">Paramètres</string>
     <string name="select_instance">Instancèe: </string>
     <string name="enter_ln_wallet_id">Enter lightning wallet Id at LNBits: (obligatoire)</string>
@@ -57,4 +59,15 @@
     <string name="denied_message">Access denied</string>
     <string name="pin_deleted">PIN deleted</string>
     <string name="data_saved">Data saved</string>
+    <string name="texto_qrbuda">Pay with Bitcoin Lightning</string>
+    <string name="instr_para_pagar">Scan this QR code with your lightning wallet</string>
+    <string name="monto">Amount:</string>
+    <string name="moneda">Currency:</string>
+    <string name="motivo">Note:</string>
+    <string name="qr_para_pago_con_lightning">QR code for Bitcoin lightning payment</string>
+    <string name="montopagovalor">$150</string>
+    <string name="monedapagovalor">CLP</string>
+    <string name="motivopagovalor">Lightning payment for Felipe, of Restaurant A</string>
+    <string name="copiar_lightning_invoice">Copy Lightning Invoice</string>
+
 </resources>

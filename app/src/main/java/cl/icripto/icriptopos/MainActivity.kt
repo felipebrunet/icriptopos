@@ -95,7 +95,9 @@ class MainActivity : AppCompatActivity() {
                     editor.apply {
                         putString("LOCALPIN", inputPin.text.toString())
                     }.apply()
-                    Toast.makeText(this, getString(R.string.saved_pin), Toast.LENGTH_SHORT).show()
+                    if (inputPin.text.isNotEmpty()) {
+                        Toast.makeText(this, getString(R.string.saved_pin), Toast.LENGTH_SHORT).show()
+                    }
                     val intent = Intent(this, ActividadAjustes::class.java)
                     startActivity(intent)
 

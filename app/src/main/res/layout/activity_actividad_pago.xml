@@ -153,12 +153,11 @@
             android:id="@+id/linkGH"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="28dp"
 
             android:text="@string/github_repo"
             app:layout_constraintStart_toStartOf="@+id/versionText"
             app:layout_constraintTop_toBottomOf="@+id/versionText"
-            tools:ignore="TextContrastCheck" />
+            tools:ignore="TextContrastCheck"/>
 
     <ImageView
             android:id="@+id/imageView"

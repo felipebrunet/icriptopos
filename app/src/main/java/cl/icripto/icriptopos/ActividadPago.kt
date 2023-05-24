@@ -135,6 +135,13 @@ class ActividadPago : AppCompatActivity() {
                                                 "Invoice Pagado!",
                                                 Toast.LENGTH_SHORT
                                             ).show()
+                                            val copyButton = findViewById<Button>(R.id.copybutton)
+                                            copyButton.text = getString(R.string.go_back_text)
+                                            copyButton.setOnClickListener {
+                                                val intent = Intent(baseContext, MainActivity::class.java)
+                                                startActivity(intent)
+                                            }
+
                                         }
                                     }
                                 }

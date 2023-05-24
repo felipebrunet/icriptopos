@@ -265,6 +265,8 @@ class MainActivity : AppCompatActivity() {
                           lnbitsServer: String, lnbitsInvoiceKey: String, lnbitsLnWalletId: String,
                           lnbitsOnChainWalletId: String, amount: Double, merchantName: String,
                           currency: String) {
+        Toast.makeText(this, getString(R.string.loading_message), Toast.LENGTH_SHORT).show()
+
         if (instance == "BTCPay") {
             val urlBtcpay = "${btcpayServer}/api/v1/invoices?storeId=${btcpayStoreId}&price=${amount}&checkoutDesc=${merchantName}&currency=${currency}"
             startActivity(Intent.parseUri(urlBtcpay, 0))

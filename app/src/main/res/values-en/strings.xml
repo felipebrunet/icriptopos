@@ -70,4 +70,5 @@
     <string name="motivopagovalor">Lightning payment for Felipe, of Restaurant A</string>
     <string name="copy_invoice_message">Copy Lightning Invoice</string>
     <string name="paid_invoice_message">Invoice has been paid!</string>
+    <string name="loading_message">Loading</string>
 </resources>

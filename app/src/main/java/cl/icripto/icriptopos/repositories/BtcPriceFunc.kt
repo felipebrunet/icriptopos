@@ -9,12 +9,12 @@ import androidx.core.content.ContextCompat.startActivity
 import cl.icripto.icriptopos.apis.BtcPriceInterface
 import cl.icripto.icriptopos.models.InvoiceData
 import cl.icripto.icriptopos.models.PriceObject
+import kotlinx.coroutines.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import kotlinx.coroutines.*
 
 @SuppressLint("SetTextI18n")
 fun getBtcPrice(currency : String, amount : Double,
@@ -23,7 +23,6 @@ fun getBtcPrice(currency : String, amount : Double,
                 invoiceKey : String,
                 context: Context) {
     var satsAmount: Long
-//    val amount100x = amount * 100
     val webHook = ""
     val completeLink = ""
     val callbackMessage = ""
@@ -46,11 +45,8 @@ fun getBtcPrice(currency : String, amount : Double,
         @SuppressLint("SetTextI18n")
         override fun onResponse(call: Call<PriceObject?>, response: Response<PriceObject?>) {
             val responseBody = response.body()
-//            val priceBTC = 1 / responseBody!!.rate
             val btcAmount = (responseBody!!.result)
             satsAmount = (btcAmount * 100000000).toLong()
-//            val satsSentence = "Amount in sats is $satsAmount sats, and in bitcoin is $btcAmount"
-//            Toast.makeText(context, satsSentence, Toast.LENGTH_LONG).show()
 
 
             val apiService = RestApiService()
@@ -78,10 +74,9 @@ fun getBtcPrice(currency : String, amount : Double,
                 detail = null
             )
 
+
             apiService.getInvoice(lnbitsServer, invoiceKey, invoiceData) {
                 if (it?.id != null) {
-//                    Toast.makeText(context, "Ok, el id es ${it.id}", Toast.LENGTH_LONG).show()
-
                     startActivity(
                         context,
                         Intent.parseUri("$lnbitsServer${it.id}", 0)

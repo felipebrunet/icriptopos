@@ -34,7 +34,7 @@
     <string name="lightning_id_hint">ID de local según URL en servidor BTCPay</string>
     <string name="server_url_hint">URL Tor es del tipo "'http://..'" \nURL en clearnet es del tipo "'https://..'"
     </string>
-    <string name="server_lnbits_url_hint">"'https://...'"</string>
+    <string name="server_lnbits_url_hint">"'https://…'"</string>
     <string name="id_actual">ID Actual:</string>
     <string name="servidor_actual">Servidor Actual:</string>
     <string name="github_repo">

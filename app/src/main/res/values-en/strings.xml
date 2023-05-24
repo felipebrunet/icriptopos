@@ -35,7 +35,7 @@
     <string name="merchant_name_hint">Store Name</string>
     <string name="lightning_id_hint">Store ID according to BTCPay server URL</string>
     <string name="server_url_hint">Tor URL is of type "'http://..'" \nClearnet URL is of type "'https://..'"</string>
-    <string name="server_lnbits_url_hint">"'https://...'"</string>
+    <string name="server_lnbits_url_hint">"'https://…'"</string>
     <string name="id_actual">Current ID: </string>
     <string name="servidor_actual">Current Server: </string>
     <string name="github_repo" ><a href="https://github.com/felipebrunet/btcpayposicripto">Open Source</a></string>

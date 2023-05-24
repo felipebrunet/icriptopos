@@ -35,7 +35,7 @@
     <string name="merchant_name_hint">Nom du magasin</string>
     <string name="lightning_id_hint">ID de magasin selon l\'URL du serveur</string>
     <string name="server_url_hint">L\'URL Tor est de type "'http://..'" \nL\'URL Clearnet est du type "'https://..'"</string>
-    <string name="server_lnbits_url_hint">"'https://...'"</string>
+    <string name="server_lnbits_url_hint">"'https://…'"</string>
     <string name="id_actual">ID actuel: </string>
     <string name="servidor_actual">Serveur actuel: </string>
     <string name="github_repo" ><a href="https://github.com/felipebrunet/btcpayposicripto">Open Source</a></string>

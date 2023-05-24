@@ -38,7 +38,8 @@
     <string name="server_lnbits_url_hint">"'https://…'"</string>
     <string name="id_actual">Current ID: </string>
     <string name="servidor_actual">Current Server: </string>
-    <string name="github_repo" ><a href="https://github.com/felipebrunet/btcpayposicripto">Open Source</a></string>
+    <string name="github_repo" >
+        <a href="https://github.com/felipebrunet/icriptopos">Open Source</a></string>
     <string name="logo_github">Logo Github</string>
     <string name="switch_propinas">Tips</string>
     <string name="init_val_screen">Go to settings</string>

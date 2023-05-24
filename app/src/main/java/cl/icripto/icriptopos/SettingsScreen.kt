@@ -11,10 +11,10 @@ import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isInvisible
 
-class ActividadAjustes : AppCompatActivity() {
+class SettingsScreen : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_actividad_ajustes)
+        setContentView(R.layout.activity_settings_screen)
 
 //        GitHHub Project URL. Make it selectable by user for opening it in the browser
         val textView: TextView = findViewById(R.id.linkGH)
@@ -157,7 +157,7 @@ class ActividadAjustes : AppCompatActivity() {
 //                        Go Back button functionality
                         val returnButton = findViewById<Button>(R.id.go_back_button)
                         returnButton.setOnClickListener {
-                            val intent = Intent(this@ActividadAjustes ,MainActivity::class.java)
+                            val intent = Intent(this@SettingsScreen ,MainActivity::class.java)
                             startActivity(intent)
                         }
 
@@ -231,7 +231,7 @@ class ActividadAjustes : AppCompatActivity() {
 //                        Go Back button functionality
                         val returnButton = findViewById<Button>(R.id.go_back_button)
                         returnButton.setOnClickListener {
-                            val intent = Intent(this@ActividadAjustes ,MainActivity::class.java)
+                            val intent = Intent(this@SettingsScreen ,MainActivity::class.java)
                             startActivity(intent)
                         }
 
@@ -292,7 +292,7 @@ class ActividadAjustes : AppCompatActivity() {
 //                        Go Back button functionality
                         val returnButton = findViewById<Button>(R.id.go_back_button)
                         returnButton.setOnClickListener {
-                            val intent = Intent(this@ActividadAjustes ,MainActivity::class.java)
+                            val intent = Intent(this@SettingsScreen ,MainActivity::class.java)
                             startActivity(intent)
                         }
 

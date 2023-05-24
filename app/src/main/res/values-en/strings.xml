@@ -68,5 +68,6 @@
     <string name="montopagovalor">$150</string>
     <string name="monedapagovalor">CLP</string>
     <string name="motivopagovalor">Lightning payment for Felipe, of Restaurant A</string>
-    <string name="copiar_lightning_invoice">Copy Lightning Invoice</string>
+    <string name="copy_invoice_message">Copy Lightning Invoice</string>
+    <string name="paid_invoice_message">Invoice has been paid!</string>
 </resources>

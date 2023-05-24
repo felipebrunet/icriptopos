@@ -98,7 +98,7 @@ class MainActivity : AppCompatActivity() {
                     if (inputPin.text.isNotEmpty()) {
                         Toast.makeText(this, getString(R.string.saved_pin), Toast.LENGTH_SHORT).show()
                     }
-                    val intent = Intent(this, ActividadAjustes::class.java)
+                    val intent = Intent(this, SettingsScreen::class.java)
                     startActivity(intent)
 
                 }
@@ -112,7 +112,7 @@ class MainActivity : AppCompatActivity() {
 
                     if (inputPin.text.toString() == pin) {
                         Toast.makeText(this, getString(R.string.granted_message), Toast.LENGTH_SHORT).show()
-                        val intent = Intent(this, ActividadAjustes::class.java)
+                        val intent = Intent(this, SettingsScreen::class.java)
                         startActivity(intent)
                     } else {
                         Toast.makeText(this, getString(R.string.denied_message), Toast.LENGTH_SHORT).show()
@@ -266,30 +266,24 @@ class MainActivity : AppCompatActivity() {
                           lnbitsOnChainWalletId: String, amount: Double, merchantName: String,
                           currency: String) {
         if (instance == "BTCPay") {
-            val urlIcripto = "${btcpayServer}/api/v1/invoices?storeId=${btcpayStoreId}&price=${amount}&checkoutDesc=${merchantName}&currency=${currency}"
-            startActivity(Intent.parseUri(urlIcripto, 0))
+            val urlBtcpay = "${btcpayServer}/api/v1/invoices?storeId=${btcpayStoreId}&price=${amount}&checkoutDesc=${merchantName}&currency=${currency}"
+            startActivity(Intent.parseUri(urlBtcpay, 0))
         }
         if (instance == "LNBits") {
-//            Log.d("acoacoaco", "lnbitsserver in main is $lnbitsServer")
             getBtcPrice(currency, amount, lnbitsLnWalletId,
                 lnbitsOnChainWalletId, merchantName,
                 "$lnbitsServer/satspay/", lnbitsInvoiceKey,
                 baseContext)
         }
         if (instance == "Buda") {
-            //        val urlBuda = "https://www.buda.com/api/v2/pay/${server}/invoice?amount=${price}&description=cobro_${nombreLocal}"
             val sharedPreferences : SharedPreferences = getSharedPreferences("sharedPres", Context.MODE_PRIVATE)
             val editor : SharedPreferences.Editor = sharedPreferences.edit()
             editor.apply{
                 putString("PRICE", amount.toString())
             }.apply()
 
-            val intent = Intent(this, ActividadPago::class.java)
+            val intent = Intent(this, BudaPay::class.java)
             startActivity(intent)
-
-
-//        val urlIcripto = "${server}/api/v1/invoices?storeId=${localID}&price=${price}&checkoutDesc=${nombreLocal}&currency=${moneda}"
-//        startActivity(Intent.parseUri(urlBuda, 0))
         }
 
 

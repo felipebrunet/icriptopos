@@ -22,34 +22,29 @@ import org.json.JSONObject
 import java.io.IOException
 import java.util.concurrent.TimeUnit
 
-class ActividadPago : AppCompatActivity() {
+class BudaPay : AppCompatActivity() {
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_actividad_pago)
+        setContentView(R.layout.activity_buda_pay)
         val textView: TextView = findViewById(R.id.linkGH)
         textView.movementMethod = LinkMovementMethod.getInstance()
 
         val defaultPrice = 0.0
         val defaultMerchantName = ""
         val defaultBudaUserName = ""
-//        val defaultMoneda = "CLP"
 
         val sharedPreferences: SharedPreferences =
             getSharedPreferences("sharedPres", Context.MODE_PRIVATE)
         val price = sharedPreferences.getString("PRICE", defaultPrice.toString()).toString().toDouble()
         val merchantName = sharedPreferences.getString("MERCHANTNAME", defaultMerchantName).toString()
         val budaUserName = sharedPreferences.getString("BUDAUSERNAME", defaultBudaUserName).toString()
-//        val moneda = sharedPreferences.getString("LOCALMONEDA", defaultMoneda).toString()
 
         val urlBuda = "https://www.buda.com/api/v2/pay/${budaUserName}/invoice?amount=${price}&description=cobro_${merchantName}"
-//        val checkURL = "http://172.21.6.98:5000"
 
         findViewById<TextView>(R.id.MontoPagoValor).text = "$${price.toInt()}"
-//        findViewById<TextView>(R.id.MonedaPagoValor).text = moneda
         findViewById<TextView>(R.id.MotivoPagoValor).text = "Pago a $merchantName (vendor $budaUserName)"
 
-//        findViewById<ImageView>(R.id.qrcodeimage).setImageBitmap(getQrCodeBitmap("34234234j2l3kjrl23kj"))
 
 
 
@@ -65,10 +60,10 @@ class ActividadPago : AppCompatActivity() {
                     {
                         runOnUiThread {
                             Toast.makeText(
-                                this@ActividadPago,
+                                this@BudaPay,
                                 "Usuario no registrado, revisar en Ajustes y en Buda.com",
                                 Toast.LENGTH_SHORT).show()
-                            val intent = Intent(this@ActividadPago, MainActivity::class.java)
+                            val intent = Intent(this@BudaPay, MainActivity::class.java)
                             startActivity(intent)
                         }
                         throw IOException("Unexpected code $response")
@@ -78,22 +73,13 @@ class ActividadPago : AppCompatActivity() {
                         val resp = response.body!!.string()
                         val invoice: String = JSONObject(resp).getString("encoded_payment_request")
                         val checkId = JSONObject(resp).getString("id")
-                        val monedaCobro = JSONObject(resp).getString("currency")
+                        val currencyCharge = JSONObject(resp).getString("currency")
                         val editor : SharedPreferences.Editor = sharedPreferences.edit()
                         editor.apply{
-                            putString("LOCALCURRENCY", monedaCobro)
+                            putString("LOCALCURRENCY", currencyCharge)
                         }.apply()
-//                        val memo = "Pago de $${price.toInt()} $monedaCobro a $nombreLocal"
-//                        val satsAmount = JSONObject(resp).getString("amount")
-//                        Log.d("Respuesta", invoice)
-//                        Log.d("Respuesta", checkId)
-//                        Log.d("Respuesta", monedaCobro)
-//                        Log.d("Respuesta", memo)
-//                        Log.d("Respuesta", satsAmount)
-//                        Log.d("Respuesta",  "https://realtime.buda.com/sub?channel=lightninginvoices%40$checkId")
-//
                         runOnUiThread {
-                            findViewById<TextView>(R.id.MonedaPagoValor).text = monedaCobro
+                            findViewById<TextView>(R.id.MonedaPagoValor).text = currencyCharge
                             findViewById<ImageView>(R.id.qrcodeimage).setImageBitmap(
                                 getQrCodeBitmap(invoice)
                             )
@@ -102,7 +88,7 @@ class ActividadPago : AppCompatActivity() {
                             copyButton.setOnClickListener {
                                 val clipboard: ClipboardManager =
                                     getSystemService(CLIPBOARD_SERVICE) as ClipboardManager
-                                val clip: ClipData = ClipData.newPlainText("copiar invoice", invoice)
+                                val clip: ClipData = ClipData.newPlainText(getString(R.string.copy_invoice_message), invoice)
                                 clipboard.setPrimaryClip(clip)
                             }
                         }
@@ -127,12 +113,11 @@ class ActividadPago : AppCompatActivity() {
                                     } else {
 
                                         runOnUiThread {
-//                                            Log.d("Respuesta", "El URL encontro respuesta")
                                             findViewById<ImageView>(R.id.qrcodeimage).setImageResource(R.drawable.checkmark)
                                             findViewById<ProgressBar>(R.id.progressBar).isInvisible = true
                                             Toast.makeText(
-                                                this@ActividadPago,
-                                                "Invoice Pagado!",
+                                                this@BudaPay,
+                                                getString(R.string.paid_invoice_message),
                                                 Toast.LENGTH_SHORT
                                             ).show()
                                             val copyButton = findViewById<Button>(R.id.copybutton)

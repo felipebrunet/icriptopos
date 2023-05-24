@@ -2,7 +2,7 @@ package cl.icripto.icriptopos.repositories
 
 
 
-import android.util.Log
+
 import cl.icripto.icriptopos.apis.RestApi
 import cl.icripto.icriptopos.models.InvoiceData
 import retrofit2.Call
@@ -22,12 +22,10 @@ class RestApiService {
         retrofitBuilder.addUser(invoiceKey ,invoiceData).enqueue(
             object : Callback<InvoiceData> {
                 override fun onFailure(call: Call<InvoiceData>, t: Throwable) {
-                    Log.d("holaaaa", "Fallo addUser Retrofit")
                     onResult(null)
                 }
 
                 override fun onResponse(call: Call<InvoiceData>, response: Response<InvoiceData>) {
-                    Log.d("holaaaa", "Funciona adduser Retrofit")
                     val invoice = response.body()
                     onResult(invoice)
                 }

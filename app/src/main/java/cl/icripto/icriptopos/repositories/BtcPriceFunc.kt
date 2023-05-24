@@ -71,28 +71,12 @@ fun getBtcPrice(currency : String, amount : Double,
                 onchainwallet = onChainIdTemp,
                 onchainaddress = null,
                 paid = null,
-                payment_hash = null,
-                payment_request = null,
                 time = 30,
-                time_elapsed = null,
-                time_left = null,
                 timestamp = null,
                 user = null,
                 webhook = webHook,
                 detail = null
             )
-
-//            Log.d("acoaco", "amount is ${invoiceData.amount.toString()}")
-//            Log.d("acoaco", "lnbitswallet is ${invoiceData.lnbitswallet.toString()}")
-//            Log.d("acoaco", "onchainwallet is ${invoiceData.onchainwallet.toString()}")
-//            Log.d("acoaco", invoiceData.webhook.toString())
-//            Log.d("acoaco", invoiceData.completelink.toString())
-//            Log.d("acoaco", invoiceData.completelinktext.toString())
-//            Log.d("acoaco", invoiceData.description.toString())
-
-            Log.d("acoacoaco", "lnbitsserver is $lnbitsServer")
-            Log.d("acoacoaco", "invoice key is $invoiceKey")
-            Log.d("acoacoaco", "invoice data is $invoiceData")
 
             apiService.getInvoice(lnbitsServer, invoiceKey, invoiceData) {
                 if (it?.id != null) {

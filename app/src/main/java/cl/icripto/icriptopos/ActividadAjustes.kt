@@ -95,6 +95,7 @@ class ActividadAjustes : AppCompatActivity() {
         instanceOption.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(p0: AdapterView<*>?) {
             }
+            @SuppressLint("CutPasteId")
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
                 instance = instanceOptions[p2]
 
@@ -154,15 +155,15 @@ class ActividadAjustes : AppCompatActivity() {
 
 
 //                        Go Back button functionality
-                        val volverButton = findViewById<Button>(R.id.go_back_button)
-                        volverButton.setOnClickListener {
+                        val returnButton = findViewById<Button>(R.id.go_back_button)
+                        returnButton.setOnClickListener {
                             val intent = Intent(this@ActividadAjustes ,MainActivity::class.java)
                             startActivity(intent)
                         }
 
 //                        Save button functionality
-                        val guardarButton = findViewById<Button>(R.id.save_button)
-                        guardarButton.setOnClickListener {
+                        val saveButton = findViewById<Button>(R.id.save_button)
+                        saveButton.setOnClickListener {
                             openMainActivitySaved(currency, instance)
                         }
                     }
@@ -228,15 +229,15 @@ class ActividadAjustes : AppCompatActivity() {
 
 
 //                        Go Back button functionality
-                        val volverButton = findViewById<Button>(R.id.go_back_button)
-                        volverButton.setOnClickListener {
+                        val returnButton = findViewById<Button>(R.id.go_back_button)
+                        returnButton.setOnClickListener {
                             val intent = Intent(this@ActividadAjustes ,MainActivity::class.java)
                             startActivity(intent)
                         }
 
 //                        Save button functionality
-                        val guardarButton = findViewById<Button>(R.id.save_button)
-                        guardarButton.setOnClickListener {
+                        val saveButton = findViewById<Button>(R.id.save_button)
+                        saveButton.setOnClickListener {
                             openMainActivitySaved(currency, instance)
                         }
                     }
@@ -289,15 +290,15 @@ class ActividadAjustes : AppCompatActivity() {
 
 
 //                        Go Back button functionality
-                        val volverButton = findViewById<Button>(R.id.go_back_button)
-                        volverButton.setOnClickListener {
+                        val returnButton = findViewById<Button>(R.id.go_back_button)
+                        returnButton.setOnClickListener {
                             val intent = Intent(this@ActividadAjustes ,MainActivity::class.java)
                             startActivity(intent)
                         }
 
 //                        Save button functionality
-                        val guardarButton = findViewById<Button>(R.id.save_button)
-                        guardarButton.setOnClickListener {
+                        val saveButton = findViewById<Button>(R.id.save_button)
+                        saveButton.setOnClickListener {
                             openMainActivitySaved(currency, instance)
                         }
 

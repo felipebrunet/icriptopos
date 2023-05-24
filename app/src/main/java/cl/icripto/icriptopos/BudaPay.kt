@@ -43,7 +43,7 @@ class BudaPay : AppCompatActivity() {
         val urlBuda = "https://www.buda.com/api/v2/pay/${budaUserName}/invoice?amount=${price}&description=cobro_${merchantName}"
 
         findViewById<TextView>(R.id.MontoPagoValor).text = "$${price.toInt()}"
-        findViewById<TextView>(R.id.MotivoPagoValor).text = "Pago a $merchantName (vendor $budaUserName)"
+        findViewById<TextView>(R.id.MotivoPagoValor).text = "$merchantName (vendor $budaUserName)"
 
 
 
@@ -61,7 +61,7 @@ class BudaPay : AppCompatActivity() {
                         runOnUiThread {
                             Toast.makeText(
                                 this@BudaPay,
-                                "Usuario no registrado, revisar en Ajustes y en Buda.com",
+                                getString(R.string.buda_username_error),
                                 Toast.LENGTH_SHORT).show()
                             val intent = Intent(this@BudaPay, MainActivity::class.java)
                             startActivity(intent)

@@ -3,9 +3,9 @@ package cl.icripto.icriptopos.repositories
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
-import android.util.Log
 import android.widget.Toast
 import androidx.core.content.ContextCompat.startActivity
+import cl.icripto.icriptopos.R
 import cl.icripto.icriptopos.apis.BtcPriceInterface
 import cl.icripto.icriptopos.models.InvoiceData
 import cl.icripto.icriptopos.models.PriceObject
@@ -39,7 +39,7 @@ fun getBtcPrice(currency : String, amount : Double,
     val retrofitData = retrofitBuilder.getData()
     retrofitData.enqueue(object : Callback<PriceObject?> {
         override fun onFailure(call: Call<PriceObject?>, t: Throwable) {
-            Log.d("MainActivity", "OnFailure: " + t.message)
+//            Log.d("MainActivity", "OnFailure: " + t.message)
         }
 
         @SuppressLint("SetTextI18n")
@@ -85,7 +85,7 @@ fun getBtcPrice(currency : String, amount : Double,
                     )
 
                 } else {
-                    Toast.makeText(context, "Error registering new user", Toast.LENGTH_LONG).show()
+                    Toast.makeText(context, context.getString(R.string.error_lnbits), Toast.LENGTH_LONG).show()
                 }
             }
 

@@ -13,3 +13,5 @@
 .externalNativeBuild
 .cxx
 local.properties
+/app/release/icriptoPos-release-v1.4.apk
+/app/release/output-metadata.json

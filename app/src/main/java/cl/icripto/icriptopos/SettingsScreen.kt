@@ -22,16 +22,16 @@ class SettingsScreen : AppCompatActivity() {
 
 //        Default values for parameters for both BTCPay and LNBits instances
         val defaultInstance = "BTCPay"
-        val defaultCurrency = "CLP"
+        val defaultCurrency = "USD"
         val defaultMerchantName = "Restaurant A"
         val defaultBtcpayServer = ""
-        val defaultLnbitsServer = "https://lnbits.icripto.cl"
+        val defaultLnbitsServer = ""
         val defaultBtcpayStoreId = ""
-        val defaultLnbitsInvoiceKey = "149e50e346754b9695178a011ddd05e4"
-        val defaultLnbitsLnWalletId = "485dd2ed0cad49cb8e1ffcebe8fdcf8b"
-        val defaultLnbitsOnChainWalletId = "is4ycZfcNdsbRpzVZNv8xs"
+        val defaultLnbitsInvoiceKey = ""
+        val defaultLnbitsLnWalletId = ""
+        val defaultLnbitsOnChainWalletId = ""
         val defaultTips = "no"
-        val defaultBudaUserName = "felipe"
+        val defaultBudaUserName = ""
 
         var currencies: Array<String>
 

@@ -25,13 +25,13 @@ class SettingsScreen : AppCompatActivity() {
         val defaultCurrency = "CLP"
         val defaultMerchantName = "Restaurant A"
         val defaultBtcpayServer = ""
-        val defaultLnbitsServer = ""
+        val defaultLnbitsServer = "https://lnbits.icripto.cl"
         val defaultBtcpayStoreId = ""
-        val defaultLnbitsInvoiceKey = ""
-        val defaultLnbitsLnWalletId = ""
-        val defaultLnbitsOnChainWalletId = ""
+        val defaultLnbitsInvoiceKey = "149e50e346754b9695178a011ddd05e4"
+        val defaultLnbitsLnWalletId = "485dd2ed0cad49cb8e1ffcebe8fdcf8b"
+        val defaultLnbitsOnChainWalletId = "is4ycZfcNdsbRpzVZNv8xs"
         val defaultTips = "no"
-        val defaultBudaUserName = ""
+        val defaultBudaUserName = "felipe"
 
         var currencies: Array<String>
 

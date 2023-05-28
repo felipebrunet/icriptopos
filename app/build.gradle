@@ -11,7 +11,7 @@ android {
         applicationId "cl.icripto.icriptopos"
         minSdk 23
         targetSdk 33
-        versionCode 4
+        versionCode 1
         versionName "1.4"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"

@@ -29,4 +29,7 @@ Feel free to submit PRs and issues.
 Donations via bitcoin lightning:
 LNAddress: felipe@btcpay.icripto.cl
 
+Available at play store:
+https://play.google.com/store/apps/details?id=cl.icripto.icriptopos
+
 

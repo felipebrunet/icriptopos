@@ -7,7 +7,7 @@ import android.widget.Toast
 import androidx.core.content.ContextCompat.startActivity
 import cl.icripto.icriptopos.R
 import cl.icripto.icriptopos.apis.BtcPriceInterface
-import cl.icripto.icriptopos.models.InvoiceData
+import cl.icripto.icriptopos.models.LNBitsInvoiceData
 import cl.icripto.icriptopos.models.PriceObject
 import kotlinx.coroutines.*
 import retrofit2.Call
@@ -49,19 +49,19 @@ fun getBtcPrice(currency : String, amount : Double,
             satsAmount = (btcAmount * 100000000).toLong()
 
 
-            val apiService = RestApiService()
+            val apiService = LNBitsRestApiService()
 
 
             if (satsAmount > limitForOnchain ) {
                 onChainIdTemp = onChainWalletId
             }
 
-            val invoiceData = InvoiceData(
+            val invoiceData = LNBitsInvoiceData(
                 amount = satsAmount,
                 balance = null,
                 completelink = completeLink,
                 completelinktext = callbackMessage,
-                description = merchantName,
+                description = "$amount $currency $merchantName",
                 id = null,
                 lnbitswallet = lnWalletId,
                 onchainwallet = onChainIdTemp,

@@ -1,6 +1,6 @@
 package cl.icripto.icriptopos.models
 
-data class InvoiceData(
+data class LNBitsInvoiceData(
     val amount: Long?,
     val balance: Int?,
     val completelink: String?,

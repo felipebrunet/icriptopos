@@ -1,6 +1,6 @@
 package cl.icripto.icriptopos.apis
 
-import cl.icripto.icriptopos.models.InvoiceData
+import cl.icripto.icriptopos.models.LNBitsInvoiceData
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.Headers
@@ -13,7 +13,7 @@ import retrofit2.http.Query
 interface RestApi {
     @Headers("Content-Type: application/json")
     @POST("api/v1/charge")
-    fun addUser(@Query("api-key") apikey: String, @Body invoiceData: InvoiceData): Call<InvoiceData>
+    fun addUser(@Query("api-key") apikey: String, @Body invoiceData: LNBitsInvoiceData): Call<LNBitsInvoiceData>
 
 }
 

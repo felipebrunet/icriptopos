@@ -4,15 +4,15 @@ package cl.icripto.icriptopos.repositories
 
 
 import cl.icripto.icriptopos.apis.RestApi
-import cl.icripto.icriptopos.models.InvoiceData
+import cl.icripto.icriptopos.models.LNBitsInvoiceData
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-class RestApiService {
-    fun getInvoice (lnbitsServer : String, invoiceKey : String, invoiceData: InvoiceData, onResult: (InvoiceData?) -> Unit) {
+class LNBitsRestApiService {
+    fun getInvoice (lnbitsServer : String, invoiceKey : String, invoiceData: LNBitsInvoiceData, onResult: (LNBitsInvoiceData?) -> Unit) {
         val retrofitBuilder = Retrofit.Builder()
             .addConverterFactory(GsonConverterFactory.create())
             .baseUrl(lnbitsServer)
@@ -20,12 +20,12 @@ class RestApiService {
             .create(RestApi::class.java)
 
         retrofitBuilder.addUser(invoiceKey ,invoiceData).enqueue(
-            object : Callback<InvoiceData> {
-                override fun onFailure(call: Call<InvoiceData>, t: Throwable) {
+            object : Callback<LNBitsInvoiceData> {
+                override fun onFailure(call: Call<LNBitsInvoiceData>, t: Throwable) {
                     onResult(null)
                 }
 
-                override fun onResponse(call: Call<InvoiceData>, response: Response<InvoiceData>) {
+                override fun onResponse(call: Call<LNBitsInvoiceData>, response: Response<LNBitsInvoiceData>) {
                     val invoice = response.body()
                     onResult(invoice)
                 }

@@ -15,7 +15,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.ContextCompat
-import cl.icripto.icriptopos.repositories.getBtcPrice
+import cl.icripto.icriptopos.repositories.payLNBits
 
 class MainActivity : AppCompatActivity() {
     @SuppressLint("MissingInflatedId", "SetTextI18n")
@@ -227,7 +227,7 @@ class MainActivity : AppCompatActivity() {
                               lnbitsLnWalletId: String, budaUserName: String): Boolean {
         return when (currentInstance) {
             "BTCPay" -> !(btcpayServer == "" || btcpayStoreId == "")
-            "LNBits" -> !(lnbitsServer == "" || lnbitsInvoiceKey == "" || lnbitsLnWalletId == "")
+            "LNBits API" -> !(lnbitsServer == "" || lnbitsInvoiceKey == "" || lnbitsLnWalletId == "")
             "Buda" -> budaUserName.isNotEmpty()
             else -> false
         }
@@ -271,8 +271,8 @@ class MainActivity : AppCompatActivity() {
             val urlBtcpay = "${btcpayServer}/api/v1/invoices?storeId=${btcpayStoreId}&price=${amount}&checkoutDesc=${merchantName}&currency=${currency}"
             startActivity(Intent.parseUri(urlBtcpay, 0))
         }
-        if (instance == "LNBits") {
-            getBtcPrice(currency, amount, lnbitsLnWalletId,
+        if (instance == "LNBits API") {
+            payLNBits(currency, amount, lnbitsLnWalletId,
                 lnbitsOnChainWalletId, merchantName,
                 "$lnbitsServer/satspay/", lnbitsInvoiceKey,
                 baseContext)

@@ -25,6 +25,7 @@ class SettingsScreen : AppCompatActivity() {
         val defaultCurrency = "USD"
         val defaultMerchantName = "Restaurant A"
         val defaultBtcpayServer = ""
+        val defaultBtcpayApiKey = ""
         val defaultLnbitsServer = ""
         val defaultBtcpayStoreId = ""
         val defaultLnbitsInvoiceKey = ""
@@ -42,6 +43,7 @@ class SettingsScreen : AppCompatActivity() {
         val savedMerchantName: String? = sharedPreferences.getString("MERCHANTNAME", defaultMerchantName)
         val savedCurrency: String? = sharedPreferences.getString("LOCALCURRENCY", defaultCurrency)
         val savedBtcpayServer: String? = sharedPreferences.getString("BTCPAYSERVER", defaultBtcpayServer)
+        val savedBtcpayApiKey: String? = sharedPreferences.getString("BTCPAYAPIKEY", defaultBtcpayApiKey)
         val savedLnbitsServer: String? = sharedPreferences.getString("LNBITSSERVER", defaultLnbitsServer)
         val savedBtcpayStoreId: String? = sharedPreferences.getString("BTCPAYSTORE", defaultBtcpayStoreId)
         val savedLnbitsInvoiceKey = sharedPreferences.getString("LNBITSINVOICEKEY", defaultLnbitsInvoiceKey)
@@ -85,9 +87,9 @@ class SettingsScreen : AppCompatActivity() {
 //        Functionality of Instance selection spinner
         val instanceOption : Spinner = findViewById(R.id.spinner_instances)
         val instanceOptions : Array<String> = if (savedInstance == null) {
-            arrayOf("BTCPay", "LNBits", "Buda")
+            arrayOf("BTCPay", "BTCPay API", "LNBits API", "Buda")
         } else {
-            arrayOf(savedInstance) + arrayOf("BTCPay", "LNBits", "Buda").filter{s -> s != savedInstance}
+            arrayOf(savedInstance) + arrayOf("BTCPay", "BTCPay API", "LNBits API", "Buda").filter{s -> s != savedInstance}
         }
         var instance: String
 
@@ -168,7 +170,7 @@ class SettingsScreen : AppCompatActivity() {
                         }
                     }
 
-                    "LNBits" -> {
+                    "LNBits API" -> {
 
                         currencies = arrayOf("USD", "EUR", "AED", "ARS", "AUD", "BRL",
                             "CAD", "CHF", "CLP", "CNY", "GBP", "INR",
@@ -356,7 +358,7 @@ class SettingsScreen : AppCompatActivity() {
                 Toast.makeText(this, R.string.data_saved, Toast.LENGTH_SHORT).show()
 
             }
-            "LNBits" -> {
+            "LNBits API" -> {
                 val lnbitsServer : String = findViewById<EditText>(R.id.server_url).text.toString()
                 val lnbitsInvoiceKey : String = findViewById<EditText>(R.id.lightning_id).text.toString()
                 val lnbitsLnWalletId : String = findViewById<EditText>(R.id.ln_wallet_id).text.toString()

@@ -17,11 +17,11 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 @SuppressLint("SetTextI18n")
-fun getBtcPrice(currency : String, amount : Double,
-                lnWalletId : String, onChainWalletId : String,
-                merchantName : String, lnbitsServer : String,
-                invoiceKey : String,
-                context: Context) {
+fun payLNBits(currency : String, amount : Double,
+              lnWalletId : String, onChainWalletId : String,
+              merchantName : String, lnbitsServer : String,
+              invoiceKey : String,
+              context: Context) {
     var satsAmount: Long
     val webHook = ""
     val completeLink = ""

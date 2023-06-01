@@ -170,6 +170,81 @@ class SettingsScreen : AppCompatActivity() {
                         }
                     }
 
+                    "BTCPay API" -> {
+
+                        currencies = arrayOf("USD", "EUR", "AED", "ARS", "AUD", "BRL",
+                            "CAD", "CHF", "CLP", "CNY", "GBP", "INR",
+                            "JPY", "KRW", "MXN", "NGN", "RUB", "ZAR", "BTC")
+
+                        val currencyOption : Spinner = findViewById(R.id.spinner_currencies)
+                        val currencyOptions : Array<String> =
+                            if (savedCurrency == null) {
+                                currencies
+                            } else { arrayOf(savedCurrency) + currencies.filter{it != savedCurrency}
+                            }
+                        var currency : String = savedCurrency.toString()
+                        currencyOption.adapter = ArrayAdapter(baseContext, android.R.layout.simple_list_item_1, currencyOptions)
+                        currencyOption.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+                            override fun onNothingSelected(p0: AdapterView<*>?) {
+                            }
+                            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+                                currency = currencyOptions[p2]
+
+
+                            }
+                        }
+
+
+//                        Set currency selector visible
+                        findViewById<TextView>(R.id.currency_title).isInvisible = false
+                        findViewById<FrameLayout>(R.id.frame_layout_currency).isInvisible = false
+
+//                        Set store title visible
+                        findViewById<EditText>(R.id.store_title).isInvisible = false
+                        findViewById<EditText>(R.id.lightning_id).isInvisible = false
+
+//                        Set BTCPay API key Visible
+                        findViewById<TextView>(R.id.ln_wallet_id_title).isInvisible = false
+                        findViewById<EditText>(R.id.ln_wallet_id).isInvisible = false
+
+//                        Hide Lnbits text views and boxes
+                        findViewById<EditText>(R.id.onchain_wallet_id_title).isInvisible = true
+                        findViewById<EditText>(R.id.onchain_wallet_id).isInvisible = true
+
+
+//                        Fill boxes with parameters that were loaded
+                        findViewById<TextView>(R.id.server_title).setText(R.string.enter_server)
+                        findViewById<EditText>(R.id.server_url).setText(savedBtcpayServer)
+                        findViewById<EditText>(R.id.server_url).setHint(R.string.server_url_hint)
+
+                        findViewById<TextView>(R.id.store_title).setText(R.string.enter_lightning_id)
+                        findViewById<EditText>(R.id.lightning_id).setText(savedBtcpayStoreId)
+                        findViewById<EditText>(R.id.lightning_id).setHint(R.string.lightning_id_hint)
+
+
+                        findViewById<TextView>(R.id.ln_wallet_id_title).setText(R.string.enter_btcpay_api_key)
+                        findViewById<EditText>(R.id.ln_wallet_id).setText(savedBtcpayApiKey)
+                        findViewById<EditText>(R.id.ln_wallet_id).setHint(R.string.btcpay_api_key_hint)
+
+                        findViewById<EditText>(R.id.merchant_name).setText(savedMerchantName)
+                        findViewById<Switch>(R.id.tips1).isChecked = tips == "yes"
+
+
+//                        Go Back button functionality
+                        val returnButton = findViewById<Button>(R.id.go_back_button)
+                        returnButton.setOnClickListener {
+                            val intent = Intent(this@SettingsScreen ,MainActivity::class.java)
+                            startActivity(intent)
+                        }
+
+//                        Save button functionality
+                        val saveButton = findViewById<Button>(R.id.save_button)
+                        saveButton.setOnClickListener {
+                            openMainActivitySaved(currency, instance)
+                        }
+                    }
+
+
                     "LNBits API" -> {
 
                         currencies = arrayOf("USD", "EUR", "AED", "ARS", "AUD", "BRL",
@@ -358,6 +433,40 @@ class SettingsScreen : AppCompatActivity() {
                 Toast.makeText(this, R.string.data_saved, Toast.LENGTH_SHORT).show()
 
             }
+
+            "BTCPay API" -> {
+                val btcpayServer : String = findViewById<EditText>(R.id.server_url).text.toString()
+                val storeId : String = findViewById<EditText>(R.id.lightning_id).text.toString()
+                val btcpayApiKey : String = findViewById<EditText>(R.id.ln_wallet_id).text.toString()
+                val merchantName : String = findViewById<EditText>(R.id.merchant_name).text.toString()
+                val sharedPreferences : SharedPreferences = getSharedPreferences("sharedPres", Context.MODE_PRIVATE)
+                val editor : SharedPreferences.Editor = sharedPreferences.edit()
+                editor.apply{
+                    putString("LOCALCURRENCY", currency)
+                }.apply()
+                editor.apply{
+                    putString("BTCPAYSERVER", btcpayServer)
+                }.apply()
+                editor.apply{
+                    putString("BTCPAYSTORE", storeId)
+                }.apply()
+                editor.apply{
+                    putString("BTCPAYAPIKEY", btcpayApiKey)
+                }.apply()
+                editor.apply{
+                    putString("MERCHANTNAME", merchantName)
+                }.apply()
+                editor.apply{
+                    putString("STATUSTIPS", tips)
+                }.apply()
+                editor.apply{
+                    putString("INSTANCE", instance)
+                }.apply()
+
+                Toast.makeText(this, R.string.data_saved, Toast.LENGTH_SHORT).show()
+
+            }
+
             "LNBits API" -> {
                 val lnbitsServer : String = findViewById<EditText>(R.id.server_url).text.toString()
                 val lnbitsInvoiceKey : String = findViewById<EditText>(R.id.lightning_id).text.toString()

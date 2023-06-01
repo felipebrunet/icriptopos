@@ -19,6 +19,8 @@
     <string name="moneda_inicial">CLP</string>
     <string name="nombre_tienda">Restaurant A</string>
     <string name="enter_server">Ingrese la URL del servidor BTCPay: (requerido)</string>
+    <string name="enter_btcpay_api_key">Ingrese API key de BTCPay: (requerido)</string>
+    <string name="btcpay_api_key_hint">API key</string>
     <string name="enter_buda_username">Ingrese usuario link de pago Buda: (requerido)</string>
     <string name="buda_username">Sólo el nombre: buda.com/link/{nombre}</string>
     <string name="enter_server_lnbits">Ingrese la URL del servidor LNBits: (requerido)</string>

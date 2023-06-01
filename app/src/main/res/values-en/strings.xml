@@ -21,6 +21,8 @@
     <string name="moneda_inicial">USD</string>
     <string name="nombre_tienda">Restaurant A</string>
     <string name="enter_server">Enter BTCPay server URL: (required)</string>
+    <string name="enter_btcpay_api_key">Enter BTCPay API Key: (required)</string>
+    <string name="btcpay_api_key_hint">API key</string>
     <string name="enter_buda_username">Enter Buda payment link Username: (required)</string>
     <string name="buda_username">Only the name: buda.com/link/{name}</string>
     <string name="enter_server_lnbits">Enter LNBits server URL: (required)</string>

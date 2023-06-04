@@ -6,7 +6,6 @@ import android.content.Intent
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.util.TypedValue
 import android.view.ContextThemeWrapper
 import android.widget.Button
@@ -277,20 +276,24 @@ class MainActivity : AppCompatActivity() {
             val urlBtcpay = "${btcpayServer}/api/v1/invoices?storeId=${btcpayStoreId}&price=${amount}&checkoutDesc=${merchantName}&currency=${currency}"
             startActivity(Intent.parseUri(urlBtcpay, 0))
         }
-        if (instance == "BTCPay API") {
 
+        if (instance == "BTCPay API") {
             val corr1 = CoroutineScope(Dispatchers.IO)
             corr1.launch {
-                val link = payBTCPay(amount.toString(), currency,
-                    btcpayStoreId, btcpayApiKey, btcpayServer)
-
+                val link = payBTCPay(
+                    amount.toString(), currency,
+                    btcpayStoreId, btcpayApiKey, btcpayServer
+                )
                 withContext(Dispatchers.Main) {
-                    Log.d("acoacoaco", "este es el link desde main $link")
-//                    Toast.makeText(baseContext, "El link es $link", Toast.LENGTH_SHORT).show()
-                    startActivity(Intent.parseUri(link, 0), null)
+                    if (link != "Error") {
+                        startActivity(Intent.parseUri(link, 0), null)
+                    } else {
+                        Toast.makeText(baseContext, "Error API BTCPay", Toast.LENGTH_SHORT).show()
+                    }
                 }
             }
         }
+
         if (instance == "LNBits API") {
             payLNBits(currency, amount, lnbitsLnWalletId,
                 lnbitsOnChainWalletId, merchantName,

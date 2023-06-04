@@ -21,20 +21,25 @@ suspend fun payBTCPay(amount: String, currency: String,
         val currency: String
     )
 
-    val client = HttpClient(CIO)
-    val response: HttpResponse = client.post {
-        url {
-            protocol = URLProtocol.HTTPS
-            host = btcpayServer.substring(8, btcpayServer.length)
-            path("api/v1/stores/$btcpayStoreId/invoices")
+    try {
+        val client = HttpClient(CIO)
+        val response: HttpResponse = client.post {
+            url {
+                protocol = URLProtocol.HTTPS
+                host = btcpayServer.substring(8, btcpayServer.length)
+                path("api/v1/stores/$btcpayStoreId/invoices")
+            }
+            headers {
+                append(HttpHeaders.Authorization, "token $btcpayApiKey")
+                append(HttpHeaders.ContentType, "application/json")
+            }
+            setBody("{\"amount\": \"$amount\", \"currency\": \"$currency\"}")
         }
-        headers {
-            append(HttpHeaders.Authorization, "token $btcpayApiKey")
-            append(HttpHeaders.ContentType, "application/json")
-        }
-        setBody("{\"amount\": \"$amount\", \"currency\": \"$currency\"}")
+        val link = Gson().fromJson(response.bodyAsText(), CheckoutData::class.java).checkoutLink
+        client.close()
+        return link
+
+    } catch (error : Exception) {
+        return "Error"
     }
-    val link = Gson().fromJson(response.bodyAsText(), CheckoutData::class.java).checkoutLink
-    client.close()
-    return link
 }

@@ -6,6 +6,7 @@ import android.content.Intent
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.util.TypedValue
 import android.view.ContextThemeWrapper
 import android.widget.Button
@@ -15,7 +16,9 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.ContextCompat
+import cl.icripto.icriptopos.repositories.payBTCPay
 import cl.icripto.icriptopos.repositories.payLNBits
+import kotlinx.coroutines.*
 
 class MainActivity : AppCompatActivity() {
     @SuppressLint("MissingInflatedId", "SetTextI18n")
@@ -274,6 +277,20 @@ class MainActivity : AppCompatActivity() {
             val urlBtcpay = "${btcpayServer}/api/v1/invoices?storeId=${btcpayStoreId}&price=${amount}&checkoutDesc=${merchantName}&currency=${currency}"
             startActivity(Intent.parseUri(urlBtcpay, 0))
         }
+        if (instance == "BTCPay API") {
+
+            val corr1 = CoroutineScope(Dispatchers.IO)
+            corr1.launch {
+                val link = payBTCPay(amount.toString(), currency,
+                    btcpayStoreId, btcpayApiKey, btcpayServer)
+
+                withContext(Dispatchers.Main) {
+                    Log.d("acoacoaco", "este es el link desde main $link")
+//                    Toast.makeText(baseContext, "El link es $link", Toast.LENGTH_SHORT).show()
+                    startActivity(Intent.parseUri(link, 0), null)
+                }
+            }
+        }
         if (instance == "LNBits API") {
             payLNBits(currency, amount, lnbitsLnWalletId,
                 lnbitsOnChainWalletId, merchantName,
@@ -286,7 +303,6 @@ class MainActivity : AppCompatActivity() {
             editor.apply{
                 putString("PRICE", amount.toString())
             }.apply()
-
             val intent = Intent(this, BudaPay::class.java)
             startActivity(intent)
         }

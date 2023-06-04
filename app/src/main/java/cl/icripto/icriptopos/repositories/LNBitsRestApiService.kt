@@ -3,7 +3,7 @@ package cl.icripto.icriptopos.repositories
 
 
 
-import cl.icripto.icriptopos.apis.RestApi
+import cl.icripto.icriptopos.apis.LNBitsRestApi
 import cl.icripto.icriptopos.models.LNBitsInvoiceData
 import retrofit2.Call
 import retrofit2.Callback
@@ -17,7 +17,7 @@ class LNBitsRestApiService {
             .addConverterFactory(GsonConverterFactory.create())
             .baseUrl(lnbitsServer)
             .build()
-            .create(RestApi::class.java)
+            .create(LNBitsRestApi::class.java)
 
         retrofitBuilder.addUser(invoiceKey ,invoiceData).enqueue(
             object : Callback<LNBitsInvoiceData> {

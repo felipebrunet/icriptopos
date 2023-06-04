@@ -75,5 +75,6 @@
     <string name="paid_invoice_message">Invoice has been paid!</string>
     <string name="loading_message">Loading</string>
     <string name="error_lnbits">Error Lnbits</string>
+    <string name="error_btcpay">Error BTCPay API</string>
     <string name="buda_username_error">Unregistered user, check in Settings and Buda.com</string>
 </resources>

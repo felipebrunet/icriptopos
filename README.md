@@ -12,6 +12,7 @@ The terminal currently supports:
 - "BTCPay": Connection to BTCPay Server for accepting payments in bitcoin (onchain and lightning + NFC, plus altcoins via plugins). This option uses the pay button. Clearnet and Tor servers.
 - "LNBits API": Connection to LNBits Server for accepting payments in bitcoin (onchain and lightning). Clearnet servers only.
 - "BUDA": Connection to buda.com for accepting payments in bitcoin (lightning only).
+- Next release will support Australian exchange Bitaroo. 
 
 Payments to onchain addresses are usually detected/recognised by evaluating the balance of the given address. Therefore, it is essential that the onchain master public key (Xpub, Zpub) used to configure the onchain payments, only has empty addresses (addresses with zero balance) when setting it up, and make sure you only use that master public key for this purpose.
 For example, use the <<M84/0/0/3>> derivation path for the btcpay server onchain wallet only, and the <<M84/0/0/4>> derivation path the lnbits onchain wallet. Do not use the same derivation path for more than one system.

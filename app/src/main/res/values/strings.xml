@@ -76,7 +76,8 @@
     <string name="loading_message">Cargando</string>
     <string name="error_lnbits">Error Lnbits</string>
     <string name="error_btcpay">Error BTCPay API</string>
-
+    <string name="bitaroo_amount">1.00</string>
+    <string name="bitaroo_currency">AUD</string>
     <string name="buda_username_error">Usuario no registrado, revisar en Ajustes y en Buda.com</string>
 
 </resources>

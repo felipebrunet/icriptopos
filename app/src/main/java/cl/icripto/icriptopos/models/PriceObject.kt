@@ -12,3 +12,9 @@ data class Request(
     val from: String,
     val to: String
 )
+
+data class BitarooCheckoutData(
+    val qr: String,
+    val amount: String,
+    val invoice: String
+)

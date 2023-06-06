@@ -33,6 +33,7 @@ class SettingsScreen : AppCompatActivity() {
         val defaultLnbitsOnChainWalletId = ""
         val defaultTips = "no"
         val defaultBudaUserName = ""
+        val defaultBitarooApiKey = ""
 
         var currencies: Array<String>
 
@@ -50,27 +51,8 @@ class SettingsScreen : AppCompatActivity() {
         val savedLnbitsLnWalletId = sharedPreferences.getString("LNBITSLNWALLETID", defaultLnbitsLnWalletId)
         val savedLnbitsOnChainWalletId = sharedPreferences.getString("LNBITSONCHAINWALLETID", defaultLnbitsOnChainWalletId)
         val savedBudaUserName = sharedPreferences.getString("BUDAUSERNAME", defaultBudaUserName)
+        val savedBitarooApiKey = sharedPreferences.getString("BITAROOAPIKEY", defaultBitarooApiKey)
         val tips : String? = sharedPreferences.getString("STATUSTIPS", defaultTips)
-
-
-//        val currencyOption : Spinner = findViewById(R.id.spinner_currencies)
-//        val currencyOptions : Array<String> =
-//            if (savedCurrency == null) {
-//                currencies
-//            } else { arrayOf(savedCurrency) + currencies
-//        }
-//        var currency : String = savedCurrency.toString()
-//        currencyOption.adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, currencyOptions)
-//        currencyOption.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-//            override fun onNothingSelected(p0: AdapterView<*>?) {
-//            }
-//            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-//                currency = currencyOptions[p2]
-//
-//
-//            }
-//        }
-
 
         val resetPinButton = findViewById<Button>(R.id.delete_pin_button)
         resetPinButton.setOnClickListener {
@@ -87,9 +69,9 @@ class SettingsScreen : AppCompatActivity() {
 //        Functionality of Instance selection spinner
         val instanceOption : Spinner = findViewById(R.id.spinner_instances)
         val instanceOptions : Array<String> = if (savedInstance == null) {
-            arrayOf("BTCPay", "BTCPay API", "LNBits API", "Buda")
+            arrayOf("BTCPay", "BTCPay API", "LNBits API", "Buda", "Bitaroo")
         } else {
-            arrayOf(savedInstance) + arrayOf("BTCPay", "BTCPay API", "LNBits API", "Buda").filter{s -> s != savedInstance}
+            arrayOf(savedInstance) + arrayOf("BTCPay", "BTCPay API", "LNBits API", "Buda", "Bitaroo").filter{s -> s != savedInstance}
         }
         var instance: String
 
@@ -378,10 +360,73 @@ class SettingsScreen : AppCompatActivity() {
                         saveButton.setOnClickListener {
                             openMainActivitySaved(currency, instance)
                         }
-
-
-
                     }
+
+                    "Bitaroo" -> {
+
+                        currencies = arrayOf("USD", "EUR", "AED", "ARS", "AUD", "BRL",
+                            "CAD", "CHF", "CLP", "CNY", "GBP", "INR",
+                            "JPY", "KRW", "MXN", "NGN", "RUB", "ZAR", "BTC")
+
+                        val currencyOption : Spinner = findViewById(R.id.spinner_currencies)
+                        val currencyOptions : Array<String> =
+                            if (currencies.contains(savedCurrency) && savedCurrency != null) {
+                                arrayOf(savedCurrency) + currencies.filter{it != savedCurrency}
+                            } else {
+                                currencies
+                            }
+                        var currency : String = savedCurrency.toString()
+                        currencyOption.adapter = ArrayAdapter(baseContext, android.R.layout.simple_list_item_1, currencyOptions)
+                        currencyOption.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+                            override fun onNothingSelected(p0: AdapterView<*>?) {
+                            }
+                            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+                                currency = currencyOptions[p2]
+
+
+                            }
+                        }
+
+
+//                        Set currency selector visible
+                        findViewById<TextView>(R.id.currency_title).isInvisible = false
+                        findViewById<FrameLayout>(R.id.frame_layout_currency).isInvisible = false
+
+
+//                        Hide Lnbits text views and boxes
+                        findViewById<TextView>(R.id.ln_wallet_id_title).isInvisible = true
+                        findViewById<EditText>(R.id.ln_wallet_id).isInvisible = true
+                        findViewById<EditText>(R.id.onchain_wallet_id_title).isInvisible = true
+                        findViewById<EditText>(R.id.onchain_wallet_id).isInvisible = true
+                        findViewById<EditText>(R.id.store_title).isInvisible = true
+                        findViewById<EditText>(R.id.lightning_id).isInvisible = true
+
+//                        Fill boxes with parameters that were loaded
+                        findViewById<TextView>(R.id.server_title).setText(R.string.enter_buda_username)
+                        findViewById<EditText>(R.id.server_url).setText(savedBitarooApiKey)
+                        findViewById<EditText>(R.id.server_url).setHint(R.string.buda_username)
+
+//                        Restaurant name
+                        findViewById<EditText>(R.id.merchant_name).setText(savedMerchantName)
+                        findViewById<Switch>(R.id.tips1).isChecked = tips == "yes"
+
+
+//                        Go Back button functionality
+                        val returnButton = findViewById<Button>(R.id.go_back_button)
+                        returnButton.setOnClickListener {
+                            val intent = Intent(this@SettingsScreen ,MainActivity::class.java)
+                            startActivity(intent)
+                        }
+
+//                        Save button functionality
+                        val saveButton = findViewById<Button>(R.id.save_button)
+                        saveButton.setOnClickListener {
+                            openMainActivitySaved(currency, instance)
+                        }
+                    }
+
+
+
                 }
             }
         }

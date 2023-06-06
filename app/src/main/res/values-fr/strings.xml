@@ -79,5 +79,8 @@
     <string name="bitaroo_amount">1.00</string>
     <string name="bitaroo_currency">AUD</string>
     <string name="buda_username_error">Utilisateur non enregistré, archivez Paramètres et Buda.com</string>
+    <string name="enter_bitaroo_apikey">Enter Bitaroo full access Api Key: (required)</string>
+    <string name="bitaroo_apikey">Bitaroo Api Key: key_id:key_secret</string>
+
 
 </resources>

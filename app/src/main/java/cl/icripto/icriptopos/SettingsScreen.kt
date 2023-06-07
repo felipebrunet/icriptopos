@@ -402,9 +402,9 @@ class SettingsScreen : AppCompatActivity() {
                         findViewById<EditText>(R.id.lightning_id).isInvisible = true
 
 //                        Fill boxes with parameters that were loaded
-                        findViewById<TextView>(R.id.server_title).setText(R.string.enter_buda_username)
+                        findViewById<TextView>(R.id.server_title).setText(R.string.enter_bitaroo_apikey)
                         findViewById<EditText>(R.id.server_url).setText(savedBitarooApiKey)
-                        findViewById<EditText>(R.id.server_url).setHint(R.string.buda_username)
+                        findViewById<EditText>(R.id.server_url).setHint(R.string.bitaroo_apikey)
 
 //                        Restaurant name
                         findViewById<EditText>(R.id.merchant_name).setText(savedMerchantName)
@@ -575,6 +575,33 @@ class SettingsScreen : AppCompatActivity() {
                 Toast.makeText(this, R.string.data_saved, Toast.LENGTH_SHORT).show()
 
             }
+
+            "Bitaroo" -> {
+                val bitarooApiKey : String = findViewById<EditText>(R.id.server_url).text.toString()
+                val merchantName : String = findViewById<EditText>(R.id.merchant_name).text.toString()
+                val sharedPreferences : SharedPreferences = getSharedPreferences("sharedPres", Context.MODE_PRIVATE)
+                val editor : SharedPreferences.Editor = sharedPreferences.edit()
+                editor.apply{
+                    putString("LOCALCURRENCY", currency)
+                }.apply()
+                editor.apply{
+                    putString("BITAROOAPIKEY", bitarooApiKey)
+                }.apply()
+                editor.apply{
+                    putString("MERCHANTNAME", merchantName)
+                }.apply()
+                editor.apply{
+                    putString("STATUSTIPS", tips)
+                }.apply()
+                editor.apply{
+                    putString("INSTANCE", instance)
+                }.apply()
+
+//                Toast.makeText(this, "${R.string.data_saved} ${budaUserName.isNotEmpty()}", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, R.string.data_saved, Toast.LENGTH_SHORT).show()
+
+            }
+
         }
     }
 }

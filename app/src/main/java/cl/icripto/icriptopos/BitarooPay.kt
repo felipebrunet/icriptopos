@@ -1,12 +1,11 @@
 package cl.icripto.icriptopos
 
-import android.content.ClipData
-import android.content.ClipboardManager
-import android.content.Intent
+import android.content.*
 import android.graphics.Bitmap
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.method.LinkMovementMethod
 import android.widget.*
 import androidx.core.view.isInvisible
 import cl.icripto.icriptopos.models.BitarooCheckoutData
@@ -29,14 +28,29 @@ class BitarooPay : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_bitaroo_pay)
 
-        val currency = "CLP"
-        val amountFiat = "3"
+        val textView: TextView = findViewById(R.id.linkGH)
+        textView.movementMethod = LinkMovementMethod.getInstance()
+
+        val defaultamountFiat = "1.0"
+        val defaultCurrency = "AUD"
+        val defaultMerchantName = ""
+        val defaultBitarooApiKey = ""
+
+        val sharedPreferences: SharedPreferences =
+            getSharedPreferences("sharedPres", Context.MODE_PRIVATE)
+        val amountFiat = sharedPreferences.getString("PRICE", defaultamountFiat)
+        val merchantName = sharedPreferences.getString("MERCHANTNAME", defaultMerchantName).toString()
+        val apiKeyBitaroo = "Bearer ${sharedPreferences.getString("BITAROOAPIKEY", defaultBitarooApiKey).toString()}"
+        val currency = sharedPreferences.getString("LOCALCURRENCY", defaultCurrency).toString()
         val urlBitaroo = "https://api.bitaroo.com.au"
         val pathBitaroo = "v1/payments/ln-invoice"
-        val apiKeyBitaroo = "Bearer yeQXq39oQLaHYTLP.yyWP__BJS1SVB3HMXsgcxGNn7UQXS3n9WhNfTFrw"
+//        val currency = "CLP"
+//        val amountFiat = "3"
+//        val apiKeyBitaroo = "Bearer yeQXq39oQLaHYTLP.yyWP__BJS1SVB3HMXsgcxGNn7UQXS3n9WhNfTFrw"
         val btcPriceUrl = "https://api.yadio.io/convert/$amountFiat/$currency/BTC"
         findViewById<TextView>(R.id.MonedaPagoValor).text = currency
         findViewById<TextView>(R.id.MontoPagoValor).text = amountFiat
+        findViewById<TextView>(R.id.MotivoPagoValor).text = merchantName
 
         val priceClient = HttpClient(CIO)
         val corr1 = CoroutineScope(Dispatchers.IO)

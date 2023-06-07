@@ -55,6 +55,7 @@ class MainActivity : AppCompatActivity() {
         val defaultBtcpayApiKey = ""
         val defaultLnbitsServer = ""
         val defaultBudaUserName = ""
+        val defaultBitarooApiKey = ""
         val defaultBtcpayStoreId = ""
         val defaultLnbitsInvoiceKey = ""
         val defaultLnbitsLnWalletId = ""
@@ -70,9 +71,10 @@ class MainActivity : AppCompatActivity() {
         val instance = sharedPreferences.getString("INSTANCE", defaultInstance).toString()
         val currency = sharedPreferences.getString("LOCALCURRENCY", defaultCurrency).toString()
         val merchantName = sharedPreferences.getString("MERCHANTNAME", defaultMerchantName).toString()
-        val btcpayServer= sharedPreferences.getString("BTCPAYSERVER", defaultBtcpayServer).toString()
-        val lnbitsServer= sharedPreferences.getString("LNBITSSERVER", defaultLnbitsServer).toString()
-        val budaUserName= sharedPreferences.getString("BUDAUSERNAME", defaultBudaUserName).toString()
+        val btcpayServer = sharedPreferences.getString("BTCPAYSERVER", defaultBtcpayServer).toString()
+        val lnbitsServer = sharedPreferences.getString("LNBITSSERVER", defaultLnbitsServer).toString()
+        val budaUserName = sharedPreferences.getString("BUDAUSERNAME", defaultBudaUserName).toString()
+        val bitarooApiKey = sharedPreferences.getString("BITAROOAPIKEY", defaultBitarooApiKey).toString()
         val btcpayStoreId = sharedPreferences.getString("BTCPAYSTORE", defaultBtcpayStoreId).toString()
         val btcpayApiKey = sharedPreferences.getString("BTCPAYAPIKEY", defaultBtcpayApiKey).toString()
         val lnbitsInvoiceKey = sharedPreferences.getString("LNBITSINVOICEKEY", defaultLnbitsInvoiceKey).toString()
@@ -132,7 +134,9 @@ class MainActivity : AppCompatActivity() {
         findViewById<TextView>(R.id.currency).text = currency
         findViewById<TextView>(R.id.merchant_title).text = merchantName
 
-        if (!checkSettings(instance, btcpayServer, btcpayStoreId, btcpayApiKey, lnbitsServer, lnbitsInvoiceKey, lnbitsLnWalletId, budaUserName)) {
+        if (!checkSettings(instance, btcpayServer, btcpayStoreId,
+                btcpayApiKey, lnbitsServer, lnbitsInvoiceKey,
+                lnbitsLnWalletId, budaUserName, bitarooApiKey)) {
             input.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20.0F)
             input.text = addToInputText(initMessage, input)
         }
@@ -228,12 +232,14 @@ class MainActivity : AppCompatActivity() {
 
     private fun checkSettings(currentInstance: String, btcpayServer: String,
                               btcpayStoreId: String, btcpayApiKey: String, lnbitsServer: String, lnbitsInvoiceKey: String,
-                              lnbitsLnWalletId: String, budaUserName: String): Boolean {
+                              lnbitsLnWalletId: String, budaUserName: String, bitarooApiKey: String): Boolean {
         return when (currentInstance) {
             "BTCPay" -> !(btcpayServer == "" || btcpayStoreId == "")
             "BTCPay API" -> !(btcpayServer == "" || btcpayStoreId == "" || btcpayApiKey == "")
             "LNBits API" -> !(lnbitsServer == "" || lnbitsInvoiceKey == "" || lnbitsLnWalletId == "")
             "Buda" -> budaUserName.isNotEmpty()
+            "Bitaroo" -> bitarooApiKey.isNotEmpty()
+
             else -> false
         }
     }
@@ -309,6 +315,17 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this, BudaPay::class.java)
             startActivity(intent)
         }
+
+        if (instance == "Bitaroo") {
+            val sharedPreferences : SharedPreferences = getSharedPreferences("sharedPres", Context.MODE_PRIVATE)
+            val editor : SharedPreferences.Editor = sharedPreferences.edit()
+            editor.apply{
+                putString("PRICE", amount.toString())
+            }.apply()
+            val intent = Intent(this, BitarooPay::class.java)
+            startActivity(intent)
+        }
+
 
 
 

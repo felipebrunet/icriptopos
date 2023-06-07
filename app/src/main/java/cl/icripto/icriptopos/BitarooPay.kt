@@ -1,5 +1,6 @@
 package cl.icripto.icriptopos
 
+import android.annotation.SuppressLint
 import android.content.*
 import android.graphics.Bitmap
 import android.graphics.Color
@@ -24,6 +25,7 @@ import kotlinx.coroutines.*
 import java.util.*
 
 class BitarooPay : AppCompatActivity() {
+    @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_bitaroo_pay)
@@ -44,12 +46,9 @@ class BitarooPay : AppCompatActivity() {
         val currency = sharedPreferences.getString("LOCALCURRENCY", defaultCurrency).toString()
         val urlBitaroo = "https://api.bitaroo.com.au"
         val pathBitaroo = "v1/payments/ln-invoice"
-//        val currency = "CLP"
-//        val amountFiat = "3"
-//        val apiKeyBitaroo = "Bearer yeQXq39oQLaHYTLP.yyWP__BJS1SVB3HMXsgcxGNn7UQXS3n9WhNfTFrw"
         val btcPriceUrl = "https://api.yadio.io/convert/$amountFiat/$currency/BTC"
         findViewById<TextView>(R.id.MonedaPagoValor).text = currency
-        findViewById<TextView>(R.id.MontoPagoValor).text = amountFiat
+        findViewById<TextView>(R.id.MontoPagoValor).text = "$${amountFiat}"
         findViewById<TextView>(R.id.MotivoPagoValor).text = merchantName
 
         val priceClient = HttpClient(CIO)
@@ -87,7 +86,7 @@ class BitarooPay : AppCompatActivity() {
             }
 
             do {
-                delay(3000)
+                delay(1000)
                 val bitarooGet: HttpResponse = bitarooClient.get{
                     url {
                         protocol = URLProtocol.HTTPS
@@ -104,7 +103,6 @@ class BitarooPay : AppCompatActivity() {
             withContext(Dispatchers.Main) {
                 findViewById<ImageView>(R.id.qrcodeimage).setImageResource(R.drawable.checkmark)
                 findViewById<ProgressBar>(R.id.progressBar).isInvisible = true
-                Toast.makeText(baseContext, "Eureka, invoice pagado", Toast.LENGTH_SHORT).show()
                 val copyButton = findViewById<Button>(R.id.copybutton)
                 copyButton.text = getString(R.string.go_back_text)
                 copyButton.setOnClickListener {

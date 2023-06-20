@@ -81,6 +81,10 @@
     <string name="buda_username_error">Usuario no registrado, revisar en Ajustes y en Buda.com</string>
     <string name="enter_bitaroo_apikey">Ingrese Api Key full acceso de Bitaroo: (requerido)</string>
     <string name="bitaroo_apikey">Api Key Bitaroo: key_id.key_secret</string>
+    <string name="enter_lightning_address">Ingrese Lightning Address (requerido)</string>
+    <string name="lightning_address">Lightning Address: username@example.com</string>
+
+
 
 
 </resources>

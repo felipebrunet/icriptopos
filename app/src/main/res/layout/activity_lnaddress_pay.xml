@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/io_background"
-    tools:context=".BitarooPay">
+    tools:context=".LNAddressPay">
 
     <TextView
             android:id="@+id/TextoQR"
@@ -157,5 +157,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/MotivoPagoValor" />
+
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

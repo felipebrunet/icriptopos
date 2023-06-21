@@ -69,9 +69,9 @@ class SettingsScreen : AppCompatActivity() {
 //        Functionality of Instance selection spinner
         val instanceOption : Spinner = findViewById(R.id.spinner_instances)
         val instanceOptions : Array<String> = if (savedInstance == null) {
-            arrayOf("BTCPay", "BTCPay API", "LNBits API", "Buda", "Bitaroo", "LN Address")
+            arrayOf("BTCPay", "BTCPay API", "LNBits API", "Buda", "Bitaroo")
         } else {
-            arrayOf(savedInstance) + arrayOf("BTCPay", "BTCPay API", "LNBits API", "Buda", "Bitaroo", "LN Address").filter{s -> s != savedInstance}
+            arrayOf(savedInstance) + arrayOf("BTCPay", "BTCPay API", "LNBits API", "Buda", "Bitaroo").filter{s -> s != savedInstance}
         }
         var instance: String
 

@@ -56,7 +56,6 @@ class MainActivity : AppCompatActivity() {
         val defaultLnbitsServer = ""
         val defaultBudaUserName = ""
         val defaultBitarooApiKey = ""
-        val defaultLNAddress = ""
         val defaultBtcpayStoreId = ""
         val defaultLnbitsInvoiceKey = ""
         val defaultLnbitsLnWalletId = ""
@@ -76,7 +75,6 @@ class MainActivity : AppCompatActivity() {
         val lnbitsServer = sharedPreferences.getString("LNBITSSERVER", defaultLnbitsServer).toString()
         val budaUserName = sharedPreferences.getString("BUDAUSERNAME", defaultBudaUserName).toString()
         val bitarooApiKey = sharedPreferences.getString("BITAROOAPIKEY", defaultBitarooApiKey).toString()
-        val lightningAddress = sharedPreferences.getString("LNADDRESS", defaultLNAddress).toString()
         val btcpayStoreId = sharedPreferences.getString("BTCPAYSTORE", defaultBtcpayStoreId).toString()
         val btcpayApiKey = sharedPreferences.getString("BTCPAYAPIKEY", defaultBtcpayApiKey).toString()
         val lnbitsInvoiceKey = sharedPreferences.getString("LNBITSINVOICEKEY", defaultLnbitsInvoiceKey).toString()
@@ -138,7 +136,7 @@ class MainActivity : AppCompatActivity() {
 
         if (!checkSettings(instance, btcpayServer, btcpayStoreId,
                 btcpayApiKey, lnbitsServer, lnbitsInvoiceKey,
-                lnbitsLnWalletId, budaUserName, bitarooApiKey, lightningAddress)) {
+                lnbitsLnWalletId, budaUserName, bitarooApiKey)) {
             input.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20.0F)
             input.text = addToInputText(initMessage, input)
         }
@@ -235,16 +233,13 @@ class MainActivity : AppCompatActivity() {
     private fun checkSettings(currentInstance: String, btcpayServer: String,
                               btcpayStoreId: String, btcpayApiKey: String, lnbitsServer: String, lnbitsInvoiceKey: String,
                               lnbitsLnWalletId: String, budaUserName: String,
-                              bitarooApiKey: String, lightningAddress: String): Boolean {
+                              bitarooApiKey: String): Boolean {
         return when (currentInstance) {
             "BTCPay" -> !(btcpayServer == "" || btcpayStoreId == "")
             "BTCPay API" -> !(btcpayServer == "" || btcpayStoreId == "" || btcpayApiKey == "")
             "LNBits API" -> !(lnbitsServer == "" || lnbitsInvoiceKey == "" || lnbitsLnWalletId == "")
             "Buda" -> budaUserName.isNotEmpty()
             "Bitaroo" -> bitarooApiKey.isNotEmpty()
-            "LN Address" -> lightningAddress.isNotEmpty()
-
-
             else -> false
         }
     }
@@ -330,17 +325,6 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this, BitarooPay::class.java)
             startActivity(intent)
         }
-
-        if (instance == "LN Address") {
-            val sharedPreferences : SharedPreferences = getSharedPreferences("sharedPres", Context.MODE_PRIVATE)
-            val editor : SharedPreferences.Editor = sharedPreferences.edit()
-            editor.apply{
-                putString("PRICE", amount.toString())
-            }.apply()
-            val intent = Intent(this, LNAddressPay::class.java)
-            startActivity(intent)
-        }
-
 
 
 

@@ -14,10 +14,6 @@
             android:theme="@style/Theme.IcriptoPOS"
             tools:targetApi="31">
         <activity
-                android:name=".LNAddressPay"
-                android:exported="false"
-                android:screenOrientation="portrait"/>
-        <activity
                 android:name=".BitarooPay"
                 android:exported="false"
                 android:screenOrientation="portrait"/>

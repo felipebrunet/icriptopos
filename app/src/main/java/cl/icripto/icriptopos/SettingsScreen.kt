@@ -34,7 +34,6 @@ class SettingsScreen : AppCompatActivity() {
         val defaultTips = "no"
         val defaultBudaUserName = ""
         val defaultBitarooApiKey = ""
-        val defaultLnAddress = ""
 
         var currencies: Array<String>
 
@@ -53,7 +52,6 @@ class SettingsScreen : AppCompatActivity() {
         val savedLnbitsOnChainWalletId = sharedPreferences.getString("LNBITSONCHAINWALLETID", defaultLnbitsOnChainWalletId)
         val savedBudaUserName = sharedPreferences.getString("BUDAUSERNAME", defaultBudaUserName)
         val savedBitarooApiKey = sharedPreferences.getString("BITAROOAPIKEY", defaultBitarooApiKey)
-        val savedLnAddress = sharedPreferences.getString("LNADDRESS", defaultLnAddress)
         val tips : String? = sharedPreferences.getString("STATUSTIPS", defaultTips)
 
         val resetPinButton = findViewById<Button>(R.id.delete_pin_button)
@@ -427,71 +425,6 @@ class SettingsScreen : AppCompatActivity() {
                         }
                     }
 
-                    "LN Address" -> {
-
-                        currencies = arrayOf("USD", "EUR", "AED", "ARS", "AUD", "BRL",
-                            "CAD", "CHF", "CLP", "CNY", "GBP", "INR",
-                            "JPY", "KRW", "MXN", "NGN", "RUB", "ZAR", "BTC")
-
-                        val currencyOption : Spinner = findViewById(R.id.spinner_currencies)
-                        val currencyOptions : Array<String> =
-                            if (currencies.contains(savedCurrency) && savedCurrency != null) {
-                                arrayOf(savedCurrency) + currencies.filter{it != savedCurrency}
-                            } else {
-                                currencies
-                            }
-                        var currency : String = savedCurrency.toString()
-                        currencyOption.adapter = ArrayAdapter(baseContext, android.R.layout.simple_list_item_1, currencyOptions)
-                        currencyOption.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-                            override fun onNothingSelected(p0: AdapterView<*>?) {
-                            }
-                            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-                                currency = currencyOptions[p2]
-
-
-                            }
-                        }
-
-
-//                        Set currency selector visible
-                        findViewById<TextView>(R.id.currency_title).isInvisible = false
-                        findViewById<FrameLayout>(R.id.frame_layout_currency).isInvisible = false
-
-
-//                        Hide Lnbits text views and boxes
-                        findViewById<TextView>(R.id.ln_wallet_id_title).isInvisible = true
-                        findViewById<EditText>(R.id.ln_wallet_id).isInvisible = true
-                        findViewById<EditText>(R.id.onchain_wallet_id_title).isInvisible = true
-                        findViewById<EditText>(R.id.onchain_wallet_id).isInvisible = true
-                        findViewById<EditText>(R.id.store_title).isInvisible = true
-                        findViewById<EditText>(R.id.lightning_id).isInvisible = true
-
-//                        Fill boxes with parameters that were loaded
-                        findViewById<TextView>(R.id.server_title).setText(R.string.enter_lightning_address)
-                        findViewById<EditText>(R.id.server_url).setText(savedLnAddress)
-                        findViewById<EditText>(R.id.server_url).setHint(R.string.lightning_address)
-
-//                        Restaurant name
-                        findViewById<EditText>(R.id.merchant_name).setText(savedMerchantName)
-                        findViewById<Switch>(R.id.tips1).isChecked = tips == "yes"
-
-
-//                        Go Back button functionality
-                        val returnButton = findViewById<Button>(R.id.go_back_button)
-                        returnButton.setOnClickListener {
-                            val intent = Intent(this@SettingsScreen ,MainActivity::class.java)
-                            startActivity(intent)
-                        }
-
-//                        Save button functionality
-                        val saveButton = findViewById<Button>(R.id.save_button)
-                        saveButton.setOnClickListener {
-                            openMainActivitySaved(currency, instance)
-                        }
-                    }
-
-
-
 
                 }
             }
@@ -667,33 +600,6 @@ class SettingsScreen : AppCompatActivity() {
                 Toast.makeText(this, R.string.data_saved, Toast.LENGTH_SHORT).show()
 
             }
-
-            "LN Address" -> {
-                val lightningAddress : String = findViewById<EditText>(R.id.server_url).text.toString()
-                val merchantName : String = findViewById<EditText>(R.id.merchant_name).text.toString()
-                val sharedPreferences : SharedPreferences = getSharedPreferences("sharedPres", Context.MODE_PRIVATE)
-                val editor : SharedPreferences.Editor = sharedPreferences.edit()
-                editor.apply{
-                    putString("LOCALCURRENCY", currency)
-                }.apply()
-                editor.apply{
-                    putString("LNADDRESS", lightningAddress)
-                }.apply()
-                editor.apply{
-                    putString("MERCHANTNAME", merchantName)
-                }.apply()
-                editor.apply{
-                    putString("STATUSTIPS", tips)
-                }.apply()
-                editor.apply{
-                    putString("INSTANCE", instance)
-                }.apply()
-
-//                Toast.makeText(this, "${R.string.data_saved} ${budaUserName.isNotEmpty()}", Toast.LENGTH_SHORT).show()
-                Toast.makeText(this, R.string.data_saved, Toast.LENGTH_SHORT).show()
-
-            }
-
 
         }
     }

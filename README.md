@@ -26,7 +26,7 @@ Binance and Coinbase are still integrating LN.
 Feel free to submit PRs and issues.
 
 Donations via bitcoin lightning:
-LNAddress: felipe@btcpay.icripto.cl
+LNAddress: felipe@walletofsatoshi.com
 
 Available at play store:
 https://play.google.com/store/apps/details?id=cl.icripto.icriptopos

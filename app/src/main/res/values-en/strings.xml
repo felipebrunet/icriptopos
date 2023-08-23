@@ -83,6 +83,11 @@
     <string name="bitaroo_apikey">Bitaroo Api Key: key_id.key_secret</string>
     <string name="enter_lightning_address">Enter Lightning Address (required)</string>
     <string name="lightning_address">Lightning Address: username@example.com</string>
+    <string name="enter_buda_api_key">Enter Buda ApiKey: (required)</string>
+    <string name="buda_api_key">"Orders only" ApiKey recommended</string>
+    <string name="enter_buda_api_secret">Enter Buda Api Secret: (required)</string>
+    <string name="buda_api_secret">Api Secret</string>
+
 
 
 </resources>

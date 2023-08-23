@@ -366,6 +366,73 @@ class SettingsScreen : AppCompatActivity() {
                         }
                     }
 
+                    "Buda API" -> {
+
+                        currencies = arrayOf("USD", "EUR", "AED", "ARS", "AUD", "BRL",
+                            "CAD", "CHF", "CLP", "CNY", "GBP", "INR",
+                            "JPY", "KRW", "MXN", "NGN", "RUB", "ZAR", "BTC")
+
+                        val currencyOption : Spinner = findViewById(R.id.spinner_currencies)
+                        val currencyOptions : Array<String> =
+                            if (savedCurrency == null) {
+                                currencies
+                            } else { arrayOf(savedCurrency) + currencies.filter{it != savedCurrency}
+                            }
+                        var currency : String = savedCurrency.toString()
+                        currencyOption.adapter = ArrayAdapter(baseContext, android.R.layout.simple_list_item_1, currencyOptions)
+                        currencyOption.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+                            override fun onNothingSelected(p0: AdapterView<*>?) {
+                            }
+                            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+                                currency = currencyOptions[p2]
+
+
+                            }
+                        }
+//                        Set currency selector visible
+                        findViewById<TextView>(R.id.currency_title).isInvisible = false
+                        findViewById<FrameLayout>(R.id.frame_layout_currency).isInvisible = false
+
+//                        Set store title visible
+                        findViewById<EditText>(R.id.store_title).isInvisible = false
+                        findViewById<EditText>(R.id.lightning_id).isInvisible = false
+
+
+//                        Hide Lnbits text views and boxes
+                        findViewById<TextView>(R.id.ln_wallet_id_title).isInvisible = true
+                        findViewById<EditText>(R.id.ln_wallet_id).isInvisible = true
+                        findViewById<EditText>(R.id.onchain_wallet_id_title).isInvisible = true
+                        findViewById<EditText>(R.id.onchain_wallet_id).isInvisible = true
+
+
+//                        Fill boxes with parameters that were loaded
+                        findViewById<TextView>(R.id.server_title).setText(R.string.enter_buda_api_key)
+                        findViewById<EditText>(R.id.server_url).setText(savedBudaApiKey)
+                        findViewById<EditText>(R.id.server_url).setHint(R.string.buda_api_key)
+
+                        findViewById<TextView>(R.id.store_title).setText(R.string.enter_buda_api_secret)
+                        findViewById<EditText>(R.id.lightning_id).setText(savedBudaApiSecret)
+                        findViewById<EditText>(R.id.lightning_id).setHint(R.string.buda_api_secret)
+
+                        findViewById<EditText>(R.id.merchant_name).setText(savedMerchantName)
+                        findViewById<Switch>(R.id.tips1).isChecked = tips == "yes"
+
+
+//                        Go Back button functionality
+                        val returnButton = findViewById<Button>(R.id.go_back_button)
+                        returnButton.setOnClickListener {
+                            val intent = Intent(this@SettingsScreen ,MainActivity::class.java)
+                            startActivity(intent)
+                        }
+
+//                        Save button functionality
+                        val saveButton = findViewById<Button>(R.id.save_button)
+                        saveButton.setOnClickListener {
+                            openMainActivitySaved(currency, instance)
+                        }
+                    }
+
+
                     "Bitaroo" -> {
 
                         currencies = arrayOf("USD", "EUR", "AED", "ARS", "AUD", "BRL",
@@ -563,6 +630,36 @@ class SettingsScreen : AppCompatActivity() {
                 }.apply()
                 editor.apply{
                     putString("BUDAUSERNAME", budaUserName)
+                }.apply()
+                editor.apply{
+                    putString("MERCHANTNAME", merchantName)
+                }.apply()
+                editor.apply{
+                    putString("STATUSTIPS", tips)
+                }.apply()
+                editor.apply{
+                    putString("INSTANCE", instance)
+                }.apply()
+
+//                Toast.makeText(this, "${R.string.data_saved} ${budaUserName.isNotEmpty()}", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, R.string.data_saved, Toast.LENGTH_SHORT).show()
+
+            }
+
+            "Buda API" -> {
+                val budaApiKey : String = findViewById<EditText>(R.id.server_url).text.toString()
+                val budaApiSecret : String = findViewById<EditText>(R.id.lightning_id).text.toString()
+                val merchantName : String = findViewById<EditText>(R.id.merchant_name).text.toString()
+                val sharedPreferences : SharedPreferences = getSharedPreferences("sharedPres", Context.MODE_PRIVATE)
+                val editor : SharedPreferences.Editor = sharedPreferences.edit()
+                editor.apply{
+                    putString("LOCALCURRENCY", currency)
+                }.apply()
+                editor.apply{
+                    putString("BUDAAPIKEY", budaApiKey)
+                }.apply()
+                editor.apply{
+                    putString("BUDAAPISECRET", budaApiSecret)
                 }.apply()
                 editor.apply{
                     putString("MERCHANTNAME", merchantName)

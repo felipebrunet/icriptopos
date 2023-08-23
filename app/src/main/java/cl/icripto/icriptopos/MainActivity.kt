@@ -238,7 +238,7 @@ class MainActivity : AppCompatActivity() {
             "BTCPay" -> !(btcpayServer == "" || btcpayStoreId == "")
             "BTCPay API" -> !(btcpayServer == "" || btcpayStoreId == "" || btcpayApiKey == "")
             "LNBits API" -> !(lnbitsServer == "" || lnbitsInvoiceKey == "" || lnbitsLnWalletId == "")
-            "Buda" -> budaUserName.isNotEmpty()
+            "Buda Link" -> budaUserName.isNotEmpty()
             "Bitaroo" -> bitarooApiKey.isNotEmpty()
             else -> false
         }
@@ -306,7 +306,7 @@ class MainActivity : AppCompatActivity() {
                 "$lnbitsServer/satspay/", lnbitsInvoiceKey,
                 baseContext)
         }
-        if (instance == "Buda") {
+        if (instance == "Buda Link") {
             val sharedPreferences : SharedPreferences = getSharedPreferences("sharedPres", Context.MODE_PRIVATE)
             val editor : SharedPreferences.Editor = sharedPreferences.edit()
             editor.apply{

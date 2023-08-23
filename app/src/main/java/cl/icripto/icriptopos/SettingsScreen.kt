@@ -34,6 +34,8 @@ class SettingsScreen : AppCompatActivity() {
         val defaultTips = "no"
         val defaultBudaUserName = ""
         val defaultBitarooApiKey = ""
+        val defaultBudaApiKey = ""
+        val defaultBudaApiSecret = ""
 
         var currencies: Array<String>
 
@@ -52,6 +54,8 @@ class SettingsScreen : AppCompatActivity() {
         val savedLnbitsOnChainWalletId = sharedPreferences.getString("LNBITSONCHAINWALLETID", defaultLnbitsOnChainWalletId)
         val savedBudaUserName = sharedPreferences.getString("BUDAUSERNAME", defaultBudaUserName)
         val savedBitarooApiKey = sharedPreferences.getString("BITAROOAPIKEY", defaultBitarooApiKey)
+        val savedBudaApiKey = sharedPreferences.getString("BUDAAPIKEY", defaultBudaApiKey)
+        val savedBudaApiSecret = sharedPreferences.getString("BUDAAPISECRET", defaultBudaApiSecret)
         val tips : String? = sharedPreferences.getString("STATUSTIPS", defaultTips)
 
         val resetPinButton = findViewById<Button>(R.id.delete_pin_button)
@@ -69,9 +73,9 @@ class SettingsScreen : AppCompatActivity() {
 //        Functionality of Instance selection spinner
         val instanceOption : Spinner = findViewById(R.id.spinner_instances)
         val instanceOptions : Array<String> = if (savedInstance == null) {
-            arrayOf("BTCPay", "BTCPay API", "LNBits API", "Buda", "Bitaroo")
+            arrayOf("BTCPay", "BTCPay API", "LNBits API", "Buda Link", "Buda API", "Bitaroo")
         } else {
-            arrayOf(savedInstance) + arrayOf("BTCPay", "BTCPay API", "LNBits API", "Buda", "Bitaroo").filter{s -> s != savedInstance}
+            arrayOf(savedInstance) + arrayOf("BTCPay", "BTCPay API", "LNBits API", "Buda Link", "Buda API", "Bitaroo").filter{s -> s != savedInstance}
         }
         var instance: String
 
@@ -301,7 +305,7 @@ class SettingsScreen : AppCompatActivity() {
                         }
                     }
 
-                    "Buda" -> {
+                    "Buda Link" -> {
 
                         currencies = arrayOf("ARS", "CLP", "COP", "PEN")
 
@@ -549,7 +553,7 @@ class SettingsScreen : AppCompatActivity() {
 
             }
 
-            "Buda" -> {
+            "Buda Link" -> {
                 val budaUserName : String = findViewById<EditText>(R.id.server_url).text.toString()
                 val merchantName : String = findViewById<EditText>(R.id.merchant_name).text.toString()
                 val sharedPreferences : SharedPreferences = getSharedPreferences("sharedPres", Context.MODE_PRIVATE)

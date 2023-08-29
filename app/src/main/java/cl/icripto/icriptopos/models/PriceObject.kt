@@ -18,3 +18,18 @@ data class BitarooCheckoutData(
     val amount: String,
     val invoice: String
 )
+
+data class BudaCheckoutData(
+    val invoice: BudaResponseObject
+)
+data class BudaResponseObject (
+    val id: String,
+    val encoded_payment_request: String,
+    val currency: String,
+    val memo: String,
+    val amount: Int,
+    val expiration_time: Int,
+    val state: String,
+    val price: String?
+
+)

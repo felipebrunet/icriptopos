@@ -6,6 +6,7 @@ import android.graphics.Bitmap
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
+import android.os.CountDownTimer
 import android.text.method.LinkMovementMethod
 import android.widget.*
 import androidx.annotation.RequiresApi
@@ -32,6 +33,7 @@ import kotlin.collections.set
 
 
 class BudaPayApi : AppCompatActivity() {
+
     @SuppressLint("SetTextI18n")
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -46,6 +48,7 @@ class BudaPayApi : AppCompatActivity() {
         val defaultMerchantName = ""
         val defaultBudaApiKey = ""
         val defaultBudaApiSecret = ""
+        val timeToExpire: Long = 180000
 
 
         val sharedPreferences: SharedPreferences =
@@ -58,14 +61,13 @@ class BudaPayApi : AppCompatActivity() {
         val urlBuda = "https://www.buda.com"
         val pathBuda = "/api/v2/lightning_network_invoices"
         val urlBudaCheck = "https://realtime.buda.com"
-
         val btcPriceUrl = "https://api.yadio.io/convert/$amountFiat/$currency/BTC"
 
 
         findViewById<TextView>(R.id.MonedaPagoValor).text = currency
-        findViewById<TextView>(R.id.MontoPagoValor).text = "$${amountFiat}"
+        findViewById<TextView>(R.id.MontoPagoValor).text = String.format(Locale.ENGLISH, "%.2f", amountFiat!!.toDouble() )
+//        findViewById<TextView>(R.id.MontoPagoValor).text = "$${amountFiat}"
         findViewById<TextView>(R.id.MotivoPagoValor).text = merchantName
-
 
         val priceClient = HttpClient(CIO)
         val corr1 = CoroutineScope(Dispatchers.IO)
@@ -112,6 +114,18 @@ class BudaPayApi : AppCompatActivity() {
                     findViewById<ImageView>(R.id.qrcodeimage).setImageBitmap(
                         getQrCodeBitmap(budaInvoice)
                     )
+
+                    val timer = object: CountDownTimer(timeToExpire, 1000) {
+                        override fun onTick(millisUntilFinished: Long) {
+                            findViewById<TextView>(R.id.TextoInstruccion).text = getString(R.string.instr_para_pagar) + " " + (millisUntilFinished/1000).toString() + " s"
+//                            Log.d("acoacoaco", (millisUntilFinished/1000).toString())
+                        }
+
+                        override fun onFinish() {
+//                            Log.d("acoacoaco", "invoice expirado")
+                        }
+                    }
+                    timer.start()
                     val copyButton = findViewById<Button>(R.id.copybutton)
                     copyButton.setOnClickListener {
                         val clipboard: ClipboardManager =
@@ -128,9 +142,11 @@ class BudaPayApi : AppCompatActivity() {
 //
                 val budaClient2 = HttpClient(CIO) {
                     install(HttpTimeout) {
-                        requestTimeoutMillis = 180000
+                        requestTimeoutMillis = timeToExpire
                     }
                 }
+
+
 
                 try {
                     val responseBudaGet: HttpResponse = budaClient2.get("$urlBudaCheck$pathBudaCheck") {
@@ -142,15 +158,7 @@ class BudaPayApi : AppCompatActivity() {
 
                     if (responseBudaGet.status.toString() != "200 OK") {
                         budaClient2.close()
-                        withContext(Dispatchers.Main) {
-                            Toast.makeText(
-                                this@BudaPayApi,
-                                getString(R.string.buda_review_payment),
-                                Toast.LENGTH_SHORT
-                            ).show()
-                            val intent = Intent(this@BudaPayApi, MainActivity::class.java)
-                            startActivity(intent)
-                        }
+                        finish()
                     } else {
                         budaClient2.close()
                         withContext(Dispatchers.Main) {
@@ -170,14 +178,16 @@ class BudaPayApi : AppCompatActivity() {
                         }
                     }
                 } catch (e: HttpRequestTimeoutException) {
+                    e.printStackTrace()
                     withContext(Dispatchers.Main) {
-                        Toast.makeText(
-                            this@BudaPayApi,
-                            getString(R.string.paid_invoice_failed),
-                            Toast.LENGTH_SHORT
-                        ).show()
-                        val intent = Intent(baseContext, MainActivity::class.java)
-                        startActivity(intent)
+                        findViewById<ImageView>(R.id.qrcodeimage).setImageResource(R.drawable.xmark)
+                        findViewById<ProgressBar>(R.id.progressBar).isInvisible = true
+                        val copyButton = findViewById<Button>(R.id.copybutton)
+                        copyButton.text = getString(R.string.go_back_text)
+                        copyButton.setOnClickListener {
+                            val intent = Intent(baseContext, MainActivity::class.java)
+                            startActivity(intent)
+                        }
                     }
                 }
 

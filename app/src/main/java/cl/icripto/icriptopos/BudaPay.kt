@@ -6,6 +6,7 @@ import android.graphics.Bitmap
 import android.graphics.Color
 import android.os.Bundle
 import android.text.method.LinkMovementMethod
+import android.util.Log
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.ProgressBar
@@ -98,16 +99,19 @@ class BudaPay : AppCompatActivity() {
                         val clientFinish = OkHttpClient.Builder()
                             .connectTimeout(10, TimeUnit.SECONDS)
                             .writeTimeout(10, TimeUnit.SECONDS)
-                            .readTimeout(300, TimeUnit.SECONDS)
+                            .readTimeout(30, TimeUnit.SECONDS)
                             .build()
                         clientFinish.newCall(requestFinish).enqueue(object : Callback {
                             override fun onFailure(call: Call, e: IOException) {
                                 e.printStackTrace()
+                                Log.d("acoacoaco", "get tuvo failure")
                             }
 
                             override fun onResponse(call: Call, response: Response) {
                                 response.use {
                                     if (!response.isSuccessful) {
+                                        Log.d("acoacoaco", "get tuvo respuesta pero no satisfactoria")
+                                        Log.d("acoacoaco","y response fue ${response.code}")
                                         throw IOException("Unexpected code $response")
                                     } else {
 

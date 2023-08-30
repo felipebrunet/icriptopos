@@ -63,7 +63,7 @@
     <string name="pin_deleted">PIN deleted</string>
     <string name="data_saved">Data saved</string>
     <string name="texto_qrbuda">Pay with Bitcoin Lightning</string>
-    <string name="instr_para_pagar">Scan this QR code with your lightning wallet</string>
+    <string name="instr_para_pagar">Scan this QR code with your wallet, pay in</string>
     <string name="monto">Amount:</string>
     <string name="moneda">Currency:</string>
     <string name="motivo">Note:</string>

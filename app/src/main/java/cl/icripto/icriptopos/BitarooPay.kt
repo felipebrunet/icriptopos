@@ -47,7 +47,7 @@ class BitarooPay : AppCompatActivity() {
         val pathBitaroo = "v1/payments/ln-invoice"
         val btcPriceUrl = "https://api.yadio.io/convert/$amountFiat/$currency/BTC"
         findViewById<TextView>(R.id.MonedaPagoValor).text = currency
-        findViewById<TextView>(R.id.MontoPagoValor).text = "$${amountFiat}"
+        findViewById<TextView>(R.id.MontoPagoValor).text = String.format(Locale.ENGLISH, "%.2f", amountFiat!!.toDouble())
         findViewById<TextView>(R.id.MotivoPagoValor).text = merchantName
 
         val priceClient = HttpClient(CIO)

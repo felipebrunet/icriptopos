@@ -47,7 +47,7 @@
     <string name="init_val_screen">Go to settings</string>
     <string name="tip_message">Sélectionnez le pourboire</string>
     <string name="no_tip">Aucun pourboire</string>
-    <string name="text_version">Icripto POS V1.6.0</string>
+    <string name="text_version">Icripto POS V1.7.0</string>
     <string name="wheel_icon">Paramètres</string>
     <string name="select_instance">Instancèe: </string>
     <string name="enter_ln_wallet_id">Entrez l\'identifiant du portefeuille Lightning chez LNBits: (obligatoire)</string>

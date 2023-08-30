@@ -11,8 +11,8 @@ android {
         applicationId "cl.icripto.icriptopos"
         minSdk 23
         targetSdk 33
-        versionCode 3
-        versionName "1.6"
+        versionCode 4
+        versionName "1.7"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -47,10 +47,10 @@ dependencies {
     //Gson
     implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
     //reflect
-    implementation("org.jetbrains.kotlin:kotlin-reflect:1.8.10")
+    implementation("org.jetbrains.kotlin:kotlin-reflect:1.8.20")
     implementation 'com.google.zxing:core:3.4.0'
-    implementation("io.ktor:ktor-client-core:2.3.1")
-    implementation("io.ktor:ktor-client-cio:2.3.1")
+    implementation("io.ktor:ktor-client-core:2.3.3")
+    implementation("io.ktor:ktor-client-cio:2.3.3")
     implementation 'com.google.code.gson:gson:2.10.1'
 
 

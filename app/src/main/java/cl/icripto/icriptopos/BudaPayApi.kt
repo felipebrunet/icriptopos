@@ -1,21 +1,16 @@
 package cl.icripto.icriptopos
 
 import android.annotation.SuppressLint
-import android.content.ClipData
-import android.content.ClipboardManager
-import android.content.Context
-import android.content.SharedPreferences
+import android.content.*
 import android.graphics.Bitmap
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import android.text.method.LinkMovementMethod
-import android.util.Log
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.TextView
+import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isInvisible
 import cl.icripto.icriptopos.models.BudaCheckoutData
 import cl.icripto.icriptopos.models.PriceObject
 import cl.icripto.icriptopos.repositories.Hmac
@@ -25,15 +20,15 @@ import com.google.zxing.EncodeHintType
 import com.google.zxing.qrcode.QRCodeWriter
 import io.ktor.client.*
 import io.ktor.client.engine.cio.*
+import io.ktor.client.plugins.*
 import io.ktor.client.request.*
+import io.ktor.client.request.header
 import io.ktor.client.statement.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import org.json.JSONObject
 import java.util.*
-import kotlin.collections.hashMapOf
 import kotlin.collections.set
 
 
@@ -62,8 +57,9 @@ class BudaPayApi : AppCompatActivity() {
         val budaApiSecret = sharedPreferences.getString("BUDAAPISECRET", defaultBudaApiSecret).toString()
         val currency = sharedPreferences.getString("LOCALCURRENCY", defaultCurrency).toString()
         val urlBuda = "https://www.buda.com"
-        val urlBudaCheck = "https://realtime.buda.com/sub?channel=lightninginvoices%40"
         val pathBuda = "/api/v2/lightning_network_invoices"
+        val urlBudaCheck = "https://realtime.buda.com"
+
         val btcPriceUrl = "https://api.yadio.io/convert/$amountFiat/$currency/BTC"
 
 
@@ -78,8 +74,9 @@ class BudaPayApi : AppCompatActivity() {
             val responsePrice: HttpResponse = priceClient.get(btcPriceUrl)
             val btcValue = Gson().fromJson(responsePrice.bodyAsText(), PriceObject::class.java).result
             val satsValue = (btcValue*100000000).toInt()
-            val btcValueDecimal = String.format(Locale.ENGLISH, "%.8f", btcValue)
-            Log.d("acoacoaco", "satsvalue es $satsValue")
+            priceClient.close()
+//            val btcValueDecimal = String.format(Locale.ENGLISH, "%.8f", btcValue)
+//            Log.d("acoacoaco", "satsvalue es $satsValue")
             val nonce = (System.currentTimeMillis()*1000).toString()
             val data = "{\"amount_satoshis\": \"$satsValue\", \"currency\": \"BTC\", \"memo\": \"Cobro $merchantName\"}"
             val encodedData = Base64.getEncoder().encodeToString(data.toByteArray())
@@ -94,31 +91,90 @@ class BudaPayApi : AppCompatActivity() {
                 header("Content-Type", "application/json")
                 setBody(data)
             }
-//            Log.d("acoacoaco", "Respuesta es ${responseBudaPost.bodyAsText()}")
-            val budaInvoice = Gson().fromJson(responseBudaPost.bodyAsText(), BudaCheckoutData::class.java).invoice.encoded_payment_request
-            val checkId = Gson().fromJson(responseBudaPost.bodyAsText(), BudaCheckoutData::class.java).invoice.id
-//            Log.d("acoacoaco", "Invoice es $budaInvoice")
 
-
-            withContext(Dispatchers.Main) {
-                findViewById<ImageView>(R.id.qrcodeimage).setImageBitmap(
-                    getQrCodeBitmap(budaInvoice)
-                )
-                val copyButton = findViewById<Button>(R.id.copybutton)
-                copyButton.setOnClickListener {
-                    val clipboard: ClipboardManager =
-                        getSystemService(CLIPBOARD_SERVICE) as ClipboardManager
-                    val clip: ClipData = ClipData.newPlainText(getString(R.string.copy_invoice_message), budaInvoice)
-                    clipboard.setPrimaryClip(clip)
+            if (responseBudaPost.status.toString() != "201 Created") {
+                budaClient.close()
+                withContext(Dispatchers.Main) {
+                    Toast.makeText(
+                        this@BudaPayApi,
+                        getString(R.string.buda_username_error),
+                        Toast.LENGTH_SHORT).show()
+                    val intent = Intent(this@BudaPayApi, MainActivity::class.java)
+                    startActivity(intent)
                 }
+            } else {
+
+                val budaInvoice = Gson().fromJson(responseBudaPost.bodyAsText(), BudaCheckoutData::class.java).invoice.encoded_payment_request
+                val checkId = Gson().fromJson(responseBudaPost.bodyAsText(), BudaCheckoutData::class.java).invoice.id
+                budaClient.close()
+
+
+
+                withContext(Dispatchers.Main) {
+                    findViewById<ImageView>(R.id.qrcodeimage).setImageBitmap(
+                        getQrCodeBitmap(budaInvoice)
+                    )
+                    val copyButton = findViewById<Button>(R.id.copybutton)
+                    copyButton.setOnClickListener {
+                        val clipboard: ClipboardManager =
+                            getSystemService(CLIPBOARD_SERVICE) as ClipboardManager
+                        val clip: ClipData = ClipData.newPlainText(getString(R.string.copy_invoice_message), budaInvoice)
+                        clipboard.setPrimaryClip(clip)
+                    }
+                }
+
+                val pathBudaCheck = "/sub?channel=lightninginvoices%40$checkId"
+                val nonce2 = (System.currentTimeMillis()*1000).toString()
+                val mensaje2 = "GET $pathBudaCheck $nonce2"
+                val signature2 = Hmac.digest(mensaje2, budaApiSecret)
+//
+                val budaClient2 = HttpClient(CIO) {
+                    install(HttpTimeout) {
+                        requestTimeoutMillis = 180000
+                    }
+                }
+
+                try {
+                    val responseBudaGet: HttpResponse = budaClient2.get("$urlBudaCheck$pathBudaCheck") {
+                        header("X-SBTC-APIKEY", budaApiKey)
+                        header("X-SBTC-NONCE", nonce2)
+                        header("X-SBTC-SIGNATURE", signature2)
+                        header("Content-Type", "application/json")
+                    }
+                    budaClient2.close()
+
+                    withContext(Dispatchers.Main) {
+                        findViewById<ImageView>(R.id.qrcodeimage).setImageResource(R.drawable.checkmark)
+                        findViewById<ProgressBar>(R.id.progressBar).isInvisible = true
+                        val copyButton = findViewById<Button>(R.id.copybutton)
+                        copyButton.text = getString(R.string.go_back_text)
+                        Toast.makeText(
+                            this@BudaPayApi,
+                            getString(R.string.paid_invoice_message),
+                            Toast.LENGTH_SHORT
+                        ).show()
+                        copyButton.setOnClickListener {
+                            val intent = Intent(baseContext, MainActivity::class.java)
+                            startActivity(intent)
+                        }
+                    }
+
+
+                } catch (e: HttpRequestTimeoutException) {
+                    withContext(Dispatchers.Main) {
+                        Toast.makeText(
+                            this@BudaPayApi,
+                            getString(R.string.paid_invoice_failed),
+                            Toast.LENGTH_SHORT
+                        ).show()
+                        val intent = Intent(baseContext, MainActivity::class.java)
+                        startActivity(intent)
+                    }
+                }
+
             }
 
-            val checkURL = "$urlBudaCheck$checkId"
-
-
-
-
-
+//            Log.d("acoacoaco", "Respuesta es ${responseBudaPost.bodyAsText()}")
 
 
         }

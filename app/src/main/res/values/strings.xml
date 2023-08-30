@@ -73,6 +73,7 @@
     <string name="motivopagovalor">Pago lightning, Restaurant A</string>
     <string name="copy_invoice_message">Copiar lightning Invoice</string>
     <string name="paid_invoice_message">Invoice Pagado!</string>
+    <string name="paid_invoice_failed">Invoice ha expirado</string>
     <string name="loading_message">Cargando</string>
     <string name="error_lnbits">Error Lnbits</string>
     <string name="error_btcpay">Error BTCPay API</string>

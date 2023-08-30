@@ -4,10 +4,10 @@ import android.annotation.SuppressLint
 import android.content.*
 import android.graphics.Bitmap
 import android.graphics.Color
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.method.LinkMovementMethod
 import android.widget.*
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isInvisible
 import cl.icripto.icriptopos.models.BitarooCheckoutData
 import cl.icripto.icriptopos.models.PriceObject
@@ -18,7 +18,6 @@ import com.google.zxing.qrcode.QRCodeWriter
 import io.ktor.client.*
 import io.ktor.client.engine.cio.*
 import io.ktor.client.request.*
-import io.ktor.client.request.headers
 import io.ktor.client.statement.*
 import io.ktor.http.*
 import kotlinx.coroutines.*
@@ -70,46 +69,64 @@ class BitarooPay : AppCompatActivity() {
                 }
                 setBody("{\"amount\": \"$btcValueDecimal\"}")
             }
-            val bitarooInvoice = Gson().fromJson(bitarooPost.bodyAsText(), BitarooCheckoutData::class.java).invoice
 
-            withContext(Dispatchers.Main) {
-                findViewById<ImageView>(R.id.qrcodeimage).setImageBitmap(
-                    getQrCodeBitmap(bitarooInvoice)
-                )
-                val copyButton = findViewById<Button>(R.id.copybutton)
-                copyButton.setOnClickListener {
-                    val clipboard: ClipboardManager =
-                        getSystemService(CLIPBOARD_SERVICE) as ClipboardManager
-                    val clip: ClipData = ClipData.newPlainText(getString(R.string.copy_invoice_message), bitarooInvoice)
-                    clipboard.setPrimaryClip(clip)
-                }
-            }
 
-            do {
-                delay(1000)
-                val bitarooGet: HttpResponse = bitarooClient.get{
-                    url {
-                        protocol = URLProtocol.HTTPS
-                        host = urlBitaroo.substring(8, urlBitaroo.length)
-                        path(pathBitaroo)
-                    }
-                    headers {
-                        append(HttpHeaders.Authorization, apiKeyBitaroo)
-                        append(HttpHeaders.ContentType, "application/json")
-                    }
-                }
-            } while (bitarooGet.bodyAsText() != "null")
-
-            withContext(Dispatchers.Main) {
-                findViewById<ImageView>(R.id.qrcodeimage).setImageResource(R.drawable.checkmark)
-                findViewById<ProgressBar>(R.id.progressBar).isInvisible = true
-                val copyButton = findViewById<Button>(R.id.copybutton)
-                copyButton.text = getString(R.string.go_back_text)
-                copyButton.setOnClickListener {
-                    val intent = Intent(baseContext, MainActivity::class.java)
+            if (bitarooPost.status.toString() != "200 OK") {
+                bitarooClient.close()
+                withContext(Dispatchers.Main) {
+                    Toast.makeText(
+                        this@BitarooPay,
+                        getString(R.string.bitaroo_username_error),
+                        Toast.LENGTH_SHORT).show()
+                    val intent = Intent(this@BitarooPay, MainActivity::class.java)
                     startActivity(intent)
                 }
+            } else {
+                val bitarooInvoice = Gson().fromJson(bitarooPost.bodyAsText(), BitarooCheckoutData::class.java).invoice
+
+                withContext(Dispatchers.Main) {
+                    findViewById<ImageView>(R.id.qrcodeimage).setImageBitmap(
+                        getQrCodeBitmap(bitarooInvoice)
+                    )
+                    val copyButton = findViewById<Button>(R.id.copybutton)
+                    copyButton.setOnClickListener {
+                        val clipboard: ClipboardManager =
+                            getSystemService(CLIPBOARD_SERVICE) as ClipboardManager
+                        val clip: ClipData = ClipData.newPlainText(getString(R.string.copy_invoice_message), bitarooInvoice)
+                        clipboard.setPrimaryClip(clip)
+                    }
+                }
+
+                do {
+                    delay(1000)
+                    val bitarooGet: HttpResponse = bitarooClient.get{
+                        url {
+                            protocol = URLProtocol.HTTPS
+                            host = urlBitaroo.substring(8, urlBitaroo.length)
+                            path(pathBitaroo)
+                        }
+                        headers {
+                            append(HttpHeaders.Authorization, apiKeyBitaroo)
+                            append(HttpHeaders.ContentType, "application/json")
+                        }
+                    }
+                } while (bitarooGet.bodyAsText() != "null")
+
+                bitarooClient.close()
+
+                withContext(Dispatchers.Main) {
+                    findViewById<ImageView>(R.id.qrcodeimage).setImageResource(R.drawable.checkmark)
+                    findViewById<ProgressBar>(R.id.progressBar).isInvisible = true
+                    val copyButton = findViewById<Button>(R.id.copybutton)
+                    copyButton.text = getString(R.string.go_back_text)
+                    copyButton.setOnClickListener {
+                        val intent = Intent(baseContext, MainActivity::class.java)
+                        startActivity(intent)
+                    }
+                }
+
             }
+
         }
     }
 

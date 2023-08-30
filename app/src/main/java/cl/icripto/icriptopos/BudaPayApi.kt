@@ -76,7 +76,6 @@ class BudaPayApi : AppCompatActivity() {
             val satsValue = (btcValue*100000000).toInt()
             priceClient.close()
 //            val btcValueDecimal = String.format(Locale.ENGLISH, "%.8f", btcValue)
-//            Log.d("acoacoaco", "satsvalue es $satsValue")
             val nonce = (System.currentTimeMillis()*1000).toString()
             val data = "{\"amount_satoshis\": \"$satsValue\", \"currency\": \"BTC\", \"memo\": \"Cobro $merchantName\"}"
             val encodedData = Base64.getEncoder().encodeToString(data.toByteArray())
@@ -173,10 +172,6 @@ class BudaPayApi : AppCompatActivity() {
                 }
 
             }
-
-//            Log.d("acoacoaco", "Respuesta es ${responseBudaPost.bodyAsText()}")
-
-
         }
     }
 

@@ -80,6 +80,7 @@
     <string name="bitaroo_amount">1.00</string>
     <string name="bitaroo_currency">AUD</string>
     <string name="buda_username_error">Unregistered user, check in Settings and Buda.com</string>
+    <string name="buda_review_payment">Review payment at Buda.com</string>
     <string name="bitaroo_username_error">Unregistered user, check in Settings and bitaroo.com.au</string>
     <string name="enter_bitaroo_apikey">Enter Bitaroo full access Api Key: (required)</string>
     <string name="bitaroo_apikey">Bitaroo Api Key: key_id.key_secret</string>

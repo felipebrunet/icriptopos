@@ -22,7 +22,6 @@ import io.ktor.client.*
 import io.ktor.client.engine.cio.*
 import io.ktor.client.plugins.*
 import io.ktor.client.request.*
-import io.ktor.client.request.header
 import io.ktor.client.statement.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -140,25 +139,36 @@ class BudaPayApi : AppCompatActivity() {
                         header("X-SBTC-SIGNATURE", signature2)
                         header("Content-Type", "application/json")
                     }
-                    budaClient2.close()
 
-                    withContext(Dispatchers.Main) {
-                        findViewById<ImageView>(R.id.qrcodeimage).setImageResource(R.drawable.checkmark)
-                        findViewById<ProgressBar>(R.id.progressBar).isInvisible = true
-                        val copyButton = findViewById<Button>(R.id.copybutton)
-                        copyButton.text = getString(R.string.go_back_text)
-                        Toast.makeText(
-                            this@BudaPayApi,
-                            getString(R.string.paid_invoice_message),
-                            Toast.LENGTH_SHORT
-                        ).show()
-                        copyButton.setOnClickListener {
-                            val intent = Intent(baseContext, MainActivity::class.java)
+                    if (responseBudaGet.status.toString() != "200 OK") {
+                        budaClient2.close()
+                        withContext(Dispatchers.Main) {
+                            Toast.makeText(
+                                this@BudaPayApi,
+                                getString(R.string.buda_review_payment),
+                                Toast.LENGTH_SHORT
+                            ).show()
+                            val intent = Intent(this@BudaPayApi, MainActivity::class.java)
                             startActivity(intent)
                         }
+                    } else {
+                        budaClient2.close()
+                        withContext(Dispatchers.Main) {
+                            findViewById<ImageView>(R.id.qrcodeimage).setImageResource(R.drawable.checkmark)
+                            findViewById<ProgressBar>(R.id.progressBar).isInvisible = true
+                            val copyButton = findViewById<Button>(R.id.copybutton)
+                            copyButton.text = getString(R.string.go_back_text)
+                            Toast.makeText(
+                                this@BudaPayApi,
+                                getString(R.string.paid_invoice_message),
+                                Toast.LENGTH_SHORT
+                            ).show()
+                            copyButton.setOnClickListener {
+                                val intent = Intent(baseContext, MainActivity::class.java)
+                                startActivity(intent)
+                            }
+                        }
                     }
-
-
                 } catch (e: HttpRequestTimeoutException) {
                     withContext(Dispatchers.Main) {
                         Toast.makeText(

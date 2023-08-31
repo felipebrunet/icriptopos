@@ -118,11 +118,9 @@ class BudaPayApi : AppCompatActivity() {
                     val timer = object: CountDownTimer(timeToExpire, 1000) {
                         override fun onTick(millisUntilFinished: Long) {
                             findViewById<TextView>(R.id.TextoInstruccion).text = getString(R.string.instr_para_pagar) + " " + (millisUntilFinished/1000).toString() + " s"
-//                            Log.d("acoacoaco", (millisUntilFinished/1000).toString())
                         }
 
                         override fun onFinish() {
-//                            Log.d("acoacoaco", "invoice expirado")
                         }
                     }
                     timer.start()

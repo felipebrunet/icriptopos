@@ -5,6 +5,7 @@ import android.content.*
 import android.graphics.Bitmap
 import android.graphics.Color
 import android.os.Bundle
+import android.os.CountDownTimer
 import android.text.method.LinkMovementMethod
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
@@ -36,6 +37,8 @@ class BitarooPay : AppCompatActivity() {
         val defaultCurrency = "AUD"
         val defaultMerchantName = ""
         val defaultBitarooApiKey = ""
+        val timeToExpire: Long = 180000
+
 
         val sharedPreferences: SharedPreferences =
             getSharedPreferences("sharedPres", Context.MODE_PRIVATE)
@@ -56,6 +59,7 @@ class BitarooPay : AppCompatActivity() {
             val responsePrice: HttpResponse = priceClient.get(btcPriceUrl)
             val btcValue = Gson().fromJson(responsePrice.bodyAsText(), PriceObject::class.java).result
             val btcValueDecimal = String.format(Locale.ENGLISH, "%.8f", btcValue )
+
             val bitarooClient = HttpClient(CIO)
             val bitarooPost: HttpResponse = bitarooClient.post{
                 url {
@@ -88,6 +92,25 @@ class BitarooPay : AppCompatActivity() {
                     findViewById<ImageView>(R.id.qrcodeimage).setImageBitmap(
                         getQrCodeBitmap(bitarooInvoice)
                     )
+
+                    val timer = object: CountDownTimer(timeToExpire, 1000) {
+                        override fun onTick(millisUntilFinished: Long) {
+                            findViewById<TextView>(R.id.TextoInstruccion).text = getString(R.string.instr_para_pagar) + " " + (millisUntilFinished/1000).toString() + " s"
+                        }
+
+                        override fun onFinish() {
+                            bitarooClient.close()
+                            findViewById<ImageView>(R.id.qrcodeimage).setImageResource(R.drawable.xmark)
+                            findViewById<ProgressBar>(R.id.progressBar).isInvisible = true
+                            val copyButton = findViewById<Button>(R.id.copybutton)
+                            copyButton.text = getString(R.string.go_back_text)
+                            copyButton.setOnClickListener {
+                                val intent = Intent(baseContext, MainActivity::class.java)
+                                startActivity(intent)
+                            }
+                        }
+                    }
+                    timer.start()
                     val copyButton = findViewById<Button>(R.id.copybutton)
                     copyButton.setOnClickListener {
                         val clipboard: ClipboardManager =
@@ -110,6 +133,7 @@ class BitarooPay : AppCompatActivity() {
                             append(HttpHeaders.ContentType, "application/json")
                         }
                     }
+
                 } while (bitarooGet.bodyAsText() != "null")
 
                 bitarooClient.close()
@@ -119,6 +143,11 @@ class BitarooPay : AppCompatActivity() {
                     findViewById<ProgressBar>(R.id.progressBar).isInvisible = true
                     val copyButton = findViewById<Button>(R.id.copybutton)
                     copyButton.text = getString(R.string.go_back_text)
+                    Toast.makeText(
+                        this@BitarooPay,
+                        getString(R.string.paid_invoice_message),
+                        Toast.LENGTH_SHORT
+                    ).show()
                     copyButton.setOnClickListener {
                         val intent = Intent(baseContext, MainActivity::class.java)
                         startActivity(intent)

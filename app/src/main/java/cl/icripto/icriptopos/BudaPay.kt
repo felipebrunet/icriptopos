@@ -5,6 +5,7 @@ import android.content.*
 import android.graphics.Bitmap
 import android.graphics.Color
 import android.os.Bundle
+import android.os.CountDownTimer
 import android.text.method.LinkMovementMethod
 import android.util.Log
 import android.widget.Button
@@ -20,6 +21,7 @@ import com.google.zxing.qrcode.QRCodeWriter
 import okhttp3.*
 import org.json.JSONObject
 import java.io.IOException
+import java.util.*
 import java.util.concurrent.TimeUnit
 
 class BudaPay : AppCompatActivity() {
@@ -33,6 +35,8 @@ class BudaPay : AppCompatActivity() {
         val defaultPrice = 0.0
         val defaultMerchantName = ""
         val defaultBudaUserName = ""
+        val timeToExpire: Long = 180000
+
 
         val sharedPreferences: SharedPreferences =
             getSharedPreferences("sharedPres", Context.MODE_PRIVATE)
@@ -40,9 +44,9 @@ class BudaPay : AppCompatActivity() {
         val merchantName = sharedPreferences.getString("MERCHANTNAME", defaultMerchantName).toString()
         val budaUserName = sharedPreferences.getString("BUDAUSERNAME", defaultBudaUserName).toString()
 
-        val urlBuda = "https://www.buda.com/api/v2/pay/${budaUserName}/invoice?amount=${price}&description=cobro_${merchantName}"
+        val urlBuda = "https://www.buda.com/api/v2/pay/${budaUserName}/invoice?amount=${price}&description=${merchantName}"
 
-        findViewById<TextView>(R.id.MontoPagoValor).text = "$${price.toInt()}"
+        findViewById<TextView>(R.id.MontoPagoValor).text = String.format(Locale.ENGLISH, "%.2f", price )
         findViewById<TextView>(R.id.MotivoPagoValor).text = "$merchantName (vendor $budaUserName)"
 
 
@@ -61,7 +65,7 @@ class BudaPay : AppCompatActivity() {
                         runOnUiThread {
                             Toast.makeText(
                                 this@BudaPay,
-                                getString(R.string.buda_username_error),
+                                getString(R.string.buda_generic_error),
                                 Toast.LENGTH_SHORT).show()
                             val intent = Intent(this@BudaPay, MainActivity::class.java)
                             startActivity(intent)
@@ -84,6 +88,24 @@ class BudaPay : AppCompatActivity() {
                                 getQrCodeBitmap(invoice)
                             )
 
+                            val timer = object: CountDownTimer(timeToExpire, 1000) {
+                                override fun onTick(millisUntilFinished: Long) {
+                                    findViewById<TextView>(R.id.TextoInstruccion).text = getString(R.string.instr_para_pagar) + " " + (millisUntilFinished/1000).toString() + " s"
+                                }
+
+                                override fun onFinish() {
+                                    findViewById<ImageView>(R.id.qrcodeimage).setImageResource(R.drawable.xmark)
+                                    findViewById<ProgressBar>(R.id.progressBar).isInvisible = true
+                                    val copyButton = findViewById<Button>(R.id.copybutton)
+                                    copyButton.text = getString(R.string.go_back_text)
+                                    copyButton.setOnClickListener {
+                                        val intent = Intent(baseContext, MainActivity::class.java)
+                                        startActivity(intent)
+                                    }
+                                }
+                            }
+                            timer.start()
+
                             val copyButton = findViewById<Button>(R.id.copybutton)
                             copyButton.setOnClickListener {
                                 val clipboard: ClipboardManager =
@@ -99,7 +121,7 @@ class BudaPay : AppCompatActivity() {
                         val clientFinish = OkHttpClient.Builder()
                             .connectTimeout(10, TimeUnit.SECONDS)
                             .writeTimeout(10, TimeUnit.SECONDS)
-                            .readTimeout(30, TimeUnit.SECONDS)
+                            .readTimeout(timeToExpire/1000, TimeUnit.SECONDS)
                             .build()
                         clientFinish.newCall(requestFinish).enqueue(object : Callback {
                             override fun onFailure(call: Call, e: IOException) {

@@ -31,15 +31,12 @@ import kotlinx.coroutines.withContext
 import java.util.*
 import kotlin.collections.set
 
-
 class BudaPayApi : AppCompatActivity() {
-
     @SuppressLint("SetTextI18n")
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_buda_pay_api)
-
         val textView: TextView = findViewById(R.id.linkGH)
         textView.movementMethod = LinkMovementMethod.getInstance()
 
@@ -48,7 +45,7 @@ class BudaPayApi : AppCompatActivity() {
         val defaultMerchantName = ""
         val defaultBudaApiKey = ""
         val defaultBudaApiSecret = ""
-        val timeToExpire: Long = 180000
+        val timeToExpire: Long = 60000
 
 
         val sharedPreferences: SharedPreferences =
@@ -62,6 +59,14 @@ class BudaPayApi : AppCompatActivity() {
         val pathBuda = "/api/v2/lightning_network_invoices"
         val urlBudaCheck = "https://realtime.buda.com"
         val btcPriceUrl = "https://api.yadio.io/convert/$amountFiat/$currency/BTC"
+        val timer = object: CountDownTimer(timeToExpire, 1000) {
+            override fun onTick(millisUntilFinished: Long) {
+                findViewById<TextView>(R.id.TextoInstruccion).text = getString(R.string.instr_para_pagar) + " " + (millisUntilFinished/1000).toString() + " s"
+            }
+
+            override fun onFinish() {
+            }
+        }
 
 
         findViewById<TextView>(R.id.MonedaPagoValor).text = currency
@@ -115,14 +120,7 @@ class BudaPayApi : AppCompatActivity() {
                         getQrCodeBitmap(budaInvoice)
                     )
 
-                    val timer = object: CountDownTimer(timeToExpire, 1000) {
-                        override fun onTick(millisUntilFinished: Long) {
-                            findViewById<TextView>(R.id.TextoInstruccion).text = getString(R.string.instr_para_pagar) + " " + (millisUntilFinished/1000).toString() + " s"
-                        }
 
-                        override fun onFinish() {
-                        }
-                    }
                     timer.start()
                     val copyButton = findViewById<Button>(R.id.copybutton)
                     copyButton.setOnClickListener {
@@ -169,6 +167,7 @@ class BudaPayApi : AppCompatActivity() {
                                 getString(R.string.paid_invoice_message),
                                 Toast.LENGTH_SHORT
                             ).show()
+                            timer.cancel()
                             copyButton.setOnClickListener {
                                 val intent = Intent(baseContext, MainActivity::class.java)
                                 startActivity(intent)

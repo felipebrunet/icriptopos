@@ -145,16 +145,13 @@ class SettingsScreen : AppCompatActivity() {
 //                        Go Back button functionality
                         val returnButton = findViewById<Button>(R.id.go_back_button)
                         returnButton.setOnClickListener {
-                            val intent = Intent(this@SettingsScreen ,MainActivity::class.java)
-                            startActivity(intent)
-                            finish()
+                            openMainActivityNotSaved()
                         }
 
 //                        Save button functionality
                         val saveButton = findViewById<Button>(R.id.save_button)
                         saveButton.setOnClickListener {
                             openMainActivitySaved(currency, instance)
-                            finish()
 
                         }
                     }
@@ -222,16 +219,13 @@ class SettingsScreen : AppCompatActivity() {
 //                        Go Back button functionality
                         val returnButton = findViewById<Button>(R.id.go_back_button)
                         returnButton.setOnClickListener {
-                            val intent = Intent(this@SettingsScreen ,MainActivity::class.java)
-                            startActivity(intent)
-                            finish()
+                            openMainActivityNotSaved()
                         }
 
 //                        Save button functionality
                         val saveButton = findViewById<Button>(R.id.save_button)
                         saveButton.setOnClickListener {
                             openMainActivitySaved(currency, instance)
-                            finish()
                         }
                     }
 
@@ -299,16 +293,13 @@ class SettingsScreen : AppCompatActivity() {
 //                        Go Back button functionality
                         val returnButton = findViewById<Button>(R.id.go_back_button)
                         returnButton.setOnClickListener {
-                            val intent = Intent(this@SettingsScreen ,MainActivity::class.java)
-                            startActivity(intent)
-                            finish()
+                            openMainActivityNotSaved()
                         }
 
 //                        Save button functionality
                         val saveButton = findViewById<Button>(R.id.save_button)
                         saveButton.setOnClickListener {
                             openMainActivitySaved(currency, instance)
-                            finish()
                         }
                     }
 
@@ -362,16 +353,13 @@ class SettingsScreen : AppCompatActivity() {
 //                        Go Back button functionality
                         val returnButton = findViewById<Button>(R.id.go_back_button)
                         returnButton.setOnClickListener {
-                            val intent = Intent(this@SettingsScreen ,MainActivity::class.java)
-                            startActivity(intent)
-                            finish()
+                            openMainActivityNotSaved()
                         }
 
 //                        Save button functionality
                         val saveButton = findViewById<Button>(R.id.save_button)
                         saveButton.setOnClickListener {
                             openMainActivitySaved(currency, instance)
-                            finish()
                         }
                     }
 
@@ -430,16 +418,13 @@ class SettingsScreen : AppCompatActivity() {
 //                        Go Back button functionality
                         val returnButton = findViewById<Button>(R.id.go_back_button)
                         returnButton.setOnClickListener {
-                            val intent = Intent(this@SettingsScreen ,MainActivity::class.java)
-                            startActivity(intent)
-                            finish()
+                            openMainActivityNotSaved()
                         }
 
 //                        Save button functionality
                         val saveButton = findViewById<Button>(R.id.save_button)
                         saveButton.setOnClickListener {
                             openMainActivitySaved(currency, instance)
-                            finish()
                         }
                     }
 
@@ -496,16 +481,13 @@ class SettingsScreen : AppCompatActivity() {
 //                        Go Back button functionality
                         val returnButton = findViewById<Button>(R.id.go_back_button)
                         returnButton.setOnClickListener {
-                            val intent = Intent(this@SettingsScreen ,MainActivity::class.java)
-                            startActivity(intent)
-                            finish()
+                            openMainActivityNotSaved()
                         }
 
 //                        Save button functionality
                         val saveButton = findViewById<Button>(R.id.save_button)
                         saveButton.setOnClickListener {
                             openMainActivitySaved(currency, instance)
-                            finish()
                         }
                     }
 
@@ -517,9 +499,16 @@ class SettingsScreen : AppCompatActivity() {
 
 //    Save and go to main screen function
     private fun openMainActivitySaved(currency : String, instance: String) {
-        val intent = Intent(this, MainActivity::class.java)
         saveData(currency, instance)
-        startActivity(intent)
+        val intent = Intent(this, MainActivity::class.java)
+        this.startActivity(intent)
+        finishAffinity()
+    }
+
+    private fun openMainActivityNotSaved() {
+        val intent = Intent(this, MainActivity::class.java)
+        this.startActivity(intent)
+        finishAffinity()
     }
 
 //    Detailed saving function

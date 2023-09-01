@@ -62,7 +62,7 @@ class BudaPay : AppCompatActivity() {
                 copyButton.setOnClickListener {
                     val intent = Intent(baseContext, MainActivity::class.java)
                     startActivity(intent)
-                    finish()
+                    finishAffinity()
                 }
 
             }
@@ -88,7 +88,7 @@ class BudaPay : AppCompatActivity() {
                                 Toast.LENGTH_SHORT).show()
                             val intent = Intent(this@BudaPay, MainActivity::class.java)
                             startActivity(intent)
-                            finish()
+                            finishAffinity()
                         }
                         throw IOException("Unexpected code $response")
 
@@ -156,7 +156,7 @@ class BudaPay : AppCompatActivity() {
                                             copyButton.setOnClickListener {
                                                 val intent = Intent(baseContext, MainActivity::class.java)
                                                 startActivity(intent)
-                                                finish()
+                                                finishAffinity()
                                             }
 
                                         }

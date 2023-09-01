@@ -45,7 +45,7 @@ class BudaPayApi : AppCompatActivity() {
         val defaultMerchantName = ""
         val defaultBudaApiKey = ""
         val defaultBudaApiSecret = ""
-        val timeToExpire: Long = 10000
+        val timeToExpire: Long = 180000
 
 
         val sharedPreferences: SharedPreferences =
@@ -105,7 +105,7 @@ class BudaPayApi : AppCompatActivity() {
                         Toast.LENGTH_SHORT).show()
                     val intent = Intent(this@BudaPayApi, MainActivity::class.java)
                     startActivity(intent)
-                    finish()
+                    finishAffinity()
                 }
             } else {
 
@@ -152,7 +152,7 @@ class BudaPayApi : AppCompatActivity() {
 
                     if (responseBudaGet.status.toString() != "200 OK") {
                         budaClient2.close()
-                        finish()
+                        finishAffinity()
                     } else {
                         budaClient2.close()
                         withContext(Dispatchers.Main) {
@@ -169,7 +169,7 @@ class BudaPayApi : AppCompatActivity() {
                             copyButton.setOnClickListener {
                                 val intent = Intent(baseContext, MainActivity::class.java)
                                 startActivity(intent)
-                                finish()
+                                finishAffinity()
                             }
                         }
                     }
@@ -184,7 +184,7 @@ class BudaPayApi : AppCompatActivity() {
                         copyButton.setOnClickListener {
                             val intent = Intent(baseContext, MainActivity::class.java)
                             startActivity(intent)
-                            finish()
+                            finishAffinity()
                         }
                     }
                 }

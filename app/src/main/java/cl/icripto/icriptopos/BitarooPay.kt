@@ -69,7 +69,7 @@ class BitarooPay : AppCompatActivity() {
                 copyButton.setOnClickListener {
                     val intent = Intent(baseContext, MainActivity::class.java)
                     startActivity(intent)
-                    finish()
+                    finishAffinity()
                 }
             }
         }
@@ -106,7 +106,7 @@ class BitarooPay : AppCompatActivity() {
                         Toast.LENGTH_SHORT).show()
                     val intent = Intent(this@BitarooPay, MainActivity::class.java)
                     startActivity(intent)
-                    finish()
+                    finishAffinity()
                 }
             } else {
                 val bitarooInvoice = Gson().fromJson(bitarooPost.bodyAsText(), BitarooCheckoutData::class.java).invoice
@@ -161,7 +161,7 @@ class BitarooPay : AppCompatActivity() {
                     copyButton.setOnClickListener {
                         val intent = Intent(baseContext, MainActivity::class.java)
                         startActivity(intent)
-                        finish()
+                        finishAffinity()
                     }
                 }
 

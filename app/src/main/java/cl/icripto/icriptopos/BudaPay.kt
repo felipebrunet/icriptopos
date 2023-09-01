@@ -49,6 +49,25 @@ class BudaPay : AppCompatActivity() {
         findViewById<TextView>(R.id.MontoPagoValor).text = String.format(Locale.ENGLISH, "%.2f", price )
         findViewById<TextView>(R.id.MotivoPagoValor).text = "$merchantName (vendor $budaUserName)"
 
+        val timer = object: CountDownTimer(timeToExpire, 1000) {
+            override fun onTick(millisUntilFinished: Long) {
+                findViewById<TextView>(R.id.TextoInstruccion).text = getString(R.string.instr_para_pagar) + " " + (millisUntilFinished/1000).toString() + " s"
+            }
+
+            override fun onFinish() {
+                findViewById<ImageView>(R.id.qrcodeimage).setImageResource(R.drawable.xmark)
+                findViewById<ProgressBar>(R.id.progressBar).isInvisible = true
+                val copyButton = findViewById<Button>(R.id.copybutton)
+                copyButton.text = getString(R.string.go_back_text)
+                copyButton.setOnClickListener {
+                    val intent = Intent(baseContext, MainActivity::class.java)
+                    startActivity(intent)
+                    finish()
+                }
+
+            }
+        }
+
 
 
 
@@ -69,6 +88,7 @@ class BudaPay : AppCompatActivity() {
                                 Toast.LENGTH_SHORT).show()
                             val intent = Intent(this@BudaPay, MainActivity::class.java)
                             startActivity(intent)
+                            finish()
                         }
                         throw IOException("Unexpected code $response")
 
@@ -88,22 +108,7 @@ class BudaPay : AppCompatActivity() {
                                 getQrCodeBitmap(invoice)
                             )
 
-                            val timer = object: CountDownTimer(timeToExpire, 1000) {
-                                override fun onTick(millisUntilFinished: Long) {
-                                    findViewById<TextView>(R.id.TextoInstruccion).text = getString(R.string.instr_para_pagar) + " " + (millisUntilFinished/1000).toString() + " s"
-                                }
 
-                                override fun onFinish() {
-                                    findViewById<ImageView>(R.id.qrcodeimage).setImageResource(R.drawable.xmark)
-                                    findViewById<ProgressBar>(R.id.progressBar).isInvisible = true
-                                    val copyButton = findViewById<Button>(R.id.copybutton)
-                                    copyButton.text = getString(R.string.go_back_text)
-                                    copyButton.setOnClickListener {
-                                        val intent = Intent(baseContext, MainActivity::class.java)
-                                        startActivity(intent)
-                                    }
-                                }
-                            }
                             timer.start()
 
                             val copyButton = findViewById<Button>(R.id.copybutton)
@@ -138,6 +143,7 @@ class BudaPay : AppCompatActivity() {
                                     } else {
 
                                         runOnUiThread {
+                                            timer.cancel()
                                             findViewById<ImageView>(R.id.qrcodeimage).setImageResource(R.drawable.checkmark)
                                             findViewById<ProgressBar>(R.id.progressBar).isInvisible = true
                                             Toast.makeText(
@@ -150,6 +156,7 @@ class BudaPay : AppCompatActivity() {
                                             copyButton.setOnClickListener {
                                                 val intent = Intent(baseContext, MainActivity::class.java)
                                                 startActivity(intent)
+                                                finish()
                                             }
 
                                         }

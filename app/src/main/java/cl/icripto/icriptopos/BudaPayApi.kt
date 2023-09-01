@@ -45,7 +45,7 @@ class BudaPayApi : AppCompatActivity() {
         val defaultMerchantName = ""
         val defaultBudaApiKey = ""
         val defaultBudaApiSecret = ""
-        val timeToExpire: Long = 60000
+        val timeToExpire: Long = 10000
 
 
         val sharedPreferences: SharedPreferences =
@@ -63,7 +63,6 @@ class BudaPayApi : AppCompatActivity() {
             override fun onTick(millisUntilFinished: Long) {
                 findViewById<TextView>(R.id.TextoInstruccion).text = getString(R.string.instr_para_pagar) + " " + (millisUntilFinished/1000).toString() + " s"
             }
-
             override fun onFinish() {
             }
         }
@@ -106,6 +105,7 @@ class BudaPayApi : AppCompatActivity() {
                         Toast.LENGTH_SHORT).show()
                     val intent = Intent(this@BudaPayApi, MainActivity::class.java)
                     startActivity(intent)
+                    finish()
                 }
             } else {
 
@@ -142,8 +142,6 @@ class BudaPayApi : AppCompatActivity() {
                     }
                 }
 
-
-
                 try {
                     val responseBudaGet: HttpResponse = budaClient2.get("$urlBudaCheck$pathBudaCheck") {
                         header("X-SBTC-APIKEY", budaApiKey)
@@ -171,11 +169,13 @@ class BudaPayApi : AppCompatActivity() {
                             copyButton.setOnClickListener {
                                 val intent = Intent(baseContext, MainActivity::class.java)
                                 startActivity(intent)
+                                finish()
                             }
                         }
                     }
                 } catch (e: HttpRequestTimeoutException) {
                     e.printStackTrace()
+                    budaClient2.close()
                     withContext(Dispatchers.Main) {
                         findViewById<ImageView>(R.id.qrcodeimage).setImageResource(R.drawable.xmark)
                         findViewById<ProgressBar>(R.id.progressBar).isInvisible = true
@@ -184,6 +184,7 @@ class BudaPayApi : AppCompatActivity() {
                         copyButton.setOnClickListener {
                             val intent = Intent(baseContext, MainActivity::class.java)
                             startActivity(intent)
+                            finish()
                         }
                     }
                 }

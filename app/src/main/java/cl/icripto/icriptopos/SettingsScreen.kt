@@ -147,12 +147,15 @@ class SettingsScreen : AppCompatActivity() {
                         returnButton.setOnClickListener {
                             val intent = Intent(this@SettingsScreen ,MainActivity::class.java)
                             startActivity(intent)
+                            finish()
                         }
 
 //                        Save button functionality
                         val saveButton = findViewById<Button>(R.id.save_button)
                         saveButton.setOnClickListener {
                             openMainActivitySaved(currency, instance)
+                            finish()
+
                         }
                     }
 
@@ -221,12 +224,14 @@ class SettingsScreen : AppCompatActivity() {
                         returnButton.setOnClickListener {
                             val intent = Intent(this@SettingsScreen ,MainActivity::class.java)
                             startActivity(intent)
+                            finish()
                         }
 
 //                        Save button functionality
                         val saveButton = findViewById<Button>(R.id.save_button)
                         saveButton.setOnClickListener {
                             openMainActivitySaved(currency, instance)
+                            finish()
                         }
                     }
 
@@ -296,12 +301,14 @@ class SettingsScreen : AppCompatActivity() {
                         returnButton.setOnClickListener {
                             val intent = Intent(this@SettingsScreen ,MainActivity::class.java)
                             startActivity(intent)
+                            finish()
                         }
 
 //                        Save button functionality
                         val saveButton = findViewById<Button>(R.id.save_button)
                         saveButton.setOnClickListener {
                             openMainActivitySaved(currency, instance)
+                            finish()
                         }
                     }
 
@@ -357,12 +364,14 @@ class SettingsScreen : AppCompatActivity() {
                         returnButton.setOnClickListener {
                             val intent = Intent(this@SettingsScreen ,MainActivity::class.java)
                             startActivity(intent)
+                            finish()
                         }
 
 //                        Save button functionality
                         val saveButton = findViewById<Button>(R.id.save_button)
                         saveButton.setOnClickListener {
                             openMainActivitySaved(currency, instance)
+                            finish()
                         }
                     }
 
@@ -423,12 +432,14 @@ class SettingsScreen : AppCompatActivity() {
                         returnButton.setOnClickListener {
                             val intent = Intent(this@SettingsScreen ,MainActivity::class.java)
                             startActivity(intent)
+                            finish()
                         }
 
 //                        Save button functionality
                         val saveButton = findViewById<Button>(R.id.save_button)
                         saveButton.setOnClickListener {
                             openMainActivitySaved(currency, instance)
+                            finish()
                         }
                     }
 
@@ -487,12 +498,14 @@ class SettingsScreen : AppCompatActivity() {
                         returnButton.setOnClickListener {
                             val intent = Intent(this@SettingsScreen ,MainActivity::class.java)
                             startActivity(intent)
+                            finish()
                         }
 
 //                        Save button functionality
                         val saveButton = findViewById<Button>(R.id.save_button)
                         saveButton.setOnClickListener {
                             openMainActivitySaved(currency, instance)
+                            finish()
                         }
                     }
 

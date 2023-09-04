@@ -47,7 +47,7 @@
     <string name="init_val_screen">Ir a ajustes</string>
     <string name="tip_message">Indicar propina</string>
     <string name="no_tip">Sin propina</string>
-    <string name="text_version">Icripto POS V1.7.0</string>
+    <string name="text_version">Icripto POS V1.7.1</string>
     <string name="wheel_icon">Ajustes</string>
     <string name="select_instance">Instancia:</string>
     <string name="enter_ln_wallet_id">Ingrese lightning wallet Id en LNBits: (requerido)</string>

@@ -47,7 +47,7 @@
     <string name="init_val_screen">Go to settings</string>
     <string name="tip_message">Select tip</string>
     <string name="no_tip">No tip</string>
-    <string name="text_version">Icripto POS V1.7.0</string>
+    <string name="text_version">Icripto POS V1.7.1</string>
     <string name="wheel_icon">Settings</string>
     <string name="select_instance">Instance: </string>
     <string name="enter_ln_wallet_id">Enter lightning wallet Id at LNBits: (required)</string>

@@ -45,7 +45,7 @@ class BudaPayApi : AppCompatActivity() {
         val defaultMerchantName = ""
         val defaultBudaApiKey = ""
         val defaultBudaApiSecret = ""
-        val timeToExpire: Long = 180000
+        val timeToExpire: Long = 80000
 
 
         val sharedPreferences: SharedPreferences =
@@ -149,6 +149,7 @@ class BudaPayApi : AppCompatActivity() {
                         header("X-SBTC-SIGNATURE", signature2)
                         header("Content-Type", "application/json")
                     }
+
 
                     if (responseBudaGet.status.toString() != "200 OK") {
                         budaClient2.close()

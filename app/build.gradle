@@ -48,7 +48,7 @@ dependencies {
     //Gson
     implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
     //reflect
-    implementation("org.jetbrains.kotlin:kotlin-reflect:1.8.22")
+    implementation("org.jetbrains.kotlin:kotlin-reflect:1.9.0")
     implementation 'com.google.zxing:core:3.4.0'
     implementation("io.ktor:ktor-client-core:2.3.3")
     implementation("io.ktor:ktor-client-cio:2.3.3")

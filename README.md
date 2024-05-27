@@ -18,7 +18,7 @@ Payments to on chain addresses are usually detected/recognised by evaluating the
 For example, use the <<M84/0/0/3>> derivation path for the btcpay server on chain wallet only, and the <<M84/0/0/4>> derivation path the lnbits on chain wallet. Do not use the same derivation path for more than one system.
 
 TODOs:
-- Enabling connections to LNBits and BTCPay Servers hosted behind onion addresses. I need a bit more knowledge to use http requests via socks protocol in order to enable this, as well as enable NFC interaction over the Tor network.
+- Enabling Binance Lightning API, for receiving payments to any binance account.
 
 I will add more exchanges API payment services as long as they enable them.
 Kraken does not allow it since its API does not have the required endpoint (simple POST request for a new invoice, and another GET endpoint for checking the status). 

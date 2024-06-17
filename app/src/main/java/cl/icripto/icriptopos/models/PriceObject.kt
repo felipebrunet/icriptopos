@@ -33,3 +33,13 @@ data class BudaResponseObject (
     val price: String?
 
 )
+
+data class BinanceCheckoutData(
+    val invoice: BinanceResponseObject
+)
+data class BinanceResponseObject (
+    val coin: String,
+    val address: String,
+    val url: String,
+    val isDefault: Int?
+)

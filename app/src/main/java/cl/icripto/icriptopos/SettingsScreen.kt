@@ -20,7 +20,7 @@ class SettingsScreen : AppCompatActivity() {
         val textView: TextView = findViewById(R.id.linkGH)
         textView.movementMethod = LinkMovementMethod.getInstance()
 
-//        Default values for parameters for both BTCPay and LNBits instances
+//        Default values for parameters for all instances
         val defaultInstance = "BTCPay"
         val defaultCurrency = "USD"
         val defaultMerchantName = "Restaurant A"
@@ -36,6 +36,8 @@ class SettingsScreen : AppCompatActivity() {
         val defaultBitarooApiKey = ""
         val defaultBudaApiKey = ""
         val defaultBudaApiSecret = ""
+        val defaultBinanceApiKey = ""
+        val defaultBinanceApiSecret = ""
 
         var currencies: Array<String>
 
@@ -56,6 +58,8 @@ class SettingsScreen : AppCompatActivity() {
         val savedBitarooApiKey = sharedPreferences.getString("BITAROOAPIKEY", defaultBitarooApiKey)
         val savedBudaApiKey = sharedPreferences.getString("BUDAAPIKEY", defaultBudaApiKey)
         val savedBudaApiSecret = sharedPreferences.getString("BUDAAPISECRET", defaultBudaApiSecret)
+        val savedBinanceApiKey = sharedPreferences.getString("BINANCEAPIKEY", defaultBinanceApiKey)
+        val savedBinanceApiSecret = sharedPreferences.getString("BINANCEAPISECRET", defaultBinanceApiSecret)
         val tips : String? = sharedPreferences.getString("STATUSTIPS", defaultTips)
 
         val resetPinButton = findViewById<Button>(R.id.delete_pin_button)
@@ -73,9 +77,9 @@ class SettingsScreen : AppCompatActivity() {
 //        Functionality of Instance selection spinner
         val instanceOption : Spinner = findViewById(R.id.spinner_instances)
         val instanceOptions : Array<String> = if (savedInstance == null) {
-            arrayOf("BTCPay", "BTCPay API", "LNBits API", "Buda Link", "Buda API", "Bitaroo")
+            arrayOf("BTCPay", "BTCPay API", "LNBits API", "Buda Link", "Buda API", "Bitaroo", "Binance API")
         } else {
-            arrayOf(savedInstance) + arrayOf("BTCPay", "BTCPay API", "LNBits API", "Buda Link", "Buda API", "Bitaroo").filter{s -> s != savedInstance}
+            arrayOf(savedInstance) + arrayOf("BTCPay", "BTCPay API", "LNBits API", "Buda Link", "Buda API", "Bitaroo", "Binance API").filter{s -> s != savedInstance}
         }
         var instance: String
 
@@ -428,6 +432,71 @@ class SettingsScreen : AppCompatActivity() {
                         }
                     }
 
+                    "Binance API" -> {
+
+                        currencies = arrayOf("USD", "EUR", "AED", "ARS", "AUD", "BRL",
+                            "CAD", "CHF", "CLP", "CNY", "GBP", "INR",
+                            "JPY", "KRW", "MXN", "NGN", "RUB", "ZAR", "BTC")
+
+                        val currencyOption : Spinner = findViewById(R.id.spinner_currencies)
+                        val currencyOptions : Array<String> =
+                            if (savedCurrency == null) {
+                                currencies
+                            } else { arrayOf(savedCurrency) + currencies.filter{it != savedCurrency}
+                            }
+                        var currency : String = savedCurrency.toString()
+                        currencyOption.adapter = ArrayAdapter(baseContext, android.R.layout.simple_list_item_1, currencyOptions)
+                        currencyOption.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+                            override fun onNothingSelected(p0: AdapterView<*>?) {
+                            }
+                            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+                                currency = currencyOptions[p2]
+
+
+                            }
+                        }
+//                        Set currency selector visible
+                        findViewById<TextView>(R.id.currency_title).isInvisible = false
+                        findViewById<FrameLayout>(R.id.frame_layout_currency).isInvisible = false
+
+//                        Set store title visible
+                        findViewById<EditText>(R.id.store_title).isInvisible = false
+                        findViewById<EditText>(R.id.lightning_id).isInvisible = false
+
+
+//                        Hide Lnbits text views and boxes
+                        findViewById<TextView>(R.id.ln_wallet_id_title).isInvisible = true
+                        findViewById<EditText>(R.id.ln_wallet_id).isInvisible = true
+                        findViewById<EditText>(R.id.onchain_wallet_id_title).isInvisible = true
+                        findViewById<EditText>(R.id.onchain_wallet_id).isInvisible = true
+
+
+//                        Fill boxes with parameters that were loaded
+                        findViewById<TextView>(R.id.server_title).setText(R.string.enter_binance_api_key)
+                        findViewById<EditText>(R.id.server_url).setText(savedBinanceApiKey)
+                        findViewById<EditText>(R.id.server_url).setHint(R.string.binance_api_key)
+
+                        findViewById<TextView>(R.id.store_title).setText(R.string.enter_binance_api_secret)
+                        findViewById<EditText>(R.id.lightning_id).setText(savedBinanceApiSecret)
+                        findViewById<EditText>(R.id.lightning_id).setHint(R.string.binance_api_secret)
+
+                        findViewById<EditText>(R.id.merchant_name).setText(savedMerchantName)
+                        findViewById<Switch>(R.id.tips1).isChecked = tips == "yes"
+
+
+//                        Go Back button functionality
+                        val returnButton = findViewById<Button>(R.id.go_back_button)
+                        returnButton.setOnClickListener {
+                            openMainActivityNotSaved()
+                        }
+
+//                        Save button functionality
+                        val saveButton = findViewById<Button>(R.id.save_button)
+                        saveButton.setOnClickListener {
+                            openMainActivitySaved(currency, instance)
+                        }
+                    }
+
 
                     "Bitaroo" -> {
 
@@ -677,6 +746,40 @@ class SettingsScreen : AppCompatActivity() {
                 Toast.makeText(this, R.string.data_saved, Toast.LENGTH_SHORT).show()
 
             }
+
+
+            "Binance API" -> {
+                val binanceApiKey : String = findViewById<EditText>(R.id.server_url).text.toString()
+                val binanceApiSecret : String = findViewById<EditText>(R.id.lightning_id).text.toString()
+                val merchantName : String = findViewById<EditText>(R.id.merchant_name).text.toString()
+                val sharedPreferences : SharedPreferences = getSharedPreferences("sharedPres", Context.MODE_PRIVATE)
+                val editor : SharedPreferences.Editor = sharedPreferences.edit()
+                editor.apply{
+                    putString("LOCALCURRENCY", currency)
+                }.apply()
+                editor.apply{
+                    putString("BINANCEAPIKEY", binanceApiKey)
+                }.apply()
+                editor.apply{
+                    putString("BINANCEAPISECRET", binanceApiSecret)
+                }.apply()
+                editor.apply{
+                    putString("MERCHANTNAME", merchantName)
+                }.apply()
+                editor.apply{
+                    putString("STATUSTIPS", tips)
+                }.apply()
+                editor.apply{
+                    putString("INSTANCE", instance)
+                }.apply()
+
+//                Toast.makeText(this, "${R.string.data_saved} ${budaUserName.isNotEmpty()}", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, R.string.data_saved, Toast.LENGTH_SHORT).show()
+
+            }
+
+
+
 
             "Bitaroo" -> {
                 val bitarooApiKey : String = findViewById<EditText>(R.id.server_url).text.toString()

@@ -63,7 +63,8 @@
     <string name="pin_deleted">PIN borrado</string>
     <string name="data_saved">Valores guardados</string>
     <string name="texto_qrbuda">Pago con Bitcoin Lightning</string>
-    <string name="instr_para_pagar">Escanea este código QR con tu wallet y paga en </string>
+    <string name="texto_qrbinance">Pago con Bitcoin Lightning</string>
+    <string name="instr_para_pagar">Escanea este código QR con tu wallet y paga en</string>
     <string name="monto">Monto:</string>
     <string name="moneda">Moneda:</string>
     <string name="motivo">Motivo:</string>
@@ -80,6 +81,7 @@
     <string name="bitaroo_amount">1.00</string>
     <string name="bitaroo_currency">AUD</string>
     <string name="buda_username_error">Usuario no registrado, revisar en Ajustes y en Buda.com</string>
+    <string name="binance_username_error">Usuario no registrado, revisar en Ajustes y en Binance.com</string>
     <string name="buda_generic_error">Error usuario o monto, revisar en Buda.com</string>
     <string name="buda_review_payment">Revisar pago en Buda.com</string>
     <string name="bitaroo_username_error">Usuario no registrado, revisar en Ajustes y en bitaroo.com.au</string>
@@ -91,6 +93,10 @@
     <string name="buda_api_key">Recomendado ApiKey sin cap. de retiros</string>
     <string name="enter_buda_api_secret">Ingrese Api Secret de Buda: (requerido)</string>
     <string name="buda_api_secret">Api Secret</string>
+    <string name="enter_binance_api_key">Ingrese ApiKey de Binance: (requerido)</string>
+    <string name="binance_api_key">Recomendado ApiKey sin cap. de retiros</string>
+    <string name="enter_binance_api_secret">Ingrese Api Secret de binance: (requerido)</string>
+    <string name="binance_api_secret">Api Secret</string>
 
 
 </resources>

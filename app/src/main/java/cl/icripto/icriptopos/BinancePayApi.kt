@@ -8,13 +8,11 @@ import android.os.Build
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.text.method.LinkMovementMethod
-import android.util.Log
 import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isInvisible
 import app.cash.lninvoice.PaymentRequest
-import cl.icripto.icriptopos.models.BinanceCheckoutData
 import cl.icripto.icriptopos.models.BinanceResponseObject
 import cl.icripto.icriptopos.models.PriceObject
 import cl.icripto.icriptopos.repositories.Hmac256
@@ -25,14 +23,8 @@ import com.google.zxing.qrcode.QRCodeWriter
 import io.ktor.client.*
 import io.ktor.client.engine.cio.*
 import io.ktor.client.request.*
-import io.ktor.client.request.headers
 import io.ktor.client.statement.*
-import io.ktor.http.*
-import io.ktor.util.*
-import io.ktor.util.Identity.encode
 import kotlinx.coroutines.*
-import okio.ByteString.Companion.decodeHex
-import okio.ByteString.Companion.encode
 import java.util.*
 import kotlin.collections.set
 
@@ -62,7 +54,6 @@ class BinancePayApi : AppCompatActivity() {
         val currency = sharedPreferences.getString("LOCALCURRENCY", defaultCurrency).toString()
         val urlBinance = "https://api.binance.com"
         val pathBinance = "/sapi/v1/capital/deposit/address"
-        val urlBinanceCheck = "https://api.binance.com"
         val btcPriceUrl = "https://api.yadio.io/convert/$amountFiat/$currency/BTC"
         val timer = object: CountDownTimer(timeToExpire, 1000) {
             override fun onTick(millisUntilFinished: Long) {
@@ -75,7 +66,6 @@ class BinancePayApi : AppCompatActivity() {
 
         findViewById<TextView>(R.id.MonedaPagoValor).text = currency
         findViewById<TextView>(R.id.MontoPagoValor).text = String.format(Locale.ENGLISH, "%.2f", amountFiat!!.toDouble() )
-//        findViewById<TextView>(R.id.MontoPagoValor).text = "$${amountFiat}"
         findViewById<TextView>(R.id.MotivoPagoValor).text = merchantName
 
         val priceClient = HttpClient(CIO)
@@ -91,14 +81,10 @@ class BinancePayApi : AppCompatActivity() {
             val data = "coin=BTC&network=LIGHTNING&amount=$btcValueDecimal&timestamp=$nonce"
             val signature = Hmac256.digest(data, binanceApiSecret)
 
-//            Log.d("lalala", "data es: ${data}")
-//            Log.d("lalala", "firma es: ${signature}")
-//            Log.d("lalala", "firma es: ${signature},\nnonce es: ${nonce}, monto es: ${btcValueDecimal}")
 
             val binanceClient = HttpClient(CIO)
             val responseBinanceGet: HttpResponse = binanceClient.get(urlBinance + pathBinance) {
                 header("X-MBX-APIKEY", binanceApiKey)
-//                header("Content-Type", "application/json")
                 url{
                     parameters.append("coin", coin)
                     parameters.append("network", network)
@@ -107,14 +93,6 @@ class BinancePayApi : AppCompatActivity() {
                     parameters.append("signature", signature)
                 }
             }
-
-
-//            Log.d("lalala", "message, ${responseBinanceGet.status}")
-//            Log.d("lalala", "message, ${responseBinanceGet.request.url}")
-//            Log.d("lalala", "message, ${responseBinanceGet.bodyAsText()}")
-//            Log.d("lalala", "invoice es: ${Gson().fromJson(responseBinanceGet.bodyAsText(), BinanceResponseObject::class.java).address}")
-//            Log.d("lalala", "mensaje es: ${Gson().fromJson(responseBinanceGet.bodyAsText(), BinanceResponseObject::class.java).msg}")
-//            Log.d("lalala", "codigo es: ${Gson().fromJson(responseBinanceGet.bodyAsText(), BinanceResponseObject::class.java).code}")
 
             val failCode: Int = Gson().fromJson(responseBinanceGet.bodyAsText(), BinanceResponseObject::class.java).code ?: 0
 
@@ -144,13 +122,12 @@ class BinancePayApi : AppCompatActivity() {
                     }
                 }
             } else {
-//                Log.d("lalala", "pasamos!")
 
 
                 val binanceInvoice = Gson().fromJson(responseBinanceGet.bodyAsText(), BinanceResponseObject::class.java).address
                 val paymentHash = PaymentRequest.parseUnsafe(binanceInvoice).paymentHash
                 binanceClient.close()
-//                Log.d("lalala", "hash es ${paymentHash}")
+
 
 
                 withContext(Dispatchers.Main) {
@@ -171,7 +148,6 @@ class BinancePayApi : AppCompatActivity() {
 
                 val pathBinanceCheck = "/sapi/v1/capital/deposit/hisrec"
                 val binanceClient2 = HttpClient(CIO)
-                val oldHash = "1419fbce3275430471c88e879d8fc0e748e69aced86b5f976e8128a69e96fb46"
 
                 for (idx in 0 until (timeToExpire*0.8/2000).toInt()) {
 
@@ -191,9 +167,6 @@ class BinancePayApi : AppCompatActivity() {
                     delay(1000)
 
                     if (binanceResponse.contains(paymentHash, ignoreCase = true)){
-//                    if (binanceResponse.contains(oldHash, ignoreCase = true)){
-//                        Log.d("lalala", "message, se activo la wea")
-//                        Show success and end activity
                         binanceClient2.close()
                         withContext(Dispatchers.Main) {
                             findViewById<ImageView>(R.id.qrcodeimage).setImageResource(R.drawable.checkmark)
@@ -214,11 +187,9 @@ class BinancePayApi : AppCompatActivity() {
                         }
                     }
                     delay(1000)
-//                    Log.d("lalala", "acumtimer es, $idx y timer es ${timer}")
                 }
 
 
-//                Log.d("lalala", "message, se acabo el tiempo")
 
                 binanceClient2.close()
                 withContext(Dispatchers.Main) {

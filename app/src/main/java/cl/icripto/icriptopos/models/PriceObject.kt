@@ -41,5 +41,7 @@ data class BinanceResponseObject (
     val coin: String,
     val address: String,
     val url: String,
-    val isDefault: Int?
+    val isDefault: Int?,
+    val msg: String?,
+    val code: Int?
 )

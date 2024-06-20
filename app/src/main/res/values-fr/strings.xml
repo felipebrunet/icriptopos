@@ -82,6 +82,7 @@
     <string name="bitaroo_currency">AUD</string>
     <string name="buda_username_error">Utilisateur non enregistré, archivez Paramètres et Buda.com</string>
     <string name="binance_username_error">Utilisateur non enregistré, archivez Paramètres et Binance.com</string>
+    <string name="binance_invalid_amount">Montant non autorisé, vérifiez sur binance.com</string>
     <string name="buda_generic_error">User or amount error, check at Buda.com</string>
     <string name="buda_review_payment">Review payment at Buda.com</string>
     <string name="bitaroo_username_error">Unregistered user, check in Settings and bitaroo.com.au</string>

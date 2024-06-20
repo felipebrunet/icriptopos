@@ -12,6 +12,8 @@ import android.util.Log
 import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isInvisible
+import app.cash.lninvoice.PaymentRequest
 import cl.icripto.icriptopos.models.BinanceCheckoutData
 import cl.icripto.icriptopos.models.BinanceResponseObject
 import cl.icripto.icriptopos.models.PriceObject
@@ -23,13 +25,12 @@ import com.google.zxing.qrcode.QRCodeWriter
 import io.ktor.client.*
 import io.ktor.client.engine.cio.*
 import io.ktor.client.request.*
+import io.ktor.client.request.headers
 import io.ktor.client.statement.*
+import io.ktor.http.*
 import io.ktor.util.*
 import io.ktor.util.Identity.encode
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.*
 import okio.ByteString.Companion.decodeHex
 import okio.ByteString.Companion.encode
 import java.util.*
@@ -49,7 +50,7 @@ class BinancePayApi : AppCompatActivity() {
         val defaultMerchantName = ""
         val defaultBinanceApiKey = ""
         val defaultBinanceApiSecret = ""
-        val timeToExpire: Long = 80000
+        val timeToExpire: Long = 240000
 
 
         val sharedPreferences: SharedPreferences =
@@ -84,24 +85,17 @@ class BinancePayApi : AppCompatActivity() {
             val btcValue = Gson().fromJson(responsePrice.bodyAsText(), PriceObject::class.java).result
             priceClient.close()
             val btcValueDecimal = String.format(Locale.ENGLISH, "%.8f", btcValue)
-//            val btcValueDecimal = "9e-05"
             val coin = "BTC"
             val network = "LIGHTNING"
             val nonce = (System.currentTimeMillis()).toString()
-//            val nonce = 1718589204214
             val data = "coin=BTC&network=LIGHTNING&amount=$btcValueDecimal&timestamp=$nonce"
-//            val data = "coin=BTC&network=LIGHTNING&amount=$btcValueDecimal&timestamp=$nonce"
-//            val data = "hola"
-
-
             val signature = Hmac256.digest(data, binanceApiSecret)
 
-            Log.d("lalala", "data es: ${data}")
-            Log.d("lalala", "firma es: ${signature}")
-
+//            Log.d("lalala", "data es: ${data}")
+//            Log.d("lalala", "firma es: ${signature}")
 //            Log.d("lalala", "firma es: ${signature},\nnonce es: ${nonce}, monto es: ${btcValueDecimal}")
-            val binanceClient = HttpClient(CIO)
 
+            val binanceClient = HttpClient(CIO)
             val responseBinanceGet: HttpResponse = binanceClient.get(urlBinance + pathBinance) {
                 header("X-MBX-APIKEY", binanceApiKey)
 //                header("Content-Type", "application/json")
@@ -115,29 +109,48 @@ class BinancePayApi : AppCompatActivity() {
             }
 
 
-            Log.d("lalala", "message, ${responseBinanceGet.status}")
-            Log.d("lalala", "message, ${responseBinanceGet.request.url}")
-            Log.d("lalala", "message, ${responseBinanceGet.bodyAsText()}")
-            Log.d("lalala", "invoice es: ${Gson().fromJson(responseBinanceGet.bodyAsText(), BinanceResponseObject::class.java).address}")
+//            Log.d("lalala", "message, ${responseBinanceGet.status}")
+//            Log.d("lalala", "message, ${responseBinanceGet.request.url}")
+//            Log.d("lalala", "message, ${responseBinanceGet.bodyAsText()}")
+//            Log.d("lalala", "invoice es: ${Gson().fromJson(responseBinanceGet.bodyAsText(), BinanceResponseObject::class.java).address}")
+//            Log.d("lalala", "mensaje es: ${Gson().fromJson(responseBinanceGet.bodyAsText(), BinanceResponseObject::class.java).msg}")
+//            Log.d("lalala", "codigo es: ${Gson().fromJson(responseBinanceGet.bodyAsText(), BinanceResponseObject::class.java).code}")
 
+            val failCode: Int = Gson().fromJson(responseBinanceGet.bodyAsText(), BinanceResponseObject::class.java).code ?: 0
 
-            if (responseBinanceGet.status.toString() != "202") {
+            if (responseBinanceGet.status.toString() != "200 ") {
+                if (failCode == -1100) {
+                    binanceClient.close()
+                    withContext(Dispatchers.Main) {
+                        Toast.makeText(
+                            this@BinancePayApi,
+                            getString(R.string.binance_invalid_amount),
+                            Toast.LENGTH_SHORT).show()
+                        val intent = Intent(this@BinancePayApi, MainActivity::class.java)
+                        startActivity(intent)
+                        finishAffinity()
+                    }
+                }
+                else {
                 binanceClient.close()
-                withContext(Dispatchers.Main) {
-                    Toast.makeText(
-                        this@BinancePayApi,
-                        getString(R.string.binance_username_error),
-                        Toast.LENGTH_SHORT).show()
-                    val intent = Intent(this@BinancePayApi, MainActivity::class.java)
-                    startActivity(intent)
-                    finishAffinity()
+                    withContext(Dispatchers.Main) {
+                        Toast.makeText(
+                            this@BinancePayApi,
+                            getString(R.string.binance_username_error),
+                            Toast.LENGTH_SHORT).show()
+                        val intent = Intent(this@BinancePayApi, MainActivity::class.java)
+                        startActivity(intent)
+                        finishAffinity()
+                    }
                 }
             } else {
-                Log.d("lalala", "pasamos!")
+//                Log.d("lalala", "pasamos!")
 
-                val binanceInvoice = Gson().fromJson(responseBinanceGet.bodyAsText(), BinanceCheckoutData::class.java).invoice.address
+
+                val binanceInvoice = Gson().fromJson(responseBinanceGet.bodyAsText(), BinanceResponseObject::class.java).address
+                val paymentHash = PaymentRequest.parseUnsafe(binanceInvoice).paymentHash
                 binanceClient.close()
-
+//                Log.d("lalala", "hash es ${paymentHash}")
 
 
                 withContext(Dispatchers.Main) {
@@ -156,73 +169,70 @@ class BinancePayApi : AppCompatActivity() {
                     }
                 }
 
+                val pathBinanceCheck = "/sapi/v1/capital/deposit/hisrec"
+                val binanceClient2 = HttpClient(CIO)
+                val oldHash = "1419fbce3275430471c88e879d8fc0e748e69aced86b5f976e8128a69e96fb46"
+
+                for (idx in 0 until (timeToExpire*0.8/2000).toInt()) {
 
 
+                    val nonce2 = (System.currentTimeMillis()).toString()
+                    val data2 = "timestamp=$nonce2"
+                    val signature2 = Hmac256.digest(data2, binanceApiSecret)
+
+                    val responseBinanceGet2: HttpResponse = binanceClient2.get(urlBinance + pathBinanceCheck) {
+                        header("X-MBX-APIKEY", binanceApiKey)
+                        url{
+                            parameters.append("timestamp", nonce2)
+                            parameters.append("signature", signature2)
+                        }
+                    }
+                    val binanceResponse = responseBinanceGet2.bodyAsText()
+                    delay(1000)
+
+                    if (binanceResponse.contains(paymentHash, ignoreCase = true)){
+//                    if (binanceResponse.contains(oldHash, ignoreCase = true)){
+//                        Log.d("lalala", "message, se activo la wea")
+//                        Show success and end activity
+                        binanceClient2.close()
+                        withContext(Dispatchers.Main) {
+                            findViewById<ImageView>(R.id.qrcodeimage).setImageResource(R.drawable.checkmark)
+                            findViewById<ProgressBar>(R.id.progressBar).isInvisible = true
+                            val copyButton = findViewById<Button>(R.id.copybutton)
+                            copyButton.text = getString(R.string.go_back_text)
+                            Toast.makeText(
+                                this@BinancePayApi,
+                                getString(R.string.paid_invoice_message),
+                                Toast.LENGTH_SHORT
+                            ).show()
+                            timer.cancel()
+                            copyButton.setOnClickListener {
+                                val intent = Intent(baseContext, MainActivity::class.java)
+                                startActivity(intent)
+                                finishAffinity()
+                            }
+                        }
+                    }
+                    delay(1000)
+//                    Log.d("lalala", "acumtimer es, $idx y timer es ${timer}")
+                }
 
 
+//                Log.d("lalala", "message, se acabo el tiempo")
 
-
-//
-//
-//                val pathBinanceCheck = "/sapi/v1/capital/deposit/hisrec"
-//                val nonce2 = (System.currentTimeMillis()).toString()
-//                val mensaje2 = "GET $pathBinanceCheck $nonce2"
-//                val signature2 = Hmac256.digest(mensaje2, binanceApiSecret)
-////
-//                val binanceClient2 = HttpClient(CIO) {
-//                    install(HttpTimeout) {
-//                        requestTimeoutMillis = timeToExpire
-//                    }
-//                }
-//
-//                try {
-//                    val responseBinanceGet2: HttpResponse = binanceClient2.get("$urlBinanceCheck$pathBinanceCheck") {
-//                        header("X-SBTC-APIKEY", binanceApiKey)
-//                        header("X-SBTC-NONCE", nonce2)
-//                        header("X-SBTC-SIGNATURE", signature2)
-//                        header("Content-Type", "application/json")
-//                    }
-//
-//
-//                    if (responseBinanceGet2.status.toString() != "200 OK") {
-//                        binanceClient2.close()
-//                        finishAffinity()
-//                    } else {
-//                        binanceClient2.close()
-//                        withContext(Dispatchers.Main) {
-//                            findViewById<ImageView>(R.id.qrcodeimage).setImageResource(R.drawable.checkmark)
-//                            findViewById<ProgressBar>(R.id.progressBar).isInvisible = true
-//                            val copyButton = findViewById<Button>(R.id.copybutton)
-//                            copyButton.text = getString(R.string.go_back_text)
-//                            Toast.makeText(
-//                                this@BinancePayApi,
-//                                getString(R.string.paid_invoice_message),
-//                                Toast.LENGTH_SHORT
-//                            ).show()
-//                            timer.cancel()
-//                            copyButton.setOnClickListener {
-//                                val intent = Intent(baseContext, MainActivity::class.java)
-//                                startActivity(intent)
-//                                finishAffinity()
-//                            }
-//                        }
-//                    }
-//                } catch (e: HttpRequestTimeoutException) {
-//                    e.printStackTrace()
-//                    binanceClient2.close()
-//                    withContext(Dispatchers.Main) {
-//                        findViewById<ImageView>(R.id.qrcodeimage).setImageResource(R.drawable.xmark)
-//                        findViewById<ProgressBar>(R.id.progressBar).isInvisible = true
-//                        val copyButton = findViewById<Button>(R.id.copybutton)
-//                        copyButton.text = getString(R.string.go_back_text)
-//                        copyButton.setOnClickListener {
-//                            val intent = Intent(baseContext, MainActivity::class.java)
-//                            startActivity(intent)
-//                            finishAffinity()
-//                        }
-//                    }
-//                }
-
+                binanceClient2.close()
+                withContext(Dispatchers.Main) {
+                    findViewById<ImageView>(R.id.qrcodeimage).setImageResource(R.drawable.xmark)
+                    findViewById<ProgressBar>(R.id.progressBar).isInvisible = true
+                    val copyButton = findViewById<Button>(R.id.copybutton)
+                    copyButton.text = getString(R.string.go_back_text)
+                    timer.cancel()
+                    copyButton.setOnClickListener {
+                        val intent = Intent(baseContext, MainActivity::class.java)
+                        startActivity(intent)
+                        finishAffinity()
+                    }
+                }
             }
         }
     }

@@ -11,14 +11,13 @@ The terminal currently supports:
 - "BTCPay API": Connection to BTCPay Server for accepting payments in bitcoin (on chain and lightning + NFC, plus altcoins via plugins). Clearnet servers only.
 - "BTCPay": Connection to BTCPay Server for accepting payments in bitcoin (on chain and lightning + NFC, plus altcoins via plugins). This option uses the pay button. Clearnet and Tor servers.
 - "LNBits API": Connection to LNBits Server for accepting payments in bitcoin (on chain and lightning). Clearnet servers only.
-- "BUDA": Connection to buda.com for accepting payments in bitcoin (lightning only).
-- "Bitaroo": Connection to Bitaroo (https://trade.bitaroo.com.au) for accepting payments in bitcoin (lightning only).
+- "Buda API": Connection to buda.com for accepting payments in bitcoin (lightning only).
+- "Buda Link": Connection to buda.com for accepting payments in bitcoin (lightning only).
+- "Bitaroo API": Connection to Bitaroo (https://trade.bitaroo.com.au) for accepting payments in bitcoin (lightning only).
+- "Binance API": Connection to buda.com for accepting payments in bitcoin (lightning only).
 
 Payments to on chain addresses are usually detected/recognised by evaluating the balance of the given address. Therefore, it is essential that the on chain master public key (Xpub, Zpub) used to configure the on chain payments, only has empty addresses (addresses with zero balance) when setting it up, and make sure you only use that master public key for this purpose.
 For example, use the <<M84/0/0/3>> derivation path for the btcpay server on chain wallet only, and the <<M84/0/0/4>> derivation path the lnbits on chain wallet. Do not use the same derivation path for more than one system.
-
-TODOs:
-- Enabling Binance Lightning API, for receiving payments to any binance account.
 
 I will add more exchanges API payment services as long as they enable them.
 Kraken does not allow it since its API does not have the required endpoint (simple POST request for a new invoice, and another GET endpoint for checking the status). 

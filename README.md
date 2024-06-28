@@ -14,7 +14,7 @@ The terminal currently supports:
 - "Buda API": Connection to buda.com for accepting payments in bitcoin (lightning only).
 - "Buda Link": Connection to buda.com for accepting payments in bitcoin (lightning only).
 - "Bitaroo API": Connection to Bitaroo (https://trade.bitaroo.com.au) for accepting payments in bitcoin (lightning only).
-- "Binance API": Connection to buda.com for accepting payments in bitcoin (lightning only).
+- "Binance API": Connection to binance.com for accepting payments in bitcoin (lightning only).
 
 Payments to on chain addresses are usually detected/recognised by evaluating the balance of the given address. Therefore, it is essential that the on chain master public key (Xpub, Zpub) used to configure the on chain payments, only has empty addresses (addresses with zero balance) when setting it up, and make sure you only use that master public key for this purpose.
 For example, use the <<M84/0/0/3>> derivation path for the btcpay server on chain wallet only, and the <<M84/0/0/4>> derivation path the lnbits on chain wallet. Do not use the same derivation path for more than one system.

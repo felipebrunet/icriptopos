@@ -12,7 +12,7 @@
             android:label="@string/app_name"
             android:supportsRtl="true"
             android:theme="@style/Theme.IcriptoPOS"
-            tools:targetApi="31">
+            tools:targetApi="34">
         <activity
                 android:name=".BinancePayApi"
                 android:exported="false"

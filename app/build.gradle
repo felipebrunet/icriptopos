@@ -12,7 +12,7 @@ android {
         applicationId "cl.icripto.icriptopos"
         minSdk 23
         //noinspection EditedTargetSdkVersion,OldTargetApi
-        targetSdk 34
+        targetSdk 36
         versionCode 7
         versionName "1.7.3"
 
